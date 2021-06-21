@@ -36,3 +36,28 @@
     transform: rotate(360deg);
   }
 }
+
+/* Sampler */
+
+.sampler {
+  margin: 4px;
+  padding: 8px;
+  border: 2px solid;
+}
+
+.sampler .step {
+  width: 72px;
+  height: 72px;
+}
+
+.sampler  .cell {
+  padding: 4px;
+}
+
+.sampler .cell.selected .step {
+ background-color: #000000; 
+}
+
+.sampler .cell.playing {
+  background-color: #61dafb;
+}

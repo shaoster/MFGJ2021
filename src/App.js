@@ -1,24 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+import SampleGrid from './SampleGrid';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <SampleGrid
+      parts={[
+        {
+          sample: "sd",
+          steps: [
+            false, false, false, false,
+            true, false, false, false,
+            false, false, false, false,
+            true, false, false, false,
+          ],
+        },
+        {
+          sample: "bd",
+          steps: [
+            true, false, false, false,
+            false, false, false, false,
+            true, false, false, false,
+            false, false, false, false,
+          ],
+        },
+        {
+          sample: "ch",
+          steps: [
+            true, false, true, false,
+            true, false, true, false,
+            true, false, true, false,
+            true, false, true, true,
+          ],
+        },
+      ]}
+      className="sampler"
+    />
   );
 }
 
