@@ -54,6 +54,11 @@
   padding: 8px;
 }
 
+.sampler .cell:hover {
+  background-color: #61dafb;
+}
+
+
 .sampler .cell.selected .step {
  background-color: #000000; 
 }
@@ -64,4 +69,10 @@
 
 .sampler .caption {
   width: min-content;
+}
+
+/* Hand */
+
+.hand .card {
+  margin: 4px;
 }

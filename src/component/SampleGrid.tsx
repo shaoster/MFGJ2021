@@ -26,8 +26,8 @@ export const STEP_COUNT: number = GRID_WIDTH * GRID_HEIGHT;
 export const DEFAULT_BPM: number = 80;
 
 function PartGrid(
-  { parts, currentlyPlayingStep, ...remainingProps }: React.HTMLAttributes<HTMLDivElement> & {
-    parts: Array<Part>, currentlyPlayingStep: number | null
+  { parts, currentlyPlayingStep, onClickStep = undefined, ...remainingProps }: React.HTMLAttributes<HTMLTableElement> & {
+    parts: Array<Part>, currentlyPlayingStep: number | null, onClickStep: any,
   }
 )
 {
@@ -59,9 +59,10 @@ function PartGrid(
               if (rowId * GRID_WIDTH + colId === currentlyPlayingStep) {
                 cellClass += " playing";
               }
+              const stepId = rowId * GRID_WIDTH + colId;
               return (
                 <td key={colId} className={cellClass}>
-                  <Paper className="step" variant="outlined"/>
+                  <Paper className="step" variant="outlined" onClick={() => onClickStep && onClickStep(tabIndex, stepId)}/>
                 </td>
               );
             })
@@ -88,11 +89,11 @@ const sampler = new Tone.Sampler({
     // Snare
     c4: "SD/E808_SD-03.wav",
   },
-  baseUrl: "/samples/808/"
+  baseUrl: process.env.PUBLIC_URL + "/samples/808/"
 }).toDestination();
 
 export default function SampleGrid(
-  { parts, ...remainingProps }: React.HTMLAttributes<HTMLDivElement> & { parts: Array<Part> }
+  { parts, onClickStep = undefined, ...remainingProps }: React.HTMLAttributes<HTMLTableElement> & { parts: Array<Part>, onClickStep?: any }
 ) {
   useEffect(() => {
     Tone.Transport.bpm.value = DEFAULT_BPM;
@@ -129,6 +130,7 @@ export default function SampleGrid(
   return <>
     <PartGrid
       parts={parts}
+      onClickStep={onClickStep}
       currentlyPlayingStep={currentlyPlayingStep}
       {...remainingProps}
     />

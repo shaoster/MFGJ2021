@@ -1,68 +1,8 @@
 import './App.css';
+import { Client } from 'boardgame.io/react';
 import Board from './component/Board';
+import { MyGame } from './Game';
 
-function App() {
-  const G = {
-    playerParts: [
-      {
-        sample: "sd",
-        steps: [
-          false, false, false, false,
-          true, false, false, false,
-          false, false, false, false,
-          true, false, false, false,
-        ],
-      },
-      {
-        sample: "bd",
-        steps: [
-          true, false, false, false,
-          false, false, false, false,
-          true, false, false, false,
-          false, false, false, false,
-        ],
-      },
-      {
-        sample: "ch",
-        steps: [
-          true, false, true, false,
-          true, false, true, false,
-          true, false, true, false,
-          true, false, true, true,
-        ],
-      },
-    ],
-    targetParts: [
-      {
-        sample: "sd",
-        steps: [
-          false, false, false, false,
-          true, false, false, false,
-          false, false, false, false,
-          true, false, false, false,
-        ],
-      },
-      {
-        sample: "bd",
-        steps: [
-          true, false, false, false,
-          false, false, false, false,
-          true, false, false, false,
-          false, false, false, false,
-        ],
-      },
-      {
-        sample: "ch",
-        steps: [
-          true, false, true, false,
-          true, false, true, false,
-          true, false, true, false,
-          true, false, true, true,
-        ],
-      },
-    ]
-  };
-  return <Board G={G}/>
-}
+const App = Client({ game: MyGame, board: Board, numPlayers: 1, debug: true});
 
 export default App;
