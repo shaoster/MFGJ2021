@@ -3,41 +3,51 @@ import React, { useEffect, useState } from 'react';
 import * as Tone from "tone";
 
 import {
+  AppBar,
   Button,
   Paper,
+  Tab,
+  Tabs,
 } from '@material-ui/core';
 
 import {
   chunk,
   range,
-  sample,
   take,
 } from 'lodash';
+
+import type {
+  Part,
+} from '../Game';
 
 export const GRID_WIDTH: number = 4;
 export const GRID_HEIGHT: number = 4;
 export const STEP_COUNT: number = GRID_WIDTH * GRID_HEIGHT;
-
-interface Part {
-  sample: string;
-  steps: Array<boolean>;
-}
+export const DEFAULT_BPM: number = 80;
 
 function PartGrid(
-  { part, currentlyPlayingStep, ...remainingProps }: {
-    part: Part, currentlyPlayingStep: number | null
+  { parts, currentlyPlayingStep, ...remainingProps }: React.HTMLAttributes<HTMLDivElement> & {
+    parts: Array<Part>, currentlyPlayingStep: number | null
   }
 )
 {
+  const [tabIndex, setTabIndex] = useState(0);
   const {
-    sample,
     steps
-  } = part;
+  } = parts[tabIndex];
   const truncatedSteps: Array<boolean> = take(steps, GRID_WIDTH * GRID_WIDTH);
   const chunkedGrid: Array<Array<boolean>> = chunk(truncatedSteps, 4);
   return (
     <table {...remainingProps}>
-      <caption>{sample}</caption>
+      <caption>
+        <AppBar position="static">
+          <Tabs value={tabIndex} onChange={(_, newValue: number) => setTabIndex(newValue)}>
+            {
+              parts.map((p: Part) => <Tab label={p.sample}/>)
+            }
+          </Tabs>
+      </AppBar>
+      </caption>
       <tbody>
       {
         chunkedGrid.map((row: Array<boolean>, rowId: number) => (
@@ -82,9 +92,10 @@ const sampler = new Tone.Sampler({
 }).toDestination();
 
 export default function SampleGrid(
-  { parts, ...remainingProps }: { parts: Array<Part>}
+  { parts, ...remainingProps }: React.HTMLAttributes<HTMLDivElement> & { parts: Array<Part> }
 ) {
   useEffect(() => {
+    Tone.Transport.bpm.value = DEFAULT_BPM;
     Tone.Transport.start();
     return () => {
       Tone.Transport.stop();
@@ -116,16 +127,11 @@ export default function SampleGrid(
     sequencer.start();
   };
   return <>
-  {
-    parts.map((p: Part, index: number) =>
-      <PartGrid
-        key={index}
-        part={p}
-        currentlyPlayingStep={currentlyPlayingStep}
-        {...remainingProps}
-      />
-    )
-  }
+    <PartGrid
+      parts={parts}
+      currentlyPlayingStep={currentlyPlayingStep}
+      {...remainingProps}
+    />
   <Button variant="contained" onClick={play} disabled={isPlaying}>{ isPlaying ? "Playing" : "Play" }</Button>
   </>
 };

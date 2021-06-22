@@ -46,12 +46,12 @@
 }
 
 .sampler .step {
-  width: 72px;
-  height: 72px;
+  width: 96px;
+  height: 96px;
 }
 
 .sampler  .cell {
-  padding: 4px;
+  padding: 8px;
 }
 
 .sampler .cell.selected .step {
@@ -60,4 +60,8 @@
 
 .sampler .cell.playing {
   background-color: #61dafb;
+}
+
+.sampler .caption {
+  width: min-content;
 }
