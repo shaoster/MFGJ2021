@@ -19,7 +19,7 @@ export default function Board({G, ctx, moves}: BoardProps<GameState>) {
   // TODO: Make more abstract.
   const onClickStep = moves.chooseTarget ?? undefined;
   return <Grid container>
-    <Grid item xs={3}>
+    <Grid item xs={3} className="current-parts">
       <h1>Current</h1>
       <SampleGrid
         parts={playerParts}
@@ -27,7 +27,7 @@ export default function Board({G, ctx, moves}: BoardProps<GameState>) {
         onClickStep={onClickStep}
       />
     </Grid>
-    <Grid item xs={3}>
+    <Grid item xs={3} className="target-parts">
       <h1>Goal</h1>
       <SampleGrid
         parts={targetParts}
@@ -35,7 +35,7 @@ export default function Board({G, ctx, moves}: BoardProps<GameState>) {
       />
     </Grid>
     <Grid item xs={6}/>
-    <Grid item xs={12}>
+    <Grid item xs={12} className="hand-area">
       <h1>Hand</h1>
       <Hand
         hand={G.playerHand}

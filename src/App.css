@@ -46,6 +46,7 @@
 }
 
 .sampler .step {
+  min-width: 96px;
   width: 96px;
   height: 96px;
 }
@@ -75,4 +76,19 @@
 
 .hand .card {
   margin: 4px;
+  min-width: 224px;
+}
+
+/* Layout */
+
+.current-parts {
+  min-width: 520px;
+}
+
+.target-parts {
+  min-width: 520px;
+}
+
+.hand-area {
+  min-width: 720px;
 }
