@@ -124,6 +124,7 @@ export default function SampleGrid(
       "16n"
     );
     setIsPlaying(true);
+    Tone.start();
     sequencer.loop = false;
     sequencer.start();
   };
