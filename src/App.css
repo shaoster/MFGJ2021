@@ -41,18 +41,39 @@
 
 .sampler {
   margin: 4px;
-  padding: 8px;
+  padding: 0px;
   border: 2px solid;
+  width: min-content;
+  height: min-content;
+}
+
+.sampler caption {
+  width: min-content;
+}
+
+.sampler .MuiTab-root {
+  min-width: 58px;
+}
+
+.sampler .MuiTab-wrapper {
+  min-width: 58px;
+}
+
+.sampler .row {
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
 }
 
 .sampler .step {
-  min-width: 96px;
-  width: 96px;
-  height: 96px;
+  padding: 0px;
+  margin: 4px;
+  width: 48px;
+  height: 48px;
 }
 
 .sampler  .cell {
-  padding: 8px;
+  margin: 0px;
+  padding: 0px;
 }
 
 .sampler .cell:hover {
@@ -82,11 +103,11 @@
 /* Layout */
 
 .current-parts {
-  min-width: 520px;
+  min-width: min-content;
 }
 
 .target-parts {
-  min-width: 520px;
+  min-width: min-content;
 }
 
 .hand-area {

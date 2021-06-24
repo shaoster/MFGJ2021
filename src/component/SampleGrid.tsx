@@ -38,15 +38,15 @@ function PartGrid(
   const truncatedSteps: Array<boolean> = take(steps, GRID_WIDTH * GRID_WIDTH);
   const chunkedGrid: Array<Array<boolean>> = chunk(truncatedSteps, 4);
   return (
-    <table {...remainingProps}>
+    <table {...remainingProps} key={tabIndex}>
       <caption>
-        <AppBar position="static">
-          <Tabs value={tabIndex} onChange={(_, newValue: number) => setTabIndex(newValue)}>
+        <AppBar position="relative">
+          <Tabs value={tabIndex} onChange={(_, newValue: number) => setTabIndex(newValue)} className="part-selector">
             {
               parts.map((p: Part) => <Tab label={p.sample}/>)
             }
           </Tabs>
-      </AppBar>
+        </AppBar>
       </caption>
       <tbody>
       {
