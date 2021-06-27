@@ -16,14 +16,12 @@ import {
   take,
 } from 'lodash';
 
-import type {
-  Part,
-} from '../Game';
-
-export const GRID_WIDTH: number = 4;
-export const GRID_HEIGHT: number = 4;
-export const STEP_COUNT: number = GRID_WIDTH * GRID_HEIGHT;
-export const DEFAULT_BPM: number = 80;
+import {
+  DEFAULT_BPM,
+  GRID_WIDTH,
+  STEP_COUNT,
+} from '../Constants';
+import { Part, StepSequence, StepState } from '../Types';
 
 function PartGrid(
   { parts, currentlyPlayingStep, onClickStep = undefined, ...remainingProps }: React.HTMLAttributes<HTMLTableElement> & {
@@ -35,8 +33,8 @@ function PartGrid(
   const {
     steps
   } = parts[tabIndex];
-  const truncatedSteps: Array<boolean> = take(steps, GRID_WIDTH * GRID_WIDTH);
-  const chunkedGrid: Array<Array<boolean>> = chunk(truncatedSteps, 4);
+  const truncatedSteps: StepSequence = take(steps, STEP_COUNT);
+  const chunkedGrid: Array<StepSequence> = chunk(truncatedSteps, 4);
   return (
     <table {...remainingProps} key={tabIndex}>
       <caption>
@@ -50,10 +48,10 @@ function PartGrid(
       </caption>
       <tbody>
       {
-        chunkedGrid.map((row: Array<boolean>, rowId: number) => (
+        chunkedGrid.map((row: StepSequence, rowId: number) => (
           <tr key={rowId} className="row">
           {
-            row.map((cell: boolean, colId: number) => {
+            row.map((cell: StepState, colId: number) => {
               let cellClass: string = "cell ";
               cellClass += (cell ? "selected": "unselected");
               if (rowId * GRID_WIDTH + colId === currentlyPlayingStep) {

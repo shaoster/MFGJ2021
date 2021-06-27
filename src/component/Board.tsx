@@ -8,8 +8,7 @@ import {
 
 import Hand from './Hand';
 import SampleGrid from './SampleGrid';
-
-import type { GameState } from '../Game';
+import { GameState } from '../Types';
 
 export default function Board({G, ctx, moves}: BoardProps<GameState>) {
   const {
