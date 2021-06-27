@@ -6,7 +6,7 @@ import {
   Grid,
 } from '@material-ui/core';
 
-import Hand from './Hand';
+import CardSequence from './CardSequence';
 import SampleGrid from './SampleGrid';
 import { GameState } from '../Types';
 
@@ -18,7 +18,7 @@ export default function Board({G, ctx, moves}: BoardProps<GameState>) {
   // TODO: Make more abstract.
   const onClickStep = moves.chooseTarget ?? undefined;
   return <Grid container>
-    <Grid item xs={3} className="current-parts">
+    <Grid item xs={2} className="current-parts">
       <h1>Current</h1>
       <SampleGrid
         parts={playerParts}
@@ -26,7 +26,7 @@ export default function Board({G, ctx, moves}: BoardProps<GameState>) {
         onClickStep={onClickStep}
       />
     </Grid>
-    <Grid item xs={3} className="target-parts">
+    <Grid item xs={2} className="target-parts">
       <h1>Goal</h1>
       <SampleGrid
         parts={targetParts}
@@ -36,11 +36,22 @@ export default function Board({G, ctx, moves}: BoardProps<GameState>) {
     <Grid item xs={6}/>
     <Grid item xs={12} className="hand-area">
       <h1>Hand</h1>
-      <Hand
-        hand={G.playerHand}
-        onClickCard={ctx.activePlayers === null ? moves.playCard : undefined}
+      <CardSequence
+        cards={G.playerHand}
+        onClickCard={moves.playCard}
+        buttonLabel="Enqueue"
         className="hand"
       />
     </Grid>
+    <Grid item xs={12} className="schedule-area">
+      <h1>Schedule</h1>
+      <CardSequence
+        cards={G.playerSchedule}
+        onClickCard={moves.removeCard}
+        buttonLabel="Remove"
+        className="schedule"
+      />
+    </Grid>
+
   </Grid>;
 };

@@ -58,7 +58,7 @@ export interface CardFlavor {
 
 export interface Card extends CardFlavor {
   // Pattern cards have special UI considerations.
-  sampleTarget: string;
+  sampleTarget?: string;
   pattern?: Pattern;
   playCard: CardAction;
 };

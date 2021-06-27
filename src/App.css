@@ -51,6 +51,8 @@
   width: min-content;
 }
 
+
+/*
 .sampler .MuiTab-root {
   min-width: 57px;
 }
@@ -58,6 +60,8 @@
 .sampler .MuiTab-wrapper {
   min-width: 57px;
 }
+
+*/
 
 .sampler .row {
   margin: 0px 0px 0px 0px;
@@ -69,11 +73,15 @@
   margin: 4px;
   width: 48px;
   height: 48px;
+  border-width: 2px;
+  border-radius: 4px;
+  border-spacing: 0px;
 }
 
 .sampler  .cell {
   margin: 0px;
   padding: 0px;
+  border-radius: 4px;
 }
 
 .sampler .cell:hover {

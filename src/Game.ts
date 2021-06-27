@@ -11,8 +11,8 @@ export const FLIP:string = "flip";
 
 const EmptyPart: () => StepSequence = () => Array.from({length: STEP_COUNT}, () => StepState.OFF);
 
-const SetupTurn = (level: number) => {
-  const puzzle = Puzzles[level];
+const SetupTurn = (turn: number) => {
+  const puzzle = Puzzles[turn - 1];
   const playerParts: Array<Part> = puzzle.targetParts.map(
     (part: Part) => ({
       sample: part.sample,
@@ -23,7 +23,7 @@ const SetupTurn = (level: number) => {
     ...puzzle,
     // TBD: Start empty for now.
     playerParts,
-    playerHand: [],
+    playerHand: puzzle.startingHand,
     playerSchedule: [],
     // Initially there are no active parts.
     activePart: null,
@@ -59,7 +59,7 @@ export const MyGame: Game = {
       
       // Add the removed card back to the hand.
       cleanState.playerHand = [...G.playerHand];
-      const removedCardId = G.playerHand[playerScheduleSlot];
+      const removedCardId = G.playerSchedule[playerScheduleSlot];
       cleanState.playerHand.push(removedCardId);
 
       // Re-play the remaining cards.
@@ -68,8 +68,10 @@ export const MyGame: Game = {
           // Ignore this removed card.
           continue;
         }
-        const card = Cards[replayedCardId];
-        card.playCard(cleanState);
+        const replayedCard = Cards[replayedCardId];
+        console.log(cleanState);
+        replayedCard.playCard(cleanState);
+        console.log(cleanState);
         cleanState.playerSchedule.push(replayedCardId);
       }
       return cleanState;

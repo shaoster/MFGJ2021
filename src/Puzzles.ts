@@ -16,8 +16,7 @@ const Puzzles: Array<Puzzle> = [
       },
     ],
     startingHand: [
-      "takeDownClothes",
-      "spread",
+      "layFlat",
       "fold",
     ]
   },

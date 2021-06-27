@@ -23,13 +23,14 @@ class CardImpl implements Card {
   title: string;
   description: string;
   image?: string;
-  sampleTarget: string;
+  sampleTarget?: string;
   pattern?: Pattern;
 
-  constructor(flavor: CardFlavor, pattern: Pattern, part: string) {
+  constructor(flavor: CardFlavor, pattern?: Pattern, part?: string) {
     this.title = flavor.title;
     this.description = flavor.description;
     this.image = flavor.image;
+    this.pattern = pattern;
     this.sampleTarget = part;
   }
 
@@ -38,6 +39,7 @@ class CardImpl implements Card {
       if (part.sample !== this.sampleTarget) {
         continue;
       }
+      console.log(this.pattern);
       if (this.pattern) {
         ApplyPatternToPart(this.pattern, part);
       }
@@ -46,6 +48,34 @@ class CardImpl implements Card {
 }
 
 const Cards : {[key: string]: Card} = {
+  // Every Beat.
+  layFlat: new CardImpl(
+    {
+      title: "Lay Flat",
+      description: "Lay your shirt flat on your bed."
+    },
+    [
+      StepAction.SET_ON, StepAction.SET_OFF, StepAction.SET_OFF, StepAction.SET_OFF,
+      StepAction.SET_ON, StepAction.SET_OFF, StepAction.SET_OFF, StepAction.SET_OFF,
+      StepAction.SET_ON, StepAction.SET_OFF, StepAction.SET_OFF, StepAction.SET_OFF,
+      StepAction.SET_ON, StepAction.SET_OFF, StepAction.SET_OFF, StepAction.SET_OFF,
+    ],
+    "sd"
+  ),
+  // Every Beat.
+  fold: new CardImpl(
+    {
+      title: "Fold",
+      description: "Fold your shirt. Wouldn't this be easier if the shirt was flat?"
+    },
+    [
+      StepAction.SET_OFF, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.SET_OFF, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+    ],
+    "sd"
+  ),
 };
 
 export default Cards;
