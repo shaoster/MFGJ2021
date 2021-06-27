@@ -1,4 +1,4 @@
-import { Puzzle } from "./Types";
+import { Puzzle, StepState } from "./Types";
 
 const Puzzles: Array<Puzzle> = [
   // 0
@@ -8,10 +8,10 @@ const Puzzles: Array<Puzzle> = [
       {
         sample: "sd",
         steps: [
-          0, 0, 0, 0,
-          1, 0, 0, 0,
-          0, 0, 0, 0,
-          1, 0, 0, 0,
+          StepState.OFF, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.OFF, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
         ],
       },
     ],
@@ -27,10 +27,10 @@ const Puzzles: Array<Puzzle> = [
       {
         sample: "bd",
         steps: [
-          1, 0, 0, 0,
-          1, 0, 0, 0,
-          1, 0, 0, 0,
-          1, 0, 0, 0,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
         ],
       },
     ],
@@ -48,10 +48,10 @@ const Puzzles: Array<Puzzle> = [
       {
         sample: "ch",
         steps: [
-          1, 0, 2, 0,
-          1, 0, 2, 0,
-          1, 0, 2, 0,
-          1, 0, 2, 0,
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
         ],
       },
     ],
@@ -69,28 +69,28 @@ const Puzzles: Array<Puzzle> = [
       {
         sample: "sd",
         steps: [
-          0, 0, 0, 0,
-          1, 0, 0, 0,
-          0, 0, 0, 0,
-          1, 0, 0, 0,
+          StepState.OFF, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.OFF, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
         ],
       },
       {
         sample: "bd",
         steps: [
-          1, 0, 0, 0,
-          0, 0, 0, 0,
-          1, 0, 0, 0,
-          0, 0, 0, 0,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.OFF, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.OFF, StepState.OFF, StepState.OFF, StepState.OFF,
         ],
       },
       {
         sample: "ch",
         steps: [
-          1, 0, 1, 0,
-          1, 0, 1, 0,
-          1, 0, 1, 0,
-          1, 0, 1, 1,
+          StepState.ON, StepState.OFF, StepState.ON, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ON, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ON, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ON, StepState.ON,
         ],
       },
     ],

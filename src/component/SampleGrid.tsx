@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component, ComponentFactory, useEffect, useState } from 'react';
 
 import * as Tone from "tone";
 
@@ -23,9 +23,35 @@ import {
 } from '../Constants';
 import { Part, StepSequence, StepState } from '../Types';
 
+export function PatternRows(
+  { classSequence, ...remainingProps } : React.HTMLAttributes<HTMLElement> & {
+    classSequence: Array<string>,
+  }
+) {
+  const chunkedGrid: Array<Array<string>> = chunk(classSequence, GRID_WIDTH);
+  return <>
+    {
+    chunkedGrid.map((row: Array<string>, rowId: number) => (
+      <tr key={"row " + rowId} className="row">
+      {
+        row.map((cellClass: string, colId: number) => {
+          const stepId = rowId * GRID_WIDTH + colId;
+          return (
+            <td key={"col " + colId} className={cellClass}>
+              <Paper className="step" variant="outlined"/>
+            </td>
+          );
+        })
+      }
+      </tr>
+    ))
+    }
+  </>;
+};
+
 function PartGrid(
-  { parts, currentlyPlayingStep, onClickStep = undefined, ...remainingProps }: React.HTMLAttributes<HTMLTableElement> & {
-    parts: Array<Part>, currentlyPlayingStep: number | null, onClickStep: any,
+  { parts, currentlyPlayingStep, ...remainingProps }: React.HTMLAttributes<HTMLElement> & {
+    parts: Array<Part>, currentlyPlayingStep: number | null
   }
 )
 {
@@ -34,7 +60,15 @@ function PartGrid(
     steps
   } = parts[tabIndex];
   const truncatedSteps: StepSequence = take(steps, STEP_COUNT);
-  const chunkedGrid: Array<StepSequence> = chunk(truncatedSteps, 4);
+  const cellClasses: Array<string> = truncatedSteps.map((step: StepState, index: number) => {
+    let cellClass = "cell ";
+    cellClass += StepState[step] as string + " ";
+    if (index === currentlyPlayingStep) {
+      cellClass += "playing";
+    }
+    return cellClass;
+  });
+
   return (
     <table {...remainingProps} key={tabIndex}>
       <caption>
@@ -47,27 +81,9 @@ function PartGrid(
         </AppBar>
       </caption>
       <tbody>
-      {
-        chunkedGrid.map((row: StepSequence, rowId: number) => (
-          <tr key={"row " + rowId} className="row">
-          {
-            row.map((cell: StepState, colId: number) => {
-              let cellClass: string = "cell ";
-              cellClass += (cell ? "selected": "unselected");
-              if (rowId * GRID_WIDTH + colId === currentlyPlayingStep) {
-                cellClass += " playing";
-              }
-              const stepId = rowId * GRID_WIDTH + colId;
-              return (
-                <td key={"col " + colId} className={cellClass}>
-                  <Paper className="step" variant="outlined" onClick={() => onClickStep && onClickStep(tabIndex, stepId)}/>
-                </td>
-              );
-            })
-          }
-          </tr>
-        ))
-      }
+        <PatternRows
+          classSequence={cellClasses}
+        />
       </tbody>
     </table>
   );
@@ -91,7 +107,7 @@ const sampler = new Tone.Sampler({
 }).toDestination();
 
 export default function SampleGrid(
-  { parts, onClickStep = undefined, ...remainingProps }: React.HTMLAttributes<HTMLTableElement> & { parts: Array<Part>, onClickStep?: any }
+  { parts, ...remainingProps }: React.HTMLAttributes<HTMLElement> & { parts: Array<Part> }
 ) {
   useEffect(() => {
     Tone.Transport.bpm.value = DEFAULT_BPM;
@@ -129,7 +145,6 @@ export default function SampleGrid(
   return <>
     <PartGrid
       parts={parts}
-      onClickStep={onClickStep}
       currentlyPlayingStep={currentlyPlayingStep}
       {...remainingProps}
     />

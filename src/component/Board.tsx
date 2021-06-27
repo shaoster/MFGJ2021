@@ -15,15 +15,12 @@ export default function Board({G, ctx, moves}: BoardProps<GameState>) {
     playerParts,
     targetParts,
   } = G;
-  // TODO: Make more abstract.
-  const onClickStep = moves.chooseTarget ?? undefined;
   return <Grid container>
     <Grid item xs={2} className="current-parts">
       <h1>Current</h1>
       <SampleGrid
         parts={playerParts}
         className="sampler player"
-        onClickStep={onClickStep}
       />
     </Grid>
     <Grid item xs={2} className="target-parts">
@@ -52,6 +49,5 @@ export default function Board({G, ctx, moves}: BoardProps<GameState>) {
         className="schedule"
       />
     </Grid>
-
   </Grid>;
 };

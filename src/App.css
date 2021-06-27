@@ -89,8 +89,8 @@
 }
 
 
-.sampler .cell.selected .step {
- background-color: #000000; 
+.sampler .cell.ON .step {
+ background-color: #808080; 
 }
 
 .sampler .cell.playing {
@@ -101,12 +101,59 @@
   width: min-content;
 }
 
-/* Hand */
+/* Cards */
 
-.hand .card {
+.card {
   margin: 4px;
   min-width: 224px;
+  width: 224px;
 }
+
+.card h2 {
+  margin: 4px;
+}
+
+.card .MuiCardContent-root {
+  height: 256px;
+}
+
+.card .pattern {
+  height: 64px;
+  width: 64px;
+  border: 2px solid #000000;
+  border-radius: 4px;
+}
+
+.card .cell {
+  padding: 0px;
+  margin: 0px;
+}
+
+.card .cell .step {
+  width: 16px;
+  height: 16px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.card .cell.SET_OFF .step {
+  background-color: #ffffff;
+}
+
+.card .cell.SET_ON .step {
+  background-color: #808080;
+}
+
+.card .cell.SET_ACCENT .step {
+  background-color: #000000;
+}
+
+.card .cell.IGNORE .step {
+  background-color: transparent;
+  border-width: 0px;
+}
+
+
 
 /* Layout */
 

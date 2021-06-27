@@ -66,7 +66,7 @@ const Cards : {[key: string]: Card} = {
   fold: new CardImpl(
     {
       title: "Fold",
-      description: "Fold your shirt. Wouldn't this be easier if the shirt was flat?"
+      description: "Fold your shirt. Wouldn't this be easier if the shirt were laid flat?"
     },
     [
       StepAction.SET_OFF, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
