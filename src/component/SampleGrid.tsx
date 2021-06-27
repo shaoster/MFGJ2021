@@ -41,7 +41,7 @@ function PartGrid(
         <AppBar position="relative">
           <Tabs value={tabIndex} onChange={(_, newValue: number) => setTabIndex(newValue)} className="part-selector">
             {
-              parts.map((p: Part) => <Tab label={p.sample}/>)
+              parts.map((p: Part, index: number) => <Tab key={"tab " + index} label={p.sample}/>)
             }
           </Tabs>
         </AppBar>
@@ -49,7 +49,7 @@ function PartGrid(
       <tbody>
       {
         chunkedGrid.map((row: StepSequence, rowId: number) => (
-          <tr key={rowId} className="row">
+          <tr key={"row " + rowId} className="row">
           {
             row.map((cell: StepState, colId: number) => {
               let cellClass: string = "cell ";
@@ -59,7 +59,7 @@ function PartGrid(
               }
               const stepId = rowId * GRID_WIDTH + colId;
               return (
-                <td key={colId} className={cellClass}>
+                <td key={"col " + colId} className={cellClass}>
                   <Paper className="step" variant="outlined" onClick={() => onClickStep && onClickStep(tabIndex, stepId)}/>
                 </td>
               );
