@@ -14,8 +14,10 @@ export interface Puzzle {
   title: string;
   // The musical composition the player is aiming to replicate.
   targetParts: Array<Part>;
-  // The 
+  // The cards you start with in your hand.
   startingHand: Array<CardId>;
+  // Any initial state that cannot be removed.
+  playerSchedule?: Array<CardId>;
 }
 
 export interface Part {
@@ -36,12 +38,15 @@ export enum StepState {
 
 // Keep this serializable for easy state management.
 export interface GameState {
+  levelTitle: string;
   playerParts: Array<Part>;
   targetParts: Array<Part>;
   // The set of cards the player can choose from.
   playerHand: Array<CardId>;
   // The sequence of cards the player has chosen to play.
   playerSchedule: Array<CardId>;
+  // The number of unremovable cards at the beginning of the schedule.
+  unremovable: number;
 }
 
 // The card identifier is just a string for now. This keeps things serializable.
@@ -66,9 +71,14 @@ export interface Card extends CardFlavor {
 export type Pattern = Array<StepAction>;
 
 export enum StepAction {
-  SET_ACCENTED,
-  SET_ON,
-  SET_OFF,
+  INCREMENT,
+  DECREMENT,
+  ZERO,
+  MAX,
+  SHIFT_UP,
+  SHIFT_RIGHT,
+  SHIFT_DOWN,
+  SHIFT_LEFT,
   IGNORE,
 };
 

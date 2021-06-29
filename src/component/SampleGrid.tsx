@@ -1,4 +1,4 @@
-import React, { Component, ComponentFactory, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import * as Tone from "tone";
 
@@ -35,7 +35,6 @@ export function PatternRows(
       <tr key={"row " + rowId} className="row">
       {
         row.map((cellClass: string, colId: number) => {
-          const stepId = rowId * GRID_WIDTH + colId;
           return (
             <td key={"col " + colId} className={cellClass}>
               <Paper className="step" variant="outlined"/>
@@ -73,9 +72,20 @@ function PartGrid(
     <table {...remainingProps} key={tabIndex}>
       <caption>
         <AppBar position="relative">
-          <Tabs value={tabIndex} onChange={(_, newValue: number) => setTabIndex(newValue)} className="part-selector">
+          <Tabs
+            variant="fullWidth"
+            value={tabIndex}
+            onChange={(_, newValue: number) => setTabIndex(newValue)}
+            className="part-selector"
+          >
             {
-              parts.map((p: Part, index: number) => <Tab key={"tab " + index} label={p.sample}/>)
+              parts.map((p: Part, index: number) =>
+                <Tab
+                  key={"tab " + index}
+                  label={p.sample}
+                  style={{ minWidth: 48 }}
+                />
+              )
             }
           </Tabs>
         </AppBar>
@@ -129,8 +139,8 @@ export default function SampleGrid(
         }
         setCurrentlyPlayingStep(stepId);
         for (let part of parts) {
-          if (part.steps[stepId]) {
-            sampler.triggerAttackRelease(keyMapper[part.sample], "16n", time);
+          if (part.steps[stepId] !== StepState.OFF) {
+            sampler.triggerAttackRelease(keyMapper[part.sample], "16n", time, part.steps[stepId] / 2);
           }
         }
       },

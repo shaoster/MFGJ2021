@@ -5,6 +5,7 @@ import Cards from './Cards';
 
 import { STEP_COUNT } from './Constants';
 import { GameState, Part, StepSequence, StepState } from './Types';
+import { INVALID_MOVE } from 'boardgame.io/core';
 
 
 export const FLIP:string = "flip";
@@ -19,15 +20,20 @@ const SetupTurn = (turn: number) => {
       steps: EmptyPart()
     })
   );
-  return {
-    ...puzzle,
+  const newG = {
     // TBD: Start empty for now.
+    levelTitle: puzzle.title,
     playerParts,
-    playerHand: puzzle.startingHand,
-    playerSchedule: [],
+    targetParts: [...puzzle.targetParts],
+    playerHand: [...puzzle.startingHand],
+    playerSchedule: [...(puzzle.playerSchedule ?? [])],
     // Initially there are no active parts.
     activePart: null,
-  }
+    unremovable: puzzle.playerSchedule?.length ?? 0,
+  };
+  // Apply any fixed cards.
+  (puzzle.playerSchedule ?? []).forEach((cardId) => Cards[cardId].playCard(newG))
+  return newG;
 }
 
 export const CheckLevelComplete: (G: GameState) => boolean = (G: GameState) => {
@@ -54,6 +60,9 @@ export const MyGame: Game = {
       G.playerSchedule.push(cardId);
     },
     removeCard: (G: GameState, ctx: Ctx, playerScheduleSlot: number) => {
+      if (playerScheduleSlot < G.unremovable) {
+        return INVALID_MOVE;
+      }
       // Reset the turn and re-apply the cards in sequence. 
       const cleanState: GameState = SetupTurn(ctx.turn);
       
@@ -64,7 +73,7 @@ export const MyGame: Game = {
 
       // Re-play the remaining cards.
       for (const [replayedCardIndex, replayedCardId] of G.playerSchedule.entries()) {
-        if (replayedCardIndex === playerScheduleSlot) {
+        if (replayedCardIndex === playerScheduleSlot || replayedCardIndex < G.unremovable) {
           // Ignore this removed card.
           continue;
         }

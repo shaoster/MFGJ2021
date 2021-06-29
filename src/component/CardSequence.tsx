@@ -1,13 +1,16 @@
 import { Button, Card, CardActions, CardContent, Grid } from "@material-ui/core";
+import { times } from "lodash";
+import { ReactElement } from "react";
 
 import Cards from '../Cards';
+import { MAX_HAND_SIZE } from "../Constants";
 import { CardId, StepAction } from "../Types";
 import { PatternRows } from "./SampleGrid";
 
 export function ActionCard({
-  cardId, cardIndex, buttonLabel, onClickCard=undefined
+  cardId, cardIndex, buttonLabel, onClickCard
 }: {cardId: CardId, cardIndex: number, buttonLabel: string, onClickCard: any} & React.HTMLAttributes<HTMLDivElement>)
-{
+: ReactElement {
   const card = Cards[cardId];
   const maybeClassSequence = card.pattern?.map(
     (stepAction: StepAction) => "cell " + StepAction[stepAction] as string
@@ -15,6 +18,7 @@ export function ActionCard({
   return <Card variant="outlined" className="card">
     <CardContent>
       <h2>{card.title}</h2>
+      {card.sampleTarget && <span>{card.sampleTarget}</span>}
       {maybeClassSequence && 
         <table className="pattern">
           <PatternRows
@@ -36,20 +40,36 @@ export function ActionCard({
   </Card>;
 };
 
+export function EmptyCardSlot(): ReactElement {
+  return <Card variant="outlined" className="card empty">
+    <CardContent>
+      &nbsp;
+    </CardContent> 
+
+  </Card>
+}
+
 export default function CardSequence({
-  cards, buttonLabel, onClickCard=undefined, ...remainingProps
-}: {cards: Array<CardId>, buttonLabel: string, onClickCard: any} & React.HTMLAttributes<HTMLDivElement>)
-{
+  cards, buttonLabel, onClickCard, unremovable, ...remainingProps
+}: {
+  cards: Array<CardId>, buttonLabel: string, onClickCard: any, unremovable: number
+} & React.HTMLAttributes<HTMLDivElement>) {
   return <Grid container {...remainingProps}>
     {
-    cards.map((cardId: string, index: number) => (
+    cards.map((cardId: string, index: number) => 
       <ActionCard
         cardId={cardId}
         cardIndex={index}
         buttonLabel={buttonLabel}
-        onClickCard={onClickCard}
+        onClickCard={index >= unremovable ? onClickCard : undefined}
+        key={index}
       />
-    ))
+    )
+    }
+    {
+      times(MAX_HAND_SIZE - cards.length, () => null).map(
+        (_, index) => <EmptyCardSlot key={cards.length + index}/>
+      )
     }
   </Grid>;
 };

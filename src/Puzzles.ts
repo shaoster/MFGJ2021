@@ -35,10 +35,12 @@ const Puzzles: Array<Puzzle> = [
       },
     ],
     startingHand:  [
+      "mop",
       "sweep",
-      "sweep",
-      "sweep",
-      "sweep",
+      "vacuum",
+    ],
+    playerSchedule: [
+      "drop",
     ]
   },
   // 2
@@ -56,10 +58,13 @@ const Puzzles: Array<Puzzle> = [
       },
     ],
     startingHand: [
+      "bus",
       "rinse",
       "scour",
-      "rinse",
-      "scour",
+      "dry",
+    ],
+    playerSchedule: [
+      "feast",
     ],
   },
   // 3
@@ -79,25 +84,25 @@ const Puzzles: Array<Puzzle> = [
         sample: "bd",
         steps: [
           StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
-          StepState.OFF, StepState.OFF, StepState.OFF, StepState.OFF,
           StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
-          StepState.OFF, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
         ],
       },
       {
         sample: "ch",
         steps: [
-          StepState.ON, StepState.OFF, StepState.ON, StepState.OFF,
-          StepState.ON, StepState.OFF, StepState.ON, StepState.OFF,
-          StepState.ON, StepState.OFF, StepState.ON, StepState.OFF,
-          StepState.ON, StepState.OFF, StepState.ON, StepState.ON,
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
         ],
       },
     ],
     startingHand: [
-      "roomba",
-      "dishwasher",
-      "laundryBot"
+      "laundry",
+      "floor",
+      "dishes",
     ],
   },
 ];

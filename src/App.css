@@ -51,17 +51,10 @@
   width: min-content;
 }
 
-
-/*
-.sampler .MuiTab-root {
-  min-width: 57px;
+.sampler .part-selector {
+  /* TODO: Fix this to match the table width. */
+  width: 254px;
 }
-
-.sampler .MuiTab-wrapper {
-  min-width: 57px;
-}
-
-*/
 
 .sampler .row {
   margin: 0px 0px 0px 0px;
@@ -93,6 +86,11 @@
  background-color: #808080; 
 }
 
+.sampler .cell.ACCENT .step {
+ background-color: #000000; 
+}
+
+
 .sampler .cell.playing {
   background-color: #61dafb;
 }
@@ -107,6 +105,8 @@
   margin: 4px;
   min-width: 224px;
   width: 224px;
+  height: 320px;
+  text-align: center;
 }
 
 .card h2 {
@@ -114,7 +114,7 @@
 }
 
 .card .MuiCardContent-root {
-  height: 256px;
+  height: 232px;
 }
 
 .card .pattern {
@@ -122,11 +122,14 @@
   width: 64px;
   border: 2px solid #000000;
   border-radius: 4px;
+  margin: auto;
 }
 
 .card .cell {
   padding: 0px;
   margin: 0px;
+  border: 1px solid;
+  border-radius: 4px;
 }
 
 .card .cell .step {
@@ -134,26 +137,85 @@
   height: 16px;
   margin: 0px;
   padding: 0px;
+  background-size: cover;
+  border: 0px;
+  background-color: transparent;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
 }
 
-.card .cell.SET_OFF .step {
-  background-color: #ffffff;
+.card .cell.INCREMENT .step {
+  background-image: url("icons/add_black_24dp.svg");
 }
 
-.card .cell.SET_ON .step {
-  background-color: #808080;
+.card .cell.DECREMENT .step {
+  background-image: url("icons/remove_black_24dp.svg");
 }
 
-.card .cell.SET_ACCENT .step {
+@keyframes shift-up {
+  0% {transform: translateY(20px)}
+  40% {transform: translateY(0px)}
+  100% {transform: translateY(0px)}
+}
+.card .cell.SHIFT_UP .step {
+  background-image: url("icons/arrow_upward_black_24dp.svg");
+  animation-name: shift-up;
+}
+
+@keyframes shift-right {
+  0% {transform: translateX(-20px)}
+  40% {transform: translateY(0px)}
+  100% {transform: translateY(0px)}
+}
+.card .cell.SHIFT_RIGHT .step {
+  background-image: url("icons/arrow_forward_black_24dp.svg");
+  animation-name: shift-right;
+}
+
+@keyframes shift-down {
+  0% {transform: translateY(-20px)}
+  40% {transform: translateY(0px)}
+  100% {transform: translateY(0px)}
+}
+.card .cell.SHIFT_DOWN .step {
+  background-image: url("icons/arrow_downward_black_24dp.svg");
+  animation-name: shift-down;
+}
+
+@keyframes shift-left {
+  0% {transform: translateX(20px)}
+  40% {transform: translateY(0px)}
+  100% {transform: translateY(0px)}
+}
+.card .cell.SHIFT_LEFT .step {
+  background-image: url("icons/arrow_back_black_24dp.svg");
+  animation-name: shift-left;
+}
+
+/* The border color for MAX needs to accomodate the fill color. */
+.card .cell.MAX {
+  background-color: #000000;
+}
+.card .cell.MAX .step {
   background-color: #000000;
 }
 
-.card .cell.IGNORE .step {
+.card .cell.ZERO .step {
+  background-color: #ffffff;
+}
+
+.card .cell.IGNORE {
   background-color: transparent;
   border-width: 0px;
 }
 
+.card p {
+  text-align: left;
+}
 
+.card button {
+  margin: auto;
+}
 
 /* Layout */
 
