@@ -109,6 +109,10 @@
   text-align: center;
 }
 
+.card.empty {
+  background-color: #f0f0f0;
+}
+
 .card h2 {
   margin: 4px;
 }

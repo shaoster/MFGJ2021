@@ -264,9 +264,6 @@ const Cards : {[key: string]: Card} = {
     ],
     "ch"
   )
-
-
-
 };
 
 export default Cards;
