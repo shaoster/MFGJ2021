@@ -86,7 +86,6 @@ export default function Board({
       }
     }
     if (currentlyPlayingStep >= (STEP_COUNT * TRACK_BARS) - 1) {
-      // We're done with this playthrough.
       setIsPlaying(false);
       setCurrentTime(undefined);
       setCurrentlyPlayingStep(null);
@@ -117,6 +116,7 @@ export default function Board({
         sequencer.start();
       }
     ).toDestination();
+    player.loop = false;
     player.autostart = true;
   };
   /*
