@@ -73,7 +73,6 @@ class CardImpl implements Card {
       if (part.sample !== this.sampleTarget) {
         continue;
       }
-      console.log(this.pattern);
       if (this.pattern) {
         ApplyPatternToPart(this.pattern, part);
       }

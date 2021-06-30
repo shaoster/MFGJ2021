@@ -21,18 +21,15 @@ const SetupTurn = (turn: number) => {
     })
   );
   const newG = {
-    // TBD: Start empty for now.
-    levelTitle: puzzle.title,
+    // Immutable stuff.
+    ...puzzle,
+    // Changing stuff.
     playerParts,
-    targetParts: [...puzzle.targetParts],
     playerHand: [...puzzle.startingHand],
-    playerSchedule: [...(puzzle.playerSchedule ?? [])],
-    // Initially there are no active parts.
-    activePart: null,
-    unremovable: puzzle.playerSchedule?.length ?? 0,
+    playerSchedule: [...(puzzle.startingSchedule ?? [])],
   };
   // Apply any fixed cards.
-  (puzzle.playerSchedule ?? []).forEach((cardId) => Cards[cardId].playCard(newG))
+  (puzzle.startingSchedule ?? []).forEach((cardId) => Cards[cardId].playCard(newG))
   return newG;
 }
 
@@ -60,7 +57,7 @@ export const MyGame: Game = {
       G.playerSchedule.push(cardId);
     },
     removeCard: (G: GameState, ctx: Ctx, playerScheduleSlot: number) => {
-      if (playerScheduleSlot < G.unremovable) {
+      if (playerScheduleSlot < G.startingSchedule.length) {
         return INVALID_MOVE;
       }
       // Reset the turn and re-apply the cards in sequence. 
@@ -73,7 +70,7 @@ export const MyGame: Game = {
 
       // Re-play the remaining cards.
       for (const [replayedCardIndex, replayedCardId] of G.playerSchedule.entries()) {
-        if (replayedCardIndex === playerScheduleSlot || replayedCardIndex < G.unremovable) {
+        if (replayedCardIndex === playerScheduleSlot || replayedCardIndex < G.startingSchedule.length) {
           // Ignore this removed card.
           continue;
         }

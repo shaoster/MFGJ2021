@@ -234,3 +234,9 @@
 .hand-area {
   min-width: 720px;
 }
+
+h1 {
+  height: 36px;
+  margin: 0px;
+  margin-bottom: 16px;
+}

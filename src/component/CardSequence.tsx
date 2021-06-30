@@ -21,9 +21,11 @@ export function ActionCard({
       {card.sampleTarget && <span>{card.sampleTarget}</span>}
       {maybeClassSequence && 
         <table className="pattern">
-          <PatternRows
-            classSequence={maybeClassSequence}
-          />
+          <tbody>
+            <PatternRows
+              classSequence={maybeClassSequence}
+            />
+          </tbody>
         </table>
       }
       <p>{card.description}</p>
