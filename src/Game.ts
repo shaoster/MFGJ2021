@@ -80,6 +80,9 @@ export const MyGame: Game = {
       }
       return cleanState;
     },
+    clearSchedule: (G: GameState, ctx: Ctx) => {
+      return SetupTurn(ctx.turn);
+    },
     commitSchedule: (G: GameState, ctx: Ctx) => {
       if (CheckLevelComplete(G)) {
         ctx.events?.endTurn?.();

@@ -168,7 +168,7 @@ export default function Board({
       </Grid>
     </Grid>
     <Grid item xs={6} className="hand-area" key="hand-area">
-      <h1>To-Do</h1>
+      <h3>To-Do</h3>
       <CardSequence
         cards={playerHand}
         onClickCard={(i: number) => {
@@ -181,7 +181,7 @@ export default function Board({
       />
     </Grid>
     <Grid item xs={6} className="schedule-area" key="schedule-area">
-      <h1>Schedule</h1>
+      <h3>Schedule</h3>
       <CardSequence
         cards={playerSchedule}
         onClickCard={(i: number) => {
@@ -194,6 +194,8 @@ export default function Board({
       />
     </Grid>
     <Grid item xs={12} className="next-day" key="next-day">
+      <Button variant="contained" onClick={moves.clearSchedule}>Clear Schedule</Button>
+      &nbsp;
       <ContinueButton G={G} onClick={moves.commitSchedule}/>
     </Grid>
   </Grid>;
