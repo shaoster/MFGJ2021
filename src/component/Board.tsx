@@ -16,6 +16,7 @@ import React, { useEffect, useState } from 'react';
 import { DEFAULT_BPM, STEP_COUNT, TRACK_BARS } from '../Constants';
 import * as Tone from 'tone';
 import { Time } from 'tone/build/esm/core/type/Units';
+import LevelDescription from './LevelDescription';
 
 function ContinueButton({G, onClick} : {G: GameState, onClick: any} ) {
   const enabled = CheckLevelComplete(G);
@@ -75,7 +76,6 @@ export default function Board({
     if (currentlyPlayingStep === null) {
       return;
     }
-    console.log(currentlyPlayingStep);
     setLastPlayedStep(currentlyPlayingStep);
     // stepIndex selects from our step sequencer, which is only 16th notes on repeat.
     const stepIndex = currentlyPlayingStep % STEP_COUNT;
@@ -119,56 +119,56 @@ export default function Board({
     player.loop = false;
     player.autostart = true;
   };
-  /*
-    <Grid item xs={1} className="target-parts">
-      <h1>Goal</h1>
-      <SampleGrid
-        parts={parts}
-        className="sampler goal"
-      />
-    </Grid>
-  */
-  return <Grid container>
-    <Grid item xs={12} className="level-title">
+  return <Grid container className="game-board" alignItems="center" justify="center">
+    <LevelDescription
+      turn={ctx.turn}
+      onDismiss={() => {
+        // On a new level, play the target first.
+        setPlayerActive(false);
+        play();
+      }}
+    />
+    <Grid item xs={12} className="title" key="title">
       <h1>{ctx.turn}: {title}</h1>
     </Grid>
-    <Grid item xs={1} className="current-parts">
-      <Button
-        variant="contained"
-        disabled={playerActive}
-        onClick={() => {
-          setPlayerActive(true);
-          play();
-        }}
-      >
-        Current
-      </Button>
-      <SampleGrid
-        parts={playerParts}
-        currentlyPlayingStep={playerActive ? currentlyPlayingStep : null}
-        className="sampler player"
-      />
+    <Grid container className="parts" justify="center" key="parts">
+      <Grid item xs={1} className="current-parts">
+        <SampleGrid
+          parts={playerParts}
+          currentlyPlayingStep={playerActive ? currentlyPlayingStep : null}
+          className="sampler player"
+        />
+        <Button
+          variant="contained"
+          disabled={playerActive}
+          onClick={() => {
+            setPlayerActive(true);
+            play();
+          }}
+        >
+          Current
+        </Button>
+      </Grid>
+      <Grid item xs={1} className="target-parts">
+        <SampleGrid
+          parts={targetParts}
+          currentlyPlayingStep={!playerActive ? currentlyPlayingStep : null}
+          className="sampler player"
+        />
+        <Button
+          variant="contained"
+          disabled={!playerActive}
+          onClick={() => {
+            setPlayerActive(false);
+            play();
+          }}
+        >
+          Target
+        </Button>
+      </Grid>
     </Grid>
-    <Grid item xs={1} className="current-parts">
-      <Button
-        variant="contained"
-        disabled={!playerActive}
-        onClick={() => {
-          setPlayerActive(false);
-          play();
-        }}
-      >
-        Target
-      </Button>
-      <SampleGrid
-        parts={targetParts}
-        currentlyPlayingStep={!playerActive ? currentlyPlayingStep : null}
-        className="sampler player"
-      />
-    </Grid>
-    <Grid item xs={9}/>
-    <Grid item xs={12} className="hand-area">
-      <h1>Hand</h1>
+    <Grid item xs={6} className="hand-area" key="hand-area">
+      <h1>To-Do</h1>
       <CardSequence
         cards={playerHand}
         onClickCard={(i: number) => {
@@ -180,8 +180,8 @@ export default function Board({
         unremovable={0}
       />
     </Grid>
-    <Grid item xs={12} className="schedule-area">
-      <h1>Schedule &nbsp; <ContinueButton G={G} onClick={moves.commitSchedule}/></h1>
+    <Grid item xs={6} className="schedule-area" key="schedule-area">
+      <h1>Schedule</h1>
       <CardSequence
         cards={playerSchedule}
         onClickCard={(i: number) => {
@@ -192,6 +192,9 @@ export default function Board({
         className="schedule"
         unremovable={G.startingSchedule.length}
       />
+    </Grid>
+    <Grid item xs={12} className="next-day" key="next-day">
+      <ContinueButton G={G} onClick={moves.commitSchedule}/>
     </Grid>
   </Grid>;
 }

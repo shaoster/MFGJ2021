@@ -75,9 +75,7 @@ export const MyGame: Game = {
           continue;
         }
         const replayedCard = Cards[replayedCardId];
-        console.log(cleanState);
         replayedCard.playCard(cleanState);
-        console.log(cleanState);
         cleanState.playerSchedule.push(replayedCardId);
       }
       return cleanState;

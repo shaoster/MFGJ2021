@@ -101,23 +101,45 @@
 
 /* Cards */
 
-.card {
-  margin: 4px;
-  min-width: 224px;
-  width: 224px;
+div.sequence {
+  margin: auto;
+  display: flex;
+  width: 300px;
   height: 320px;
+  background-color: #e0e0e0;
+  border: 2px solid #000000;
+  border-radius: 4px;
+}
+
+div.card-slot {
+  margin-top: -4px;
+  margin-left: -8px;
+  min-width: 56px;
+  max-width: 56px;
+  flex-shrink: initial;
+  display: flex;
+  flex-direction: row;
+  overflow: visible;
+}
+
+div.card {
+  min-width: 220px;
+  width: 220px;
+  height: 320px;
+  border: 1px solid #000000;
   text-align: center;
 }
 
-.card.empty {
+div.card.empty {
   background-color: #f0f0f0;
 }
 
 .card h2 {
-  margin: 4px;
+  margin: 0px;
 }
 
 .card .MuiCardContent-root {
+  padding: 8px;
   height: 232px;
 }
 
@@ -214,6 +236,8 @@
 }
 
 .card p {
+  margin: 0px;
+  margin-top: 4px;
   text-align: left;
 }
 
@@ -221,18 +245,99 @@
   margin: auto;
 }
 
+@keyframes play-card {
+  0% {
+    opacity: 1.0;
+  }
+  100% {
+    opacity: 0.0;
+  }
+}
+
+div.card-slot.card-exit {
+  animation: play-card 0.2s linear forwards;
+}
+
+@keyframes displace-card {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(172px) rotate(1deg);
+  }
+}
+
+div.card-displace {
+  animation: displace-card 0.2s linear forwards;
+}
+
+div.card-stay-displaced {
+  transform: translateX(172px) rotate(1deg);
+}
+
+@keyframes hide-card {
+  0% {
+    transform: translateX(172px) rotate(1deg);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+div.card-hide {
+  animation: hide-card 0.2s linear forwards;
+}
+
+div.card-stay-hidden {
+  transform: translateX(0px);
+}
+
+/* Event */
+.event-modal {
+  height: 100%;
+  width: 100%;
+  padding: auto;
+}
+
+.event-body {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  text-align: center;
+  vertical-align: middle;
+}
+
+
 /* Layout */
+.game-board {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.parts {
+  width: 100%;
+  display: flex;
+  left: 0px;
+}
 
 .current-parts {
+  padding: 0px;
   min-width: min-content;
+}
+
+.title h1 {
+  height: 48px;
+  margin-bottom: 32px;
 }
 
 .target-parts {
   min-width: min-content;
-}
-
-.hand-area {
-  min-width: 720px;
+  width: fit-content;
 }
 
 h1 {
@@ -240,3 +345,16 @@ h1 {
   margin: 0px;
   margin-bottom: 16px;
 }
+
+div.next-day {
+  margin-top: 16px;
+}
+
+.hand-area {
+  min-width: 650px;
+}
+
+.schedule-area {
+  min-width: 650px;
+}
+
