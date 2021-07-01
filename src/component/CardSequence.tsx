@@ -66,17 +66,14 @@ export default function CardSequence({
 }: {
   cards: Array<CardId>, buttonLabel: string, onClickCard: any, unremovable: number
 } & React.HTMLAttributes<HTMLDivElement>) {
-  const [selectedCard, setSelectedCard] = useState(cards.length - 1);
-  const [lastSelectedCard, setLastSelectedCard] = useState(0);
+  const [selectedCard, setSelectedCard] = useState(0);
   const [cardClasses, setCardClasses] = useState(BASIC_CARD_CLASSES);
+  const [lastCardCount, setLastCardCount] = useState(cards.length);
   useEffect(() => {
-    if (cards.length === 0) {
+    if (cards.length !== lastCardCount) {
       setCardClasses(BASIC_CARD_CLASSES);
-      setLastSelectedCard(0);
       setSelectedCard(0);
-      return;
-    }
-    if (lastSelectedCard === selectedCard) {
+      setLastCardCount(cards.length);
       return;
     }
     // We need to do a little bit of state machine magic to get the right animations.
@@ -93,8 +90,7 @@ export default function CardSequence({
       newClasses[i] = "card-" + newClass;
     }
     setCardClasses(newClasses);
-    setLastSelectedCard(selectedCard);
-  }, [cards, selectedCard, lastSelectedCard]);
+  }, [cards, lastCardCount, selectedCard]);
 
   const clickCard = (index: number) => {
     if (index >= unremovable) {
