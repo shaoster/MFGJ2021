@@ -114,8 +114,8 @@ div.sequence {
 div.card-slot {
   margin-top: -4px;
   margin-left: -8px;
-  min-width: 56px;
-  max-width: 56px;
+  min-width: 28px;
+  max-width: 36px;
   flex-shrink: initial;
   display: flex;
   flex-direction: row;
@@ -263,32 +263,33 @@ div.card-slot.card-exit {
     transform: translateX(0px);
   }
   100% {
-    transform: translateX(172px) rotate(1deg);
+    transform: translateX(-192px) rotate(-1deg);
   }
 }
 
 div.card-displace {
   animation: displace-card 0.2s linear forwards;
+  opacity: 0.8;
 }
 
 div.card-stay-displaced {
-  transform: translateX(172px) rotate(1deg);
+  transform: translateX(-192px) rotate(-1deg);
 }
 
-@keyframes hide-card {
+@keyframes show-card {
   0% {
-    transform: translateX(172px) rotate(1deg);
+    transform: translateX(-192px) rotate(-1deg);
   }
   100% {
     transform: translateX(0px);
   }
 }
 
-div.card-hide {
-  animation: hide-card 0.2s linear forwards;
+div.card-show {
+  animation: show-card 0.2s linear forwards;
 }
 
-div.card-stay-hidden {
+div.card-stay-shown {
   transform: translateX(0px);
 }
 

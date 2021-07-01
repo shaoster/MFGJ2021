@@ -56,6 +56,7 @@ export default function Board({
   } = G;
   useEffect(() => {
     Tone.Transport.bpm.value = DEFAULT_BPM;
+    Tone.start();
     Tone.Transport.start();
     return () => {
       Tone.Transport.stop();

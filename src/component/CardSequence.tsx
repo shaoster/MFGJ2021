@@ -9,10 +9,10 @@ import { CardId, StepAction } from "../Types";
 import { PatternRows } from "./SampleGrid";
 
 export function ActionCard({
-  cardId, cardIndex, buttonLabel, onClickCard, onClickEnabled, setSelectedCard, isSelectedCard,
+  cardId, cardIndex, buttonLabel, onClickCard, onClickEnabled, viewCard
 }: {
   cardId: CardId, cardIndex: number, buttonLabel: string, onClickCard: any,
-  onClickEnabled: boolean, setSelectedCard: any, isSelectedCard: boolean
+  onClickEnabled: boolean, viewCard: any
 } & React.HTMLAttributes<HTMLDivElement>) : ReactElement
 {
   const card = Cards[cardId];
@@ -23,9 +23,7 @@ export function ActionCard({
   return <Card
     variant="outlined"
     className="card"
-    onClick={() => {
-      setSelectedCard(isSelectedCard ? 0 : cardIndex)
-    }}
+    onClick={viewCard}
   >
     <CardContent>
       <h2>{card.title}</h2>
@@ -61,7 +59,7 @@ export function EmptyCardSlot(): ReactElement {
   </Card>
 }
 
-const BASIC_CARD_CLASSES = range(MAX_HAND_SIZE).map((i) => "card-hide");
+const BASIC_CARD_CLASSES = range(MAX_HAND_SIZE).map((i) => "card-show");
 
 export default function CardSequence({
   cards, buttonLabel, onClickCard, unremovable, className, ...remainingProps
@@ -85,29 +83,12 @@ export default function CardSequence({
     const newClasses: Array<string> = [...BASIC_CARD_CLASSES]
     for (let i = 0; i < MAX_HAND_SIZE; i++) {
       const computeClass: () => string = () => {
-        if (selectedCard > 0) {
-          if (i < selectedCard) {
-            // To the left of the action. Use hide-card.
-            if ((i < lastSelectedCard || lastSelectedCard === 0)) {
-              return "stay-hidden";
-            } else {
-              return "hide";
-            }
-          } else {
-            if (lastSelectedCard > 0 && i >= lastSelectedCard) {
-              return "stay-displaced";
-            } else {
-              return "displace";
-            }
-          }
+        if (i < selectedCard) {
+          return "displace";
         } else {
-          if (i < lastSelectedCard) {
-            return "stay-hidden";
-          } else {
-            return "hide";
-          }
+          return "show";
         }
-      };
+      }
       const newClass = computeClass();
       newClasses[i] = "card-" + newClass;
     }
@@ -133,8 +114,12 @@ export default function CardSequence({
             buttonLabel={buttonLabel}
             onClickCard={() => clickCard(index)}
             onClickEnabled={index >= unremovable}
-            setSelectedCard={setSelectedCard}
-            isSelectedCard={index === selectedCard}
+            viewCard={() => setSelectedCard(
+              index !== selectedCard ? index : (
+                index < cards.length - 1 ? 
+                  index + 1 : 0 
+              )
+            )}
           />
         </div>
       </CSSTransition>
