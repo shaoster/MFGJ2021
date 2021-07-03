@@ -37,6 +37,11 @@
   }
 }
 
+body {
+  background-image: url("icons/repeatingbgsmall.png");
+  background-repeat: repeat;
+}
+
 /* Sampler */
 
 .sampler {
@@ -81,6 +86,9 @@
   background-color: #61dafb;
 }
 
+.sampler .cell.OFF .step {
+ background-color: transparent; 
+}
 
 .sampler .cell.ON .step {
  background-color: #808080; 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import {
-  AppBar,
   Paper,
   Tab,
   Tabs,
@@ -66,24 +65,22 @@ function PartGrid(
   return (
     <table {...remainingProps} key={tabIndex}>
       <caption>
-        <AppBar position="relative">
-          <Tabs
-            variant="fullWidth"
-            value={tabIndex}
-            onChange={(_, newValue: number) => setTabIndex(newValue)}
-            className="part-selector"
-          >
-            {
-              parts.map((p: Part, index: number) =>
-                <Tab
-                  key={"tab " + index}
-                  label={p.sample}
-                  style={{ minWidth: 48 }}
-                />
-              )
-            }
-          </Tabs>
-        </AppBar>
+        <Tabs
+          variant="fullWidth"
+          value={tabIndex}
+          onChange={(_, newValue: number) => setTabIndex(newValue)}
+          className="part-selector"
+        >
+          {
+            parts.map((p: Part, index: number) =>
+              <Tab
+                key={"tab " + index}
+                label={p.sample}
+                style={{ minWidth: 48 }}
+              />
+            )
+          }
+        </Tabs>
       </caption>
       <tbody>
         <PatternRows
