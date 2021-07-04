@@ -45,7 +45,7 @@ body {
 /* Sampler */
 
 .sampler {
-  margin: 4px;
+  margin: auto;
   padding: 0px;
   border: 2px solid;
   width: min-content;
@@ -58,7 +58,7 @@ body {
 
 .sampler .part-selector {
   /* TODO: Fix this to match the table width. */
-  width: 254px;
+  width: 346px;
 }
 
 .sampler .row {
@@ -69,22 +69,25 @@ body {
 .sampler .step {
   padding: 0px;
   margin: 4px;
-  width: 48px;
-  height: 48px;
+  width: 72px;
+  height: 72px;
   border-width: 2px;
   border-radius: 4px;
   border-spacing: 0px;
 }
 
-.sampler  .cell {
+.sampler .cell {
   margin: 0px;
   padding: 0px;
   border-radius: 4px;
+  opacity: 0.9;
 }
 
+/*
 .sampler .cell:hover {
   background-color: #61dafb;
 }
+*/
 
 .sampler .cell.OFF .step {
  background-color: transparent; 
@@ -105,6 +108,23 @@ body {
 
 .sampler .caption {
   width: min-content;
+}
+
+.sampler tbody {
+  background-size: cover;
+  background-color: #e0e0e0;
+}
+
+.sampler tbody.sd {
+  background-image: url('icons/iconsnare.png');
+}
+
+.sampler tbody.bd {
+  background-image: url('icons/iconbass.png');
+}
+
+.sampler tbody.ch {
+  background-image: url('icons/iconhihat.png');
 }
 
 /* Cards */
@@ -319,6 +339,7 @@ div.card-stay-shown {
 
 
 /* Layout */
+
 .game-board {
   position: absolute;
   left: 50%;
@@ -326,6 +347,45 @@ div.card-stay-shown {
   transform: translateY(-50%) translateX(-50%);
   text-align: center;
   vertical-align: middle;
+}
+
+.portrait {
+  border-radius: 4px;
+  min-width: 180px;
+  min-height: 480px;
+  width: 240px;
+  height: 600px;
+  background-image: url("icons/placeholder.svg");
+  background-size: cover;
+  margin: auto;
+}
+
+div.progress-bar {
+  height: 18px !important;
+  border-radius: 4px;
+}
+
+div.start-stop {
+  margin: 0px;
+  margin-top: 8px;
+  height: 40px;
+}
+
+div.start-stop button {
+  background-size: cover;
+  background-color: transparent;
+  min-width: 24px;
+  min-height: 24px;
+  width: 36px;
+  height: 36px;
+}
+
+button.play {
+  background-image: url("icons/play_arrow_black_24dp.svg");
+}
+
+button.stop {
+  background-image: url("icons/stop_black_24dp.svg");
 }
 
 .parts {
@@ -349,6 +409,17 @@ div.card-stay-shown {
   width: fit-content;
 }
 
+button.selected {
+  border: 4px solid #61dafb;
+}
+
+div.dialogue {
+  margin-top: 16px;
+  padding: 4px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
 h1 {
   height: 36px;
   margin: 0px;
@@ -360,10 +431,9 @@ div.next-day {
 }
 
 .hand-area {
-  min-width: 384px;
+  min-width: 300px;
 }
 
 .schedule-area {
-  min-width: 384px;
+  min-width: 300px;
 }
-

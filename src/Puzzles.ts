@@ -9,7 +9,7 @@ const Puzzles: Array<Puzzle> = [
       "laundry laundry laundry",
       "laundry laundry"
     ],
-    levelTrack: `${LT_PREFIX}dummy116bpm.ogg`,
+    levelTrack: `${LT_PREFIX}unmixed_1_1_88_bpm.ogg`,
     targetParts: [
       {
         sample: "sd",
@@ -34,7 +34,7 @@ const Puzzles: Array<Puzzle> = [
       "floor sweepy sweepy floor",
       "sweepy sweepy floor floor"
     ],
-    levelTrack: `${LT_PREFIX}dummy116bpm.ogg`,
+    levelTrack: `${LT_PREFIX}unmixed_1_2_88_bpm.ogg`,
     targetParts: [
       {
         sample: "bd",
@@ -62,7 +62,7 @@ const Puzzles: Array<Puzzle> = [
       "dishy dishy wishy wash",
       "washa dishy dish dish"
     ],
-    levelTrack: `${LT_PREFIX}dummy116bpm.ogg`,
+    levelTrack: `${LT_PREFIX}unmixed_1_3_88_bpm.ogg`,
     targetParts: [
       {
         sample: "ch",
@@ -91,7 +91,7 @@ const Puzzles: Array<Puzzle> = [
       "every every thing thing",
       "all at once"
     ],
-    levelTrack: `${LT_PREFIX}dummy116bpm.ogg`,
+    levelTrack: `${LT_PREFIX}unmixed_test_song_176_bpm.ogg`,
     targetParts: [
       {
         sample: "sd",

@@ -50,7 +50,8 @@ function PartGrid(
 {
   const [tabIndex, setTabIndex] = useState(0);
   const {
-    steps
+    steps,
+    sample,
   } = parts[tabIndex];
   const truncatedSteps: StepSequence = take(steps, STEP_COUNT);
   const cellClasses: Array<string> = truncatedSteps.map((step: StepState, index: number) => {
@@ -82,7 +83,7 @@ function PartGrid(
           }
         </Tabs>
       </caption>
-      <tbody>
+      <tbody className={sample}>
         <PatternRows
           classSequence={cellClasses}
         />

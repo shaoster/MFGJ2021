@@ -13,10 +13,12 @@ import { GameState, StepState } from '../Types';
 import { CheckLevelComplete } from '../Game';
 import { range } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { DEFAULT_BPM, STEP_COUNT, TRACK_BARS } from '../Constants';
+import { DEFAULT_BPM, SECONDS_PER_STEP, STEP_COUNT, TRACK_BARS } from '../Constants';
 import * as Tone from 'tone';
 import { Time } from 'tone/build/esm/core/type/Units';
 import LevelDescription from './LevelDescription';
+import TrackProgress from './TrackProgress';
+import { Player, Sequence } from 'tone';
 
 function ContinueButton({G, onClick} : {G: GameState, onClick: any} ) {
   const enabled = CheckLevelComplete(G);
@@ -67,6 +69,8 @@ export default function Board({
   const [currentTime, setCurrentTime] = useState<Time | undefined>(undefined);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playerActive, setPlayerActive] = useState(true);
+  const [player, setPlayer] = useState<Player | null>(null);
+  const [sequence, setSequence] = useState<Sequence | null>(null);
   useEffect(() => {
     if (lastPlayedStep === currentlyPlayingStep) {
       return;
@@ -75,6 +79,9 @@ export default function Board({
       return;
     }
     if (currentlyPlayingStep === null) {
+      return;
+    }
+    if (!isPlaying) {
       return;
     }
     setLastPlayedStep(currentlyPlayingStep);
@@ -90,9 +97,11 @@ export default function Board({
       setIsPlaying(false);
       setCurrentTime(undefined);
       setCurrentlyPlayingStep(null);
+      setPlayer(null);
+      setSequence(null);
       return;
     }
-  }, [currentTime, playerParts, targetParts, currentlyPlayingStep, lastPlayedStep, playerActive])
+  }, [currentTime, playerParts, targetParts, currentlyPlayingStep, lastPlayedStep, playerActive, isPlaying])
   const onStep = (time: Time, stepId: number) => {
     // This is a bit subtle: time has to be set before step.
     // Only step triggers the sample side effect.
@@ -108,6 +117,7 @@ export default function Board({
       range(STEP_COUNT * TRACK_BARS),
       "16n"
     );
+    setSequence(sequencer);
     const player = new Tone.Player(
       levelTrack,
       () => {
@@ -117,9 +127,23 @@ export default function Board({
         sequencer.start();
       }
     ).toDestination();
+    setPlayer(player);
     player.loop = false;
     player.autostart = true;
   };
+  const stop = () => {
+    if (!isPlaying) {
+      return;
+    }
+    setCurrentTime(undefined);
+    setLastPlayedStep(null);
+    setCurrentlyPlayingStep(null);
+    sequence?.stop();
+    setSequence(null);
+    player?.stop();
+    setPlayer(null);
+    setIsPlaying(false);
+  }
   return <Grid container className="game-board" alignItems="center" justify="center">
     <LevelDescription
       turn={ctx.turn}
@@ -129,46 +153,87 @@ export default function Board({
         play();
       }}
     />
-    <Grid item xs={12} className="title" key="title">
-      <h1>{ctx.turn}: {title}</h1>
+    <Grid item xs={3} className="pc-area portrait-area" key="pc-area">
+      <div className="pc portrait">&nbsp;</div>
     </Grid>
-    <Grid container className="parts" justify="center" key="parts">
-      <Grid item xs={1} className="current-parts">
-        <SampleGrid
-          parts={playerParts}
-          currentlyPlayingStep={playerActive ? currentlyPlayingStep : null}
-          className="sampler player"
-        />
-        <Button
-          variant="contained"
-          disabled={playerActive}
-          onClick={() => {
-            setPlayerActive(true);
-            play();
-          }}
-        >
-          Current
-        </Button>
-      </Grid>
-      <Grid item xs={1} className="target-parts">
-        <SampleGrid
-          parts={targetParts}
-          currentlyPlayingStep={!playerActive ? currentlyPlayingStep : null}
-          className="sampler player"
-        />
-        <Button
-          variant="contained"
-          disabled={!playerActive}
-          onClick={() => {
-            setPlayerActive(false);
-            play();
-          }}
-        >
-          Target
-        </Button>
+    <Grid item xs={6} className="parts-area">
+      <Grid container className="parts" justify="center" key="parts">
+        <Grid item xs={12} key="title">
+          <h1>{ctx.turn}: {title}</h1>
+        </Grid>
+        <Grid item xs={1} key="time-elapsed">
+          {isPlaying && 
+            <span>
+              {((currentlyPlayingStep ?? 0)  * SECONDS_PER_STEP).toFixed(1)}
+            </span>
+          }
+        </Grid>
+        <Grid item xs={10} key="progress">
+          <TrackProgress progress={currentlyPlayingStep} max={TRACK_BARS * STEP_COUNT} />
+        </Grid>
+        <Grid item xs={1} key="time-remaining">
+          {isPlaying && 
+            <span>
+              {(((TRACK_BARS * STEP_COUNT) - (currentlyPlayingStep ?? 0))  * SECONDS_PER_STEP).toFixed(1)}
+            </span>
+          }
+        </Grid>
+        <Grid item xs={12} className="start-stop" key="start-stop">
+          <Button
+            className={isPlaying ? "stop" : "play"}
+            onClick={isPlaying ? stop : play}
+          >
+            &nbsp;
+          </Button>
+        </Grid>
+        <Grid item xs={12} className="current-parts">
+          { playerActive ? 
+            <SampleGrid
+              parts={playerParts}
+              currentlyPlayingStep={playerActive ? currentlyPlayingStep : null}
+              className="sampler player"
+            />
+            :
+            <SampleGrid
+              parts={targetParts}
+              currentlyPlayingStep={!playerActive ? currentlyPlayingStep : null}
+              className="sampler player"
+            />
+          }
+          <Button
+            variant="contained"
+            disabled={playerActive}
+            className={playerActive ? "selected" : ""}
+            onClick={() => {
+              setPlayerActive(true);
+              play();
+            }}
+          >
+            Current
+          </Button>
+          &nbsp;
+          <Button
+            variant="contained"
+            disabled={!playerActive}
+            className={!playerActive ? "selected" : ""}
+            onClick={() => {
+              setPlayerActive(false);
+              play();
+            }}
+          >
+            Target
+          </Button>
+        </Grid>
+        <Grid item xs={12} className="dialogue">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </Grid>
       </Grid>
     </Grid>
-    <Grid item xs={6} className="hand-area" key="hand-area">
+    <Grid item xs={3} className="npc-area portrait-area" key="npc-area">
+      <div className="npc portrait">&nbsp;</div>
+    </Grid>
+    <Grid item xs={12} key="break"/>
+    <Grid item xs={5} className="hand-area" key="hand-area">
       <h3>To-Do</h3>
       <CardSequence
         cards={playerHand}
@@ -181,7 +246,17 @@ export default function Board({
         unremovable={0}
       />
     </Grid>
-    <Grid item xs={6} className="schedule-area" key="schedule-area">
+    <Grid item xs={2} className="next-day" key="next-day">
+      <Button variant="contained" onClick={moves.clearSchedule}>Clear</Button>
+      <hr/>
+      <ContinueButton G={G} onClick={
+        () => {
+          moves.commitSchedule();
+          stop();
+        }
+      }/>
+    </Grid>
+    <Grid item xs={5} className="schedule-area" key="schedule-area">
       <h3>Schedule</h3>
       <CardSequence
         cards={playerSchedule}
@@ -193,11 +268,6 @@ export default function Board({
         className="schedule"
         unremovable={G.startingSchedule.length}
       />
-    </Grid>
-    <Grid item xs={12} className="next-day" key="next-day">
-      <Button variant="contained" onClick={moves.clearSchedule}>Clear Schedule</Button>
-      &nbsp;
-      <ContinueButton G={G} onClick={moves.commitSchedule}/>
     </Grid>
   </Grid>;
 }
