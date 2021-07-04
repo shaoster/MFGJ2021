@@ -94,11 +94,7 @@ export default function Board({
       }
     }
     if (currentlyPlayingStep >= (STEP_COUNT * TRACK_BARS) - 1) {
-      setIsPlaying(false);
-      setCurrentTime(undefined);
-      setCurrentlyPlayingStep(null);
-      setPlayer(null);
-      setSequence(null);
+      stop();
       return;
     }
   }, [currentTime, playerParts, targetParts, currentlyPlayingStep, lastPlayedStep, playerActive, isPlaying])
