@@ -20,6 +20,8 @@ export interface Puzzle {
   startingHand: Array<CardId>;
   // Any initial state that cannot be removed.
   startingSchedule: Array<CardId>;
+  // Any dialog prior to cards being scheduled.
+  hints?: Array<string>;
 }
 
 export interface Part {
@@ -46,6 +48,8 @@ export interface GameState extends Puzzle {
   playerHand: Array<CardId>;
   // The player's current schedule.
   playerSchedule: Array<CardId>;
+  // Whether the player has unlocked the next level.
+  hasClearedLevel: boolean;
 }
 
 // The card identifier is just a string for now. This keeps things serializable.

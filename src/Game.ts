@@ -12,7 +12,7 @@ export const FLIP:string = "flip";
 
 const EmptyPart: () => StepSequence = () => Array.from({length: STEP_COUNT}, () => StepState.OFF);
 
-const SetupTurn = (turn: number) => {
+const SetupTurn = (turn: number, oldG?: GameState) => {
   const puzzle = Puzzles[turn - 1];
   const playerParts: Array<Part> = puzzle.targetParts.map(
     (part: Part) => ({
@@ -27,6 +27,8 @@ const SetupTurn = (turn: number) => {
     playerParts,
     playerHand: [...puzzle.startingHand],
     playerSchedule: [...(puzzle.startingSchedule ?? [])],
+    hasClearedLevel: oldG?.hasClearedLevel ?? false,
+    hints: [...(puzzle.hints ?? [])],
   };
   // Apply any fixed cards.
   (puzzle.startingSchedule ?? []).forEach((cardId) => Cards[cardId].playCard(newG))
@@ -50,22 +52,33 @@ export const MyGame: Game = {
     playCard: (G: GameState, ctx: Ctx, handSlot: number) => {
       const cardId = G.playerHand[handSlot];
       const card = Cards[cardId];
+      if (!card) {
+        return INVALID_MOVE;
+      }
       card.playCard(G); 
       // Remove the played card.
       G.playerHand.splice(handSlot, 1);
       // Add it to the play stack.
       G.playerSchedule.push(cardId);
+      if (CheckLevelComplete(G)) {
+        G.hasClearedLevel = true;
+      }
     },
     removeCard: (G: GameState, ctx: Ctx, playerScheduleSlot: number) => {
       if (playerScheduleSlot < G.startingSchedule.length) {
         return INVALID_MOVE;
       }
+
+      const removedCardId = G.playerSchedule[playerScheduleSlot];
+      if (!removedCardId) {
+        return INVALID_MOVE;
+      }
+
       // Reset the turn and re-apply the cards in sequence. 
-      const cleanState: GameState = SetupTurn(ctx.turn);
+      const cleanState: GameState = SetupTurn(ctx.turn, G);
       
       // Add the removed card back to the hand.
       cleanState.playerHand = [...G.playerHand];
-      const removedCardId = G.playerSchedule[playerScheduleSlot];
       cleanState.playerHand.push(removedCardId);
 
       // Re-play the remaining cards.
@@ -78,13 +91,19 @@ export const MyGame: Game = {
         replayedCard.playCard(cleanState);
         cleanState.playerSchedule.push(replayedCardId);
       }
+      if (CheckLevelComplete(cleanState)) {
+        G.hasClearedLevel = true;
+      }
       return cleanState;
     },
     clearSchedule: (G: GameState, ctx: Ctx) => {
-      return SetupTurn(ctx.turn);
+      if (CheckLevelComplete(G)) {
+        G.hasClearedLevel = true;
+      }
+      return SetupTurn(ctx.turn, G);
     },
     commitSchedule: (G: GameState, ctx: Ctx) => {
-      if (CheckLevelComplete(G)) {
+      if (G.hasClearedLevel) {
         ctx.events?.endTurn?.();
       }
     },

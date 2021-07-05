@@ -22,7 +22,7 @@ export default function TurnDescription({turn, onDismiss} : {turn: number, onDis
       <div className="event-body">
         <h1>{puzzle.title}</h1>
         {puzzle.description.map((descriptionLine, i) => <p key={i}>{descriptionLine}</p>)}
-        <p>Press Escape or click/tap anywhere to continue...</p>
+        <p><em>Press Escape or click/tap anywhere to continue...</em></p>
       </div>
     </Paper>
   </Modal>;

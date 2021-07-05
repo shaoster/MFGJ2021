@@ -81,16 +81,42 @@ class CardImpl implements Card {
 }
 
 const Cards : {[key: string]: Card} = {
+  makeBed: new CardImpl(
+    {
+      title: "Make Bed",
+      description: "If you make your bed every morning, you will have accomplished the first task of the day."
+    },
+    [
+      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+    ],
+    "bd"
+  ),
+  cleanChest: new CardImpl(
+    {
+      title: "Clean Chest",
+      description: "Next to the bed is a small chest for your personal belongings. It's a bit dusty."
+    },
+    [
+      StepAction.DECREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+    ],
+    "bd"
+  ),
   layFlat: new CardImpl(
     {
       title: "Lay Flat",
       description: "Lay your shirt flat on your bed. The foundation of any laundry folding routine."
     },
     [
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
       StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
     ],
     "sd"
   ),
@@ -100,23 +126,36 @@ const Cards : {[key: string]: Card} = {
       description: "Fold your shirt. Add some complexity! (Assuming you have something to start with...)"
     },
     [
-      StepAction.DECREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
       StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.DECREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
       StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+    ],
+    "sd"
+  ),
+  putAway: new CardImpl(
+    {
+      title: "Put Away",
+      description: "Put away your freshly folded clothes."
+    },
+    [
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.MAX, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
     ],
     "sd"
   ),
   drop: new CardImpl(
     {
-      title: "Drop",
+      title: "The Mess",
       description: "Oops! You dropped your [?] all over the floor. What a mess..."
     },
     [
-      StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT,
-      StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT,
-      StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT,
-      StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT,
+      StepAction.MAX, StepAction.MAX, StepAction.MAX, StepAction.MAX,
+      StepAction.MAX, StepAction.MAX, StepAction.MAX, StepAction.MAX,
+      StepAction.MAX, StepAction.MAX, StepAction.MAX, StepAction.MAX,
+      StepAction.MAX, StepAction.MAX, StepAction.MAX, StepAction.MAX,
     ],
     "bd"
   ),
@@ -126,36 +165,49 @@ const Cards : {[key: string]: Card} = {
       description: "Mop the floor. This mess might be a bit too much to soak up though."
     },
     [
-      StepAction.DECREMENT, StepAction.DECREMENT, StepAction.IGNORE, StepAction.DECREMENT,
-      StepAction.DECREMENT, StepAction.DECREMENT, StepAction.IGNORE, StepAction.DECREMENT,
-      StepAction.DECREMENT, StepAction.DECREMENT, StepAction.IGNORE, StepAction.DECREMENT,
-      StepAction.DECREMENT, StepAction.DECREMENT, StepAction.IGNORE, StepAction.DECREMENT,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.DECREMENT, StepAction.DECREMENT,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.DECREMENT, StepAction.DECREMENT,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.DECREMENT, StepAction.DECREMENT,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.DECREMENT, StepAction.DECREMENT,
     ],
     "bd"
   ),
   sweep: new CardImpl(
     {
       title: "Sweep",
-      description: "Sweep the floor. It's a bit hard to reach that corner."
+      description: "Sweep the floor. It's a bit hard to get the corners though.."
     },
     [
-      StepAction.ZERO, StepAction.SHIFT_RIGHT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_RIGHT,
-      StepAction.ZERO, StepAction.SHIFT_RIGHT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_RIGHT,
-      StepAction.ZERO, StepAction.SHIFT_RIGHT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_RIGHT,
-      StepAction.ZERO, StepAction.SHIFT_RIGHT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_RIGHT,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.DECREMENT, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.DECREMENT, StepAction.DECREMENT,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.DECREMENT, StepAction.DECREMENT,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.DECREMENT, StepAction.IGNORE,
     ],
     "bd"
   ),
   vacuum: new CardImpl(
     {
       title: "Vacuum",
-      description: "Suck up whatever is left. (Maybe leave 4 [?]s on the floor?)"
+      description: "Suck up whatever is left."
     },
     [
-      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.DECREMENT,
-      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.DECREMENT,
-      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.DECREMENT,
-      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.DECREMENT,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.DECREMENT,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.DECREMENT,
+    ],
+    "bd"
+  ),
+  emptyTrash: new CardImpl(
+    {
+      title: "Empty Trash",
+      description: "Those bins were chalk full of [???]! Much better now..."
+    },
+    [
+      StepAction.IGNORE, StepAction.ZERO, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.ZERO, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.ZERO, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.ZERO, StepAction.IGNORE, StepAction.IGNORE,
     ],
     "bd"
   ),
@@ -165,12 +217,26 @@ const Cards : {[key: string]: Card} = {
       description: "What a delicious meal! What are we going to do about all the dishes?"
     },
     [
-      StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT,
-      StepAction.IGNORE, StepAction.INCREMENT, StepAction.IGNORE, StepAction.INCREMENT,
-      StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT,
-      StepAction.IGNORE, StepAction.INCREMENT, StepAction.IGNORE, StepAction.INCREMENT,
+      StepAction.INCREMENT, StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.INCREMENT, StepAction.INCREMENT, StepAction.IGNORE, StepAction.MAX,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.MAX, StepAction.IGNORE, StepAction.MAX, StepAction.MAX,
     ],
     "ch"
+  ),
+  rearrange: new CardImpl(
+    {
+      title: "Rearrange",
+      description: "All the chairs and tables have been moved away from their original places!"
+    },
+    [
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_UP, StepAction.SHIFT_LEFT, StepAction.SHIFT_UP,
+      StepAction.SHIFT_DOWN, StepAction.SHIFT_UP, StepAction.SHIFT_DOWN, StepAction.SHIFT_UP,
+      StepAction.SHIFT_DOWN, StepAction.SHIFT_UP, StepAction.SHIFT_DOWN, StepAction.SHIFT_UP,
+      StepAction.SHIFT_DOWN, StepAction.SHIFT_RIGHT, StepAction.SHIFT_DOWN, StepAction.SHIFT_RIGHT,
+    ],
+    "ch"
+
   ),
   bus: new CardImpl(
     {
@@ -178,10 +244,10 @@ const Cards : {[key: string]: Card} = {
       description: "What a delicious meal! What are we going to do about all the dishes?"
     },
     [
-      StepAction.SHIFT_LEFT, StepAction.SHIFT_LEFT, StepAction.SHIFT_LEFT, StepAction.ZERO,
-      StepAction.SHIFT_LEFT, StepAction.SHIFT_LEFT, StepAction.SHIFT_LEFT, StepAction.ZERO,
-      StepAction.SHIFT_LEFT, StepAction.SHIFT_LEFT, StepAction.SHIFT_LEFT, StepAction.ZERO,
-      StepAction.SHIFT_LEFT, StepAction.SHIFT_LEFT, StepAction.SHIFT_LEFT, StepAction.ZERO,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_LEFT, StepAction.SHIFT_LEFT, StepAction.SHIFT_UP,
+      StepAction.SHIFT_DOWN, StepAction.IGNORE, StepAction.IGNORE, StepAction.SHIFT_UP,
+      StepAction.SHIFT_DOWN, StepAction.IGNORE, StepAction.IGNORE, StepAction.SHIFT_UP,
+      StepAction.SHIFT_DOWN, StepAction.SHIFT_RIGHT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_RIGHT,
     ],
     "ch"
   ),
@@ -191,10 +257,10 @@ const Cards : {[key: string]: Card} = {
       description: "Rinse the dishes. This will make them easier to clean."
     },
     [
-      StepAction.IGNORE, StepAction.ZERO, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.IGNORE, StepAction.ZERO, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.IGNORE, StepAction.ZERO, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.IGNORE, StepAction.ZERO, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_UP, StepAction.SHIFT_LEFT, StepAction.SHIFT_UP,
+      StepAction.SHIFT_DOWN, StepAction.SHIFT_RIGHT, StepAction.SHIFT_DOWN, StepAction.SHIFT_RIGHT,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
     ],
     "ch"
   ),
@@ -204,10 +270,10 @@ const Cards : {[key: string]: Card} = {
       description: "Scour the dishes. Really put your back into it."
     },
     [
-      StepAction.INCREMENT, StepAction.IGNORE, StepAction.INCREMENT, StepAction.IGNORE,
-      StepAction.INCREMENT, StepAction.IGNORE, StepAction.INCREMENT, StepAction.IGNORE,
-      StepAction.INCREMENT, StepAction.IGNORE, StepAction.INCREMENT, StepAction.IGNORE,
-      StepAction.INCREMENT, StepAction.IGNORE, StepAction.INCREMENT, StepAction.IGNORE,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_UP, StepAction.SHIFT_UP, StepAction.SHIFT_RIGHT,
+      StepAction.SHIFT_DOWN, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_DOWN,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
     ],
     "ch"
   ),
@@ -217,10 +283,11 @@ const Cards : {[key: string]: Card} = {
       description: "Let the dishes dry. What a lovely sight!"
     },
     [
-      StepAction.DECREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.DECREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.DECREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.DECREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
+
     ],
     "ch"
   ),
@@ -231,9 +298,9 @@ const Cards : {[key: string]: Card} = {
     },
     [
       StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.MAX, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
       StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.MAX, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
     ],
     "sd"
   ),

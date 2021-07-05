@@ -9,10 +9,10 @@ import { CardId, StepAction } from "../Types";
 import { PatternRows } from "./SampleGrid";
 
 export function ActionCard({
-  cardId, cardIndex, buttonLabel, onClickCard, onClickEnabled, viewCard
+  cardId, cardIndex, buttonLabel, onClickCard, onClickEnabled, viewCard, isSelected
 }: {
   cardId: CardId, cardIndex: number, buttonLabel: string, onClickCard: any,
-  onClickEnabled: boolean, viewCard: any
+  onClickEnabled: boolean, viewCard: any, isSelected: boolean
 } & React.HTMLAttributes<HTMLDivElement>) : ReactElement
 {
   const card = Cards[cardId];
@@ -22,7 +22,7 @@ export function ActionCard({
   // TODO: Figure out how to make this nice on touch.
   return <Card
     variant="outlined"
-    className="card"
+    className={"card" + (isSelected ? " selected" : "")}
     onClick={viewCard}
   >
     <CardContent>
@@ -37,16 +37,17 @@ export function ActionCard({
           </tbody>
         </table>
       }
-      <p>{card.description}</p>
     </CardContent> 
     <CardActions>
+      {onClickEnabled && 
       <Button
         variant="contained"
         onClick={()=>onClickCard(cardIndex)}
-        disabled={!onClickEnabled}
+        disabled={!isSelected}
       >
         {buttonLabel}
       </Button>         
+      }
     </CardActions>
   </Card>;
 };
@@ -102,7 +103,7 @@ export default function CardSequence({
     <TransitionGroup component={null}>
     {
     cards.map((cardId: CardId, index: number) => 
-      <CSSTransition key={index} exit={true} classNames="card" timeout={200}>
+      <CSSTransition key={cardId + ":" + index} exit={true} classNames="card" timeout={200}>
         <div className={"card-slot " + cardClasses[index]} style={{zIndex: MAX_HAND_SIZE - index}}>
           <ActionCard
             cardId={cardId}
@@ -110,12 +111,14 @@ export default function CardSequence({
             buttonLabel={buttonLabel}
             onClickCard={() => clickCard(index)}
             onClickEnabled={index >= unremovable}
-            viewCard={() => setSelectedCard(
-              index !== selectedCard ? index : (
+            viewCard={() => {
+              const newCard = index !== selectedCard ? index : (
                 index < cards.length - 1 ? 
                   index + 1 : 0 
-              )
-            )}
+              );
+              setSelectedCard(newCard);
+            }}
+            isSelected={index === selectedCard}
           />
         </div>
       </CSSTransition>

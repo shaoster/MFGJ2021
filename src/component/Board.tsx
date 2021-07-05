@@ -10,23 +10,25 @@ import {
 import CardSequence from './CardSequence';
 import SampleGrid from './SampleGrid';
 import { GameState, StepState } from '../Types';
-import { CheckLevelComplete } from '../Game';
 import { range } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { DEFAULT_BPM, SECONDS_PER_STEP, STEP_COUNT, TRACK_BARS } from '../Constants';
 import * as Tone from 'tone';
 import { Time } from 'tone/build/esm/core/type/Units';
 import LevelDescription from './LevelDescription';
 import TrackProgress from './TrackProgress';
 import { Player, Sequence } from 'tone';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
+import Cards from '../Cards';
 
 function ContinueButton({G, onClick} : {G: GameState, onClick: any} ) {
-  const enabled = CheckLevelComplete(G);
-  return <Button variant="contained" onClick={onClick} disabled={!enabled}>
-   Next Day 
+  const enabled = G.hasClearedLevel;
+  return <Button variant="contained" onClick={onClick} disabled={!enabled} className={enabled ? "glow" : ""}>
+   Continue
   </Button>;
 }
 const keyMapper: { [key: string]: string } = {
+  cy: "f4",
   bd: "e4",
   ch: "d4",
   sd: "c4",
@@ -34,12 +36,14 @@ const keyMapper: { [key: string]: string } = {
 
 const sampler = new Tone.Sampler({
   urls: {
+    // Cymbal
+    f4: "CY/E808_CY-12.wav",
     // Bass Drum
     e4: "BD/E808_BD[short]-03.wav",
     // Closed Hat
     d4: "CH/E808_CH-06.wav",
     // Snare
-    c4: "SD/E808_SD-03.wav",
+    c4: "SD/E808_SD-15.wav",
   },
   baseUrl: process.env.PUBLIC_URL + "/samples/808/"
 }).toDestination();
@@ -50,11 +54,13 @@ export default function Board({
 {
   const {
     title,
+    hints,
     levelTrack,
     playerParts,
     targetParts,
     playerHand,
     playerSchedule,
+    hasClearedLevel,
   } = G;
   useEffect(() => {
     Tone.Transport.bpm.value = DEFAULT_BPM;
@@ -64,6 +70,10 @@ export default function Board({
       Tone.Transport.stop();
     }
   }, []);
+  const [npcDialog, setNpcDialog] = useState(hints);
+  useEffect(() => {
+    setNpcDialog(hints);
+  }, [hints]);
   const [currentlyPlayingStep, setCurrentlyPlayingStep] = useState<number | null>(null);
   const [lastPlayedStep, setLastPlayedStep] = useState<number | null>(null);
   const [currentTime, setCurrentTime] = useState<Time | undefined>(undefined);
@@ -71,6 +81,51 @@ export default function Board({
   const [playerActive, setPlayerActive] = useState(true);
   const [player, setPlayer] = useState<Player | null>(null);
   const [sequence, setSequence] = useState<Sequence | null>(null);
+  const onStep = (time: Time, stepId: number) => {
+    // This is a bit subtle: time has to be set before step.
+    // Only step triggers the sample side effect.
+    setCurrentTime(time);
+    setCurrentlyPlayingStep(stepId);
+  };
+  const play = () => {
+    if (isPlaying) {
+      return;
+    }
+    const sequencer = new Tone.Sequence(
+      onStep,
+      range(STEP_COUNT * TRACK_BARS),
+      "16n"
+    );
+    // Just to prevent overlap.
+    stop();
+    setSequence(sequencer);
+    const player = new Tone.Player(
+      levelTrack,
+      () => {
+        setIsPlaying(true);
+        Tone.start();
+        sequencer.loop = false;
+        sequencer.start();
+      }
+    ).toDestination();
+    setPlayer(player);
+    player.loop = false;
+    player.autostart = true;
+  };
+  const stop = useCallback(() => {
+    if (!isPlaying) {
+      return;
+    }
+    setCurrentTime(undefined);
+    setLastPlayedStep(null);
+    setCurrentlyPlayingStep(null);
+    sequence?.stop();
+    setSequence(null);
+    player?.stop();
+    setPlayer(null);
+    setIsPlaying(false);
+    setPlayerActive(true);
+  }, [isPlaying, sequence, player]);
   useEffect(() => {
     if (lastPlayedStep === currentlyPlayingStep) {
       return;
@@ -97,49 +152,13 @@ export default function Board({
       stop();
       return;
     }
-  }, [currentTime, playerParts, targetParts, currentlyPlayingStep, lastPlayedStep, playerActive, isPlaying])
-  const onStep = (time: Time, stepId: number) => {
-    // This is a bit subtle: time has to be set before step.
-    // Only step triggers the sample side effect.
-    setCurrentTime(time);
-    setCurrentlyPlayingStep(stepId);
-  };
-  const play = () => {
-    if (isPlaying) {
-      return;
+  }, [currentTime, playerParts, targetParts, currentlyPlayingStep, lastPlayedStep, playerActive, isPlaying, stop])
+  const onViewCard = (i: number) => {
+    const selectedCard = Cards[playerHand[i]];
+    if (selectedCard) {
+      setNpcDialog([selectedCard.description]);
     }
-    const sequencer = new Tone.Sequence(
-      onStep,
-      range(STEP_COUNT * TRACK_BARS),
-      "16n"
-    );
-    setSequence(sequencer);
-    const player = new Tone.Player(
-      levelTrack,
-      () => {
-        setIsPlaying(true);
-        Tone.start();
-        sequencer.loop = false;
-        sequencer.start();
-      }
-    ).toDestination();
-    setPlayer(player);
-    player.loop = false;
-    player.autostart = true;
   };
-  const stop = () => {
-    if (!isPlaying) {
-      return;
-    }
-    setCurrentTime(undefined);
-    setLastPlayedStep(null);
-    setCurrentlyPlayingStep(null);
-    sequence?.stop();
-    setSequence(null);
-    player?.stop();
-    setPlayer(null);
-    setIsPlaying(false);
-  }
   return <Grid container className="game-board" alignItems="center" justify="center">
     <LevelDescription
       turn={ctx.turn}
@@ -183,19 +202,27 @@ export default function Board({
           </Button>
         </Grid>
         <Grid item xs={12} className="current-parts">
-          { playerActive ? 
-            <SampleGrid
-              parts={playerParts}
-              currentlyPlayingStep={playerActive ? currentlyPlayingStep : null}
-              className="sampler player"
-            />
-            :
-            <SampleGrid
-              parts={targetParts}
-              currentlyPlayingStep={!playerActive ? currentlyPlayingStep : null}
-              className="sampler player"
-            />
-          }
+          <SwitchTransition>
+            <CSSTransition
+              key={playerActive ? "current": "target"}
+              timeout={200}
+              classNames={playerActive ? "current": "target"}
+            >
+            { playerActive ? 
+              <SampleGrid
+                parts={playerParts}
+                currentlyPlayingStep={playerActive ? currentlyPlayingStep : null}
+                className="sampler current"
+              />
+              :
+              <SampleGrid
+                parts={targetParts}
+                currentlyPlayingStep={!playerActive ? currentlyPlayingStep : null}
+                className="sampler target"
+              />
+            }
+            </CSSTransition>
+          </SwitchTransition>
           <Button
             variant="contained"
             disabled={playerActive}
@@ -205,7 +232,7 @@ export default function Board({
               play();
             }}
           >
-            Current
+            My Parts
           </Button>
           &nbsp;
           <Button
@@ -217,11 +244,13 @@ export default function Board({
               play();
             }}
           >
-            Target
+            Goal 
           </Button>
         </Grid>
         <Grid item xs={12} className="dialogue">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          { typeof(npcDialog) !== 'undefined' && 
+            npcDialog.map((line, i) => <p key={i}>{line}</p>)
+          }
         </Grid>
       </Grid>
     </Grid>
@@ -235,7 +264,9 @@ export default function Board({
         cards={playerHand}
         onClickCard={(i: number) => {
           moves.playCard(i);
+          setPlayerActive(true);
           play();
+          onViewCard(i);
         }}
         buttonLabel="Enqueue"
         className="hand"
@@ -243,7 +274,7 @@ export default function Board({
       />
     </Grid>
     <Grid item xs={2} className="next-day" key="next-day">
-      <Button variant="contained" onClick={moves.clearSchedule}>Clear</Button>
+      <Button variant="contained" onClick={moves.clearSchedule}>Reset</Button>
       <hr/>
       <ContinueButton G={G} onClick={
         () => {

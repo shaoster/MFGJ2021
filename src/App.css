@@ -40,6 +40,7 @@
 body {
   background-image: url("icons/repeatingbgsmall.png");
   background-repeat: repeat;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 /* Sampler */
@@ -48,8 +49,6 @@ body {
   margin: auto;
   padding: 0px;
   border: 2px solid;
-  width: min-content;
-  height: min-content;
 }
 
 .sampler caption {
@@ -112,7 +111,15 @@ body {
 
 .sampler tbody {
   background-size: cover;
-  background-color: #e0e0e0;
+  
+}
+
+.sampler.current tbody {
+  background-color: rgba(0, 0, 255, 0.2);
+}
+
+.sampler.target tbody {
+  background-color: rgba(255, 0, 0, 0.2);
 }
 
 .sampler tbody.sd {
@@ -125,6 +132,44 @@ body {
 
 .sampler tbody.ch {
   background-image: url('icons/iconhihat.png');
+}
+
+.current-enter{
+   opacity: 0;
+   transform: translateX(-200px);
+}
+.current-exit{
+   opacity: 1;
+   transform: translateX(0);
+}
+.current-enter-active{
+   opacity: 1;
+   transform: translateX(0);
+   transition: transform 200ms, opacity 200ms;
+}
+.current-exit-active{
+   opacity: 0;
+   transform: translateX(-200px);
+   transition: transform 200ms, opacity 200ms;
+}
+
+.target-enter{
+   opacity: 0;
+   transform: translateX(200px);
+}
+.target-exit{
+   opacity: 1;
+   transform: translateX(0);
+}
+.target-enter-active{
+   opacity: 1;
+   transform: translateX(0);
+   transition: transform 200ms, opacity 200ms;
+}
+.target-exit-active{
+   opacity: 0;
+   transform: translateX(200px);
+   transition: transform 200ms, opacity 200ms;
 }
 
 /* Cards */
@@ -164,16 +209,18 @@ div.card.empty {
 
 .card h2 {
   margin: 0px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .card .MuiCardContent-root {
   padding: 8px;
-  height: 232px;
+  height: 240px;
 }
 
 .card .pattern {
-  height: 64px;
-  width: 64px;
+  height: 162px;
+  width: 162px;
   border: 2px solid #000000;
   border-radius: 4px;
   margin: auto;
@@ -184,11 +231,12 @@ div.card.empty {
   margin: 0px;
   border: 1px solid;
   border-radius: 4px;
+  cursor: help;
 }
 
 .card .cell .step {
-  width: 16px;
-  height: 16px;
+  width: 38px;
+  height: 38px;
   margin: 0px;
   padding: 0px;
   background-size: cover;
@@ -207,7 +255,7 @@ div.card.empty {
 }
 
 @keyframes shift-up {
-  0% {transform: translateY(20px)}
+  0% {transform: translateY(40px)}
   40% {transform: translateY(0px)}
   100% {transform: translateY(0px)}
 }
@@ -217,7 +265,7 @@ div.card.empty {
 }
 
 @keyframes shift-right {
-  0% {transform: translateX(-20px)}
+  0% {transform: translateX(-40px)}
   40% {transform: translateY(0px)}
   100% {transform: translateY(0px)}
 }
@@ -227,7 +275,7 @@ div.card.empty {
 }
 
 @keyframes shift-down {
-  0% {transform: translateY(-20px)}
+  0% {transform: translateY(-40px)}
   40% {transform: translateY(0px)}
   100% {transform: translateY(0px)}
 }
@@ -237,7 +285,7 @@ div.card.empty {
 }
 
 @keyframes shift-left {
-  0% {transform: translateX(20px)}
+  0% {transform: translateX(40px)}
   40% {transform: translateY(0px)}
   100% {transform: translateY(0px)}
 }
@@ -297,7 +345,7 @@ div.card-slot.card-exit {
 
 div.card-displace {
   animation: displace-card 0.2s linear forwards;
-  opacity: 0.8;
+  opacity: 0.5;
 }
 
 div.card-stay-displaced {
@@ -315,6 +363,10 @@ div.card-stay-displaced {
 
 div.card-show {
   animation: show-card 0.2s linear forwards;
+}
+
+.hand div.selected.card {
+  opacity: 1;
 }
 
 div.card-stay-shown {
@@ -355,9 +407,19 @@ div.card-stay-shown {
   min-height: 480px;
   width: 240px;
   height: 600px;
-  background-image: url("icons/placeholder.svg");
   background-size: cover;
   margin: auto;
+  opacity: 0.5;
+}
+
+/* Placeholders for now. */
+
+.pc-area .portrait {
+  background-color: blue;
+}
+
+.npc-area .portrait {
+  background-color: red;
 }
 
 div.progress-bar {
@@ -397,6 +459,8 @@ button.stop {
 .current-parts {
   padding: 0px;
   min-width: min-content;
+  min-height: fit-content;
+  height: 440px;
 }
 
 .title h1 {
@@ -436,4 +500,20 @@ div.next-day {
 
 .schedule-area {
   min-width: 300px;
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0px 0px 0px blue;
+  }
+  25% {
+    text-shadow: 0px 0px 16px blue;
+  }
+  50% {
+    text-shadow: 0px 0px 100px blue;
+  }
+}
+
+.glow {
+  animation: glow 2s linear infinite forwards;
 }
