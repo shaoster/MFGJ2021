@@ -58,9 +58,8 @@ const Puzzles: Array<Puzzle> = [
     ],
     startingSchedule: [],
     hints: [
-      "Queue up items on your To-Do list and make a plan for the day!",
       "Why don't we get started by doing the laundry?",
-      "Is it just me, or is there something absolutely musical about clean clothes?"
+      "**PLACE** items from your **To-Do** list on your **Schedule** and get to work!",
     ],
   },
   // 1

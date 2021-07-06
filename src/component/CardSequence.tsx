@@ -9,10 +9,10 @@ import { CardId, StepAction } from "../Types";
 import { PatternRows } from "./SampleGrid";
 
 export function ActionCard({
-  cardId, cardIndex, buttonLabel, onClickCard, onClickEnabled, viewCard, isSelected
+  cardId, cardIndex, buttonLabel, onClickCard, onClickEnabled, viewCard, isSelected, emphasizeButton,
 }: {
   cardId: CardId, cardIndex: number, buttonLabel: string, onClickCard: any,
-  onClickEnabled: boolean, viewCard: any, isSelected: boolean
+  onClickEnabled: boolean, viewCard: any, isSelected: boolean, emphasizeButton: boolean
 } & React.HTMLAttributes<HTMLDivElement>) : ReactElement
 {
   const card = Cards[cardId];
@@ -22,12 +22,10 @@ export function ActionCard({
   // TODO: Figure out how to make this nice on touch.
   return <Card
     variant="outlined"
-    className={"card" + (isSelected ? " selected" : "")}
+    className={"card " + card.sampleTarget + (isSelected ? " selected" : "")}
     onClick={viewCard}
   >
     <CardContent>
-      <h2>{card.title}</h2>
-      {card.sampleTarget && <span>{card.sampleTarget}</span>}
       {maybeClassSequence && 
         <table className="pattern">
           <tbody>
@@ -44,6 +42,7 @@ export function ActionCard({
         variant="contained"
         onClick={()=>onClickCard(cardIndex)}
         disabled={!isSelected}
+        className={emphasizeButton ? "glow" : ""}
       >
         {buttonLabel}
       </Button>         
@@ -63,9 +62,9 @@ export function EmptyCardSlot(): ReactElement {
 const BASIC_CARD_CLASSES = range(MAX_HAND_SIZE).map((i) => "card-show");
 
 export default function CardSequence({
-  cards, buttonLabel, onClickCard, unremovable, className, ...remainingProps
+  cards, buttonLabel, onClickCard, unremovable, className, emphasizeButton, ...remainingProps
 }: {
-  cards: Array<CardId>, buttonLabel: string, onClickCard: any, unremovable: number
+  cards: Array<CardId>, buttonLabel: string, onClickCard: any, unremovable: number, emphasizeButton: boolean
 } & React.HTMLAttributes<HTMLDivElement>) {
   const [selectedCard, setSelectedCard] = useState(0);
   const [cardClasses, setCardClasses] = useState(BASIC_CARD_CLASSES);
@@ -106,7 +105,10 @@ export default function CardSequence({
       <CSSTransition key={cardId + ":" + index} exit={true} classNames="card" timeout={200}>
         <div
           className={"card-slot " + cardClasses[index]}
-          style={{zIndex: MAX_HAND_SIZE - index, marginTop: (index * 4) + "px"}}
+          style={{
+            zIndex: MAX_HAND_SIZE - index,
+            // marginTop: ((index - cards.length - 1) * 4) + "px",
+          }}
         >
           <ActionCard
             cardId={cardId}
@@ -122,6 +124,7 @@ export default function CardSequence({
               setSelectedCard(newCard);
             }}
             isSelected={index === selectedCard}
+            emphasizeButton={emphasizeButton}
           />
         </div>
       </CSSTransition>
