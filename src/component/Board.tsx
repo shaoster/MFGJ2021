@@ -27,23 +27,35 @@ function ContinueButton({G, onClick} : {G: GameState, onClick: any} ) {
    Continue
   </Button>;
 }
-const keyMapper: { [key: string]: string } = {
-  cy: "f4",
-  bd: "e4",
-  ch: "d4",
-  sd: "c4",
+const keyMapper: { [key: string]: {pitch: string, duration: string}} = {
+  cy: {
+    pitch: "f4",
+    duration: "2n",
+  },
+  bd: {
+    pitch: "e4",
+    duration: "16n",
+  },
+  ch: {
+    pitch: "d4",
+    duration: "16n",
+  },
+  sd: {
+    pitch: "c4",
+    duration: "16n",
+  }
 };
 
 const sampler = new Tone.Sampler({
   urls: {
     // Cymbal
-    f4: "CY/E808_CY-12.wav",
+    f4: "CY/E808_CY-12[short].ogg",
     // Bass Drum
     e4: "BD/E808_BD[short]-03.wav",
     // Closed Hat
     d4: "CH/E808_CH-06.wav",
     // Snare
-    c4: "SD/E808_SD-15.wav",
+    c4: "SD/E808_SD-07.wav",
   },
   baseUrl: process.env.PUBLIC_URL + "/samples/808/"
 }).toDestination();
@@ -148,7 +160,12 @@ export default function Board({
     const parts = playerActive ? playerParts : targetParts;
     for (let part of parts) {
       if (part.steps[stepIndex] !== StepState.OFF) {
-        sampler.triggerAttackRelease(keyMapper[part.sample], "16n", currentTime, part.steps[stepIndex] / 2);
+        sampler.triggerAttackRelease(
+          keyMapper[part.sample].pitch, 
+          keyMapper[part.sample].duration,
+          currentTime,
+          part.steps[stepIndex] / 2
+        );
       }
     }
     if (currentlyPlayingStep >= (STEP_COUNT * trackBars) - 1) {
