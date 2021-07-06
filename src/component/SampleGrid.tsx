@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   Paper,
@@ -43,12 +43,11 @@ export function PatternRows(
 };
 
 function PartGrid(
-  { parts, currentlyPlayingStep, ...remainingProps }: React.HTMLAttributes<HTMLElement> & {
-    parts: Array<Part>, currentlyPlayingStep: number | null
+  { parts, currentlyPlayingStep, tabIndex, setTabIndex, ...remainingProps }: React.HTMLAttributes<HTMLElement> & {
+    parts: Array<Part>, currentlyPlayingStep: number | null, tabIndex: number, setTabIndex: any
   }
 )
 {
-  const [tabIndex, setTabIndex] = useState(0);
   const {
     steps,
     sample,
@@ -93,13 +92,15 @@ function PartGrid(
 }
 
 export default function SampleGrid(
-  { parts, currentlyPlayingStep, ...remainingProps }: React.HTMLAttributes<HTMLElement> & {
-    parts: Array<Part>, currentlyPlayingStep: number | null 
+  { parts, currentlyPlayingStep, tabIndex, setTabIndex, ...remainingProps }: React.HTMLAttributes<HTMLElement> & {
+    parts: Array<Part>, currentlyPlayingStep: number | null, tabIndex: number, setTabIndex: any
   }
 ) {
   return <>
     <PartGrid
       parts={parts}
+      tabIndex={tabIndex}
+      setTabIndex={setTabIndex}
       currentlyPlayingStep={currentlyPlayingStep}
       {...remainingProps}
     />

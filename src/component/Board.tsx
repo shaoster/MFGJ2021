@@ -89,6 +89,7 @@ export default function Board({
   useEffect(() => {
     setNpcDialog(hints);
   }, [hints]);
+  const [selectedPart, setSelectedPart] = useState(0);
   const [currentlyPlayingStep, setCurrentlyPlayingStep] = useState<number | null>(null);
   const [lastPlayedStep, setLastPlayedStep] = useState<number | null>(null);
   const [currentTime, setCurrentTime] = useState<Time | undefined>(undefined);
@@ -228,19 +229,13 @@ export default function Board({
               timeout={200}
               classNames={playerActive ? "current": "target"}
             >
-            { playerActive ? 
               <SampleGrid
-                parts={playerParts}
-                currentlyPlayingStep={playerActive ? currentlyPlayingStep : null}
-                className="sampler current"
+                parts={playerActive ? playerParts : targetParts}
+                currentlyPlayingStep={currentlyPlayingStep}
+                className={"sampler " + (playerActive ? "current" : "target")}
+                tabIndex={selectedPart}
+                setTabIndex={setSelectedPart}
               />
-              :
-              <SampleGrid
-                parts={targetParts}
-                currentlyPlayingStep={!playerActive ? currentlyPlayingStep : null}
-                className="sampler target"
-              />
-            }
             </CSSTransition>
           </SwitchTransition>
           <Button
