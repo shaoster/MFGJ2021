@@ -1,8 +1,5 @@
 body {
-  /*
-  /* Replace with updated palette.
-  background-image: url("icons/repeatingbgsmall.png");
-  */
+  background-image: url("icons/repeatingbgdarkblue.png");
   background-color: #BF8DE2;
   background-repeat: repeat;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -18,6 +15,8 @@ body {
   margin: auto;
   padding: 0px;
   border: 0px;
+  border-radius: 4px;
+  background-color: rgba(191, 141, 226, 0.2);
 }
 
 .sampler caption {
@@ -62,7 +61,7 @@ body {
 }
 
 .sampler .cell.ON .step {
- background-color: rgba(191, 141, 226, 0.3); 
+ background-color: rgba(191, 141, 226, 0.5); 
 }
 
 .sampler .cell.ACCENT .step {
@@ -80,15 +79,30 @@ body {
 
 .sampler tbody {
   background-size: cover;
-  
 }
 
-.sampler.current tbody {
-  background-color: #6E90FF;
+.sampler.current tbody.sd {
+  background-image: url("icons/grid_snare_blue.png");
 }
 
-.sampler.target tbody {
-  background-color: #F4A4CD;
+.sampler.current tbody.bd {
+  background-image: url("icons/grid_bass_blue.png");
+}
+
+.sampler.current tbody.ch {
+  background-image: url("icons/grid_hihat_blue.png");
+}
+
+.sampler.target tbody.sd {
+  background-image: url("icons/grid_snare_red.png");
+}
+
+.sampler.target tbody.bd {
+  background-image: url("icons/grid_bass_red.png");
+}
+
+.sampler.target tbody.ch {
+  background-image: url("icons/grid_hihat_red.png");
 }
 
 span.MuiTabs-indicator {
@@ -158,6 +172,7 @@ div.sequence {
   border-radius: 4px;
 }
 
+/*
 div.sequence.hand {
   background-color: #6E90FF;
 }
@@ -165,6 +180,7 @@ div.sequence.hand {
 div.sequence.schedule {
   background-color: #F4A4CD;
 }
+*/
 
 div.card-slot {
   margin-top: -4px;
@@ -181,10 +197,16 @@ div.card {
   min-width: 220px;
   width: 220px;
   height: 320px;
-  border: 1px solid #000000;
+  border: 2px solid #BF8DE2;
+  background-color: #BF8DE2;
   background-image: url("icons/tileableholograph.png");
   color: #BF8DE2;
   text-align: center;
+}
+
+div.card:hover {
+  border: 2px solid #B8F7FF;
+  background-color: #B8F7FF;
 }
 
 .card h2 {
@@ -325,7 +347,6 @@ div.card-slot.card-exit {
 
 div.card-displace {
   animation: displace-card 0.2s linear forwards;
-  opacity: 0.5;
 }
 
 div.card-stay-displaced {
@@ -485,13 +506,13 @@ div.next-day {
 
 @keyframes glow {
   0% {
-    text-shadow: 0px 0px 0px #B8F7FF;
+    text-shadow: 0px 0px 0px #BF8DE2;
   }
   25% {
-    text-shadow: 0px 0px 16px #B8F7FF;
+    text-shadow: 0px 0px 16px #BF8DE2;
   }
   50% {
-    text-shadow: 0px 0px 32px #B8F7FF;
+    text-shadow: 0px 0px 48px #BF8DE2;
   }
 }
 
@@ -507,4 +528,17 @@ button.MuiButton-contained {
 button.MuiButton-contained.Mui-disabled {
   background-color: rgba(193, 239, 189, 0.3);
   color: #F5CBA3;
+}
+
+div.MuiLinearProgress-barColorPrimary {
+  background-color: #B8F7FF; 
+}
+
+div.MuiLinearProgress-root {
+  background-color: #BF8DE2; 
+  border: 2px solid #B8F7FF;
+}
+
+.MuiTouchRipple-rippleVisible {
+  color: #BF8DE2 !important;
 }

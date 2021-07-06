@@ -112,7 +112,8 @@ export default function Board({
     }
     const sequencer = new Tone.Sequence(
       onStep,
-      range(STEP_COUNT * trackBars),
+      // One extra beat to resolve animations.
+      range(STEP_COUNT * trackBars + 1),
       "16n"
     );
     // Just to prevent overlap.
@@ -158,6 +159,10 @@ export default function Board({
     if (!isPlaying) {
       return;
     }
+    if (currentlyPlayingStep >= (STEP_COUNT * trackBars)) {
+      stop();
+      return;
+    }
     setLastPlayedStep(currentlyPlayingStep);
     // stepIndex selects from our step sequencer, which is only 16th notes on repeat.
     const stepIndex = currentlyPlayingStep % STEP_COUNT;
@@ -171,10 +176,6 @@ export default function Board({
           part.steps[stepIndex] / 2
         );
       }
-    }
-    if (currentlyPlayingStep >= (STEP_COUNT * trackBars) - 1) {
-      stop();
-      return;
     }
   }, [currentTime, playerParts, targetParts, currentlyPlayingStep, lastPlayedStep, playerActive, isPlaying, stop, trackBars])
   const onViewCard = (i: number) => {

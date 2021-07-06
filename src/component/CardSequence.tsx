@@ -104,7 +104,10 @@ export default function CardSequence({
     {
     cards.map((cardId: CardId, index: number) => 
       <CSSTransition key={cardId + ":" + index} exit={true} classNames="card" timeout={200}>
-        <div className={"card-slot " + cardClasses[index]} style={{zIndex: MAX_HAND_SIZE - index}}>
+        <div
+          className={"card-slot " + cardClasses[index]}
+          style={{zIndex: MAX_HAND_SIZE - index, marginTop: (index * 4) + "px"}}
+        >
           <ActionCard
             cardId={cardId}
             cardIndex={index}
