@@ -1,46 +1,15 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 body {
+  /*
+  /* Replace with updated palette.
   background-image: url("icons/repeatingbgsmall.png");
+  */
+  background-color: #BF8DE2;
   background-repeat: repeat;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #B8F7FF;
+  /*
+  text-shadow: 1px 1px 2px black, -1px 1px 2px black, 1px -1px 2px black, -1px -1px 2px black;
+  */
 }
 
 /* Sampler */
@@ -48,7 +17,7 @@ body {
 .sampler {
   margin: auto;
   padding: 0px;
-  border: 2px solid;
+  border: 0px;
 }
 
 .sampler caption {
@@ -57,7 +26,7 @@ body {
 
 .sampler .part-selector {
   /* TODO: Fix this to match the table width. */
-  width: 346px;
+  width: 351px;
 }
 
 .sampler .row {
@@ -84,7 +53,7 @@ body {
 
 /*
 .sampler .cell:hover {
-  background-color: #61dafb;
+  background-color: #B8F7FF;
 }
 */
 
@@ -93,16 +62,16 @@ body {
 }
 
 .sampler .cell.ON .step {
- background-color: #808080; 
+ background-color: rgba(191, 141, 226, 0.3); 
 }
 
 .sampler .cell.ACCENT .step {
- background-color: #000000; 
+ background-color: #BF8DE2; 
 }
 
 
 .sampler .cell.playing {
-  background-color: #61dafb;
+  background-color: #B8F7FF;
 }
 
 .sampler .caption {
@@ -115,13 +84,18 @@ body {
 }
 
 .sampler.current tbody {
-  background-color: rgba(0, 0, 255, 0.2);
+  background-color: #6E90FF;
 }
 
 .sampler.target tbody {
-  background-color: rgba(255, 0, 0, 0.2);
+  background-color: #F4A4CD;
 }
 
+span.MuiTabs-indicator {
+  background-color: #B8F7FF;
+}
+
+/*
 .sampler tbody.sd {
   background-image: url('icons/iconsnare.png');
 }
@@ -133,6 +107,7 @@ body {
 .sampler tbody.ch {
   background-image: url('icons/iconhihat.png');
 }
+*/
 
 .current-enter{
    opacity: 0;
@@ -179,9 +154,16 @@ div.sequence {
   display: flex;
   width: 300px;
   height: 320px;
-  background-color: #e0e0e0;
-  border: 2px solid #000000;
+  border: 0px;
   border-radius: 4px;
+}
+
+div.sequence.hand {
+  background-color: #6E90FF;
+}
+
+div.sequence.schedule {
+  background-color: #F4A4CD;
 }
 
 div.card-slot {
@@ -200,11 +182,9 @@ div.card {
   width: 220px;
   height: 320px;
   border: 1px solid #000000;
+  background-image: url("icons/tileableholograph.png");
+  color: #BF8DE2;
   text-align: center;
-}
-
-div.card.empty {
-  background-color: #f0f0f0;
 }
 
 .card h2 {
@@ -221,7 +201,7 @@ div.card.empty {
 .card .pattern {
   height: 162px;
   width: 162px;
-  border: 2px solid #000000;
+  border: 2px solid #BF8DE2;
   border-radius: 4px;
   margin: auto;
 }
@@ -296,14 +276,14 @@ div.card.empty {
 
 /* The border color for MAX needs to accomodate the fill color. */
 .card .cell.MAX {
-  background-color: #000000;
+  background-color: #BF8DE2;
 }
 .card .cell.MAX .step {
-  background-color: #000000;
+  background-color: #BF8DE2;
 }
 
 .card .cell.ZERO .step {
-  background-color: #ffffff;
+  background-color: #C1EFBD;
 }
 
 .card .cell.IGNORE {
@@ -374,10 +354,11 @@ div.card-stay-shown {
 }
 
 /* Event */
-.event-modal {
+div.event-modal {
   height: 100%;
   width: 100%;
   padding: auto;
+  background-image: url("icons/tileableholograph.png");
 }
 
 .event-body {
@@ -387,6 +368,7 @@ div.card-stay-shown {
   transform: translateY(-50%) translateX(-50%);
   text-align: center;
   vertical-align: middle;
+  color: #AF81E4;
 }
 
 
@@ -409,17 +391,16 @@ div.card-stay-shown {
   height: 600px;
   background-size: cover;
   margin: auto;
-  opacity: 0.5;
 }
 
 /* Placeholders for now. */
 
 .pc-area .portrait {
-  background-color: blue;
+  background-color: #6E90FF;
 }
 
 .npc-area .portrait {
-  background-color: red;
+  background-color: #F4A4CD;
 }
 
 div.progress-bar {
@@ -474,13 +455,13 @@ button.stop {
 }
 
 button.selected {
-  border: 4px solid #61dafb;
+  border: 4px solid #B8F7FF;
 }
 
 div.dialogue {
   margin-top: 16px;
   padding: 4px;
-  background-color: #f0f0f0;
+  background-color: rgba(231, 132, 186, 0.8);
   border-radius: 4px;
 }
 
@@ -504,16 +485,26 @@ div.next-day {
 
 @keyframes glow {
   0% {
-    text-shadow: 0px 0px 0px blue;
+    text-shadow: 0px 0px 0px #B8F7FF;
   }
   25% {
-    text-shadow: 0px 0px 16px blue;
+    text-shadow: 0px 0px 16px #B8F7FF;
   }
   50% {
-    text-shadow: 0px 0px 100px blue;
+    text-shadow: 0px 0px 32px #B8F7FF;
   }
 }
 
 .glow {
   animation: glow 2s linear infinite forwards;
+}
+
+button.MuiButton-contained {
+  background-color: #C1EFBD;
+  color: #Bf8DE2;
+}
+
+button.MuiButton-contained.Mui-disabled {
+  background-color: rgba(193, 239, 189, 0.3);
+  color: #F5CBA3;
 }

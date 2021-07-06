@@ -90,6 +90,9 @@ export default function Board({
     setNpcDialog(hints);
   }, [hints]);
   const [selectedPart, setSelectedPart] = useState(0);
+  useEffect(() => {
+    setSelectedPart(0);
+  }, [ctx.turn]);
   const [currentlyPlayingStep, setCurrentlyPlayingStep] = useState<number | null>(null);
   const [lastPlayedStep, setLastPlayedStep] = useState<number | null>(null);
   const [currentTime, setCurrentTime] = useState<Time | undefined>(undefined);
