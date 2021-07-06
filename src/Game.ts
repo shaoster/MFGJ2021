@@ -28,7 +28,6 @@ const SetupTurn = (turn: number, oldG?: GameState) => {
     playerHand: [...puzzle.startingHand],
     playerSchedule: [...(puzzle.startingSchedule ?? [])],
     hasClearedLevel: oldG?.hasClearedLevel ?? false,
-    hints: [...(puzzle.hints ?? [])],
   };
   // Apply any fixed cards.
   (puzzle.startingSchedule ?? []).forEach((cardId) => Cards[cardId].playCard(newG))

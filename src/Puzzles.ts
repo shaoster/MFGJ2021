@@ -2,6 +2,51 @@ import { Puzzle, StepState } from "./Types";
 
 const LT_PREFIX = process.env.PUBLIC_URL + "/samples/levels/";
 const Puzzles: Array<Puzzle> = [
+  {
+    title: "Day 2",
+    description: [
+      "After the tutorial.",
+    ],
+    levelTrack: `${LT_PREFIX}unmixed_2_1_112_bpm.ogg`,
+    overrideBPM: 112,
+    targetParts: [
+      {
+        sample: "bd",
+        steps: [
+          StepState.ON, StepState.ON, StepState.OFF, StepState.OFF,
+          StepState.OFF, StepState.ON, StepState.OFF, StepState.ON,
+          StepState.OFF, StepState.ON, StepState.OFF, StepState.ON,
+          StepState.OFF, StepState.OFF, StepState.ON, StepState.OFF,
+        ],
+      },
+      {
+        sample: "sd",
+        steps: [
+          StepState.OFF, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.OFF, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
+        ],
+      },
+      {
+        sample: "ch",
+        steps: [
+          StepState.ACCENT, StepState.ACCENT, StepState.ACCENT, StepState.ACCENT,
+          StepState.OFF, StepState.ACCENT, StepState.ON, StepState.ON,
+          StepState.ACCENT, StepState.ON, StepState.ON, StepState.ON,
+          StepState.OFF, StepState.ON, StepState.ACCENT, StepState.ON,
+        ],
+      },
+    ],
+    startingHand: [
+    ],
+    startingSchedule: [
+    ],
+    hints: [
+      "Things are starting to get hard...",
+    ],
+  },
+
   // 0
   /*
   {
@@ -140,7 +185,8 @@ const Puzzles: Array<Puzzle> = [
       "You've worked hard.",
       "It's time to meet the master..."
     ],
-    levelTrack: `${LT_PREFIX}unmixed_test_song_176_bpm.ogg`,
+    levelTrack: `${LT_PREFIX}unmixed_1_all_88_bpm.ogg`,
+    overrideTrackBars: 12,
     targetParts: [
       {
         sample: "sd",
@@ -180,6 +226,7 @@ const Puzzles: Array<Puzzle> = [
       "Show me what you've done today!"
     ]
   },
+
 ];
 
 export default Puzzles;

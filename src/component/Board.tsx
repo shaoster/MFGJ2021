@@ -12,7 +12,7 @@ import SampleGrid from './SampleGrid';
 import { GameState, StepState } from '../Types';
 import { range } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
-import { DEFAULT_BPM, SECONDS_PER_STEP, STEP_COUNT, TRACK_BARS } from '../Constants';
+import { DEFAULT_BPM, DEFAULT_TRACK_BARS, SECONDS_PER_STEP, STEP_COUNT } from '../Constants';
 import * as Tone from 'tone';
 import { Time } from 'tone/build/esm/core/type/Units';
 import LevelDescription from './LevelDescription';
@@ -60,16 +60,19 @@ export default function Board({
     targetParts,
     playerHand,
     playerSchedule,
-    hasClearedLevel,
+    overrideTrackBars,
+    overrideBPM,
   } = G;
+  const trackBars = overrideTrackBars ?? DEFAULT_TRACK_BARS;
+  const bpm = overrideBPM ?? DEFAULT_BPM;
   useEffect(() => {
-    Tone.Transport.bpm.value = DEFAULT_BPM;
+    Tone.Transport.bpm.value = bpm;
     Tone.start();
     Tone.Transport.start();
     return () => {
       Tone.Transport.stop();
     }
-  }, []);
+  }, [bpm]);
   const [npcDialog, setNpcDialog] = useState(hints);
   useEffect(() => {
     setNpcDialog(hints);
@@ -93,7 +96,7 @@ export default function Board({
     }
     const sequencer = new Tone.Sequence(
       onStep,
-      range(STEP_COUNT * TRACK_BARS),
+      range(STEP_COUNT * trackBars),
       "16n"
     );
     // Just to prevent overlap.
@@ -148,11 +151,11 @@ export default function Board({
         sampler.triggerAttackRelease(keyMapper[part.sample], "16n", currentTime, part.steps[stepIndex] / 2);
       }
     }
-    if (currentlyPlayingStep >= (STEP_COUNT * TRACK_BARS) - 1) {
+    if (currentlyPlayingStep >= (STEP_COUNT * trackBars) - 1) {
       stop();
       return;
     }
-  }, [currentTime, playerParts, targetParts, currentlyPlayingStep, lastPlayedStep, playerActive, isPlaying, stop])
+  }, [currentTime, playerParts, targetParts, currentlyPlayingStep, lastPlayedStep, playerActive, isPlaying, stop, trackBars])
   const onViewCard = (i: number) => {
     const selectedCard = Cards[playerHand[i]];
     if (selectedCard) {
@@ -184,12 +187,12 @@ export default function Board({
           }
         </Grid>
         <Grid item xs={10} key="progress">
-          <TrackProgress progress={currentlyPlayingStep} max={TRACK_BARS * STEP_COUNT} />
+          <TrackProgress progress={currentlyPlayingStep} max={trackBars * STEP_COUNT} />
         </Grid>
         <Grid item xs={1} key="time-remaining">
           {isPlaying && 
             <span>
-              {(((TRACK_BARS * STEP_COUNT) - (currentlyPlayingStep ?? 0))  * SECONDS_PER_STEP).toFixed(1)}
+              {(((trackBars * STEP_COUNT) - (currentlyPlayingStep ?? 0))  * SECONDS_PER_STEP).toFixed(1)}
             </span>
           }
         </Grid>

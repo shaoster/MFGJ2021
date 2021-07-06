@@ -14,6 +14,10 @@ export interface Puzzle {
   title: string;
   description: Array<string>;
   levelTrack: string;
+  // Override the usually constant length of the track.
+  overrideTrackBars?: number;
+  // Override the usually constant bpm.
+  overrideBPM?: number;
   // The musical composition the player is aiming to replicate.
   targetParts: Array<Part>;
   // The cards you start with in your hand.
