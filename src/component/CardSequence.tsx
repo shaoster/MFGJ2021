@@ -1,6 +1,6 @@
 import { Button, Card, CardActions, CardContent } from "@material-ui/core";
 import { range } from "lodash";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useReducer } from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import Cards from '../Cards';
@@ -10,20 +10,24 @@ import { PatternRows } from "./SampleGrid";
 
 export function ActionCard({
   cardId, cardIndex, buttonLabel, onClickCard, onClickEnabled, viewCard, isSelected, emphasizeButton,
+  leftOffset,
 }: {
   cardId: CardId, cardIndex: number, buttonLabel: string, onClickCard: any,
-  onClickEnabled: boolean, viewCard: any, isSelected: boolean, emphasizeButton: boolean
+  onClickEnabled: boolean, viewCard: any, isSelected: boolean, emphasizeButton: boolean,
+  leftOffset: number
 } & React.HTMLAttributes<HTMLDivElement>) : ReactElement
 {
   const card = Cards[cardId];
   const maybeClassSequence = card.pattern?.map(
     (stepAction: StepAction) => "cell " + StepAction[stepAction] as string
   );
-  // TODO: Figure out how to make this nice on touch.
   return <Card
     variant="outlined"
     className={"card " + card.sampleTarget + (isSelected ? " selected" : "")}
     onClick={viewCard}
+    style={{
+      marginLeft: leftOffset + "px"
+    }}
   >
     <CardContent>
       {maybeClassSequence && 
@@ -40,7 +44,10 @@ export function ActionCard({
       {onClickEnabled && 
       <Button
         variant="contained"
-        onClick={()=>onClickCard(cardIndex)}
+        onClick={(evt) => {
+          onClickCard(cardIndex);
+          evt.stopPropagation();
+        }}
         disabled={!isSelected}
         className={emphasizeButton ? "emphasis" : ""}
       >
@@ -59,72 +66,124 @@ export function EmptyCardSlot(): ReactElement {
   </Card>
 }
 
-const BASIC_CARD_CLASSES = range(MAX_HAND_SIZE).map((i) => "card-show");
+interface CardInteraction {
+  type: string;
+  value?: any;
+};
+
+interface SequenceState {
+  selectedCard: number;
+  cardClasses: Array<any>;
+  cardCount: number;
+  renderedCardCount: number; 
+};
+
+const CardInteractionReducer: (lastState: SequenceState, action: CardInteraction) => SequenceState =
+  (lastState: SequenceState, action: CardInteraction) => {
+    switch (action.type) {
+      // These two transitions are purely for tracking transient animation states.
+      case 'enter':
+        return {
+          ...lastState,
+          renderedCardCount: lastState.renderedCardCount + 1,
+        };
+      case 'exited':
+        return {
+          ...lastState,
+          renderedCardCount: lastState.renderedCardCount - 1,
+        };
+      // This is the race-safe implementation for how to handle card selections.
+      case 'select-card': {
+        const newCard = action.value !== lastState.selectedCard ? action.value : (
+          action.value < lastState.cardCount - 1 ? 
+            action.value + 1 : 0 
+        );
+        const computeClass: (i: number) => string = (i) => {
+          if (i < newCard) {
+            return "displace";
+          } else {
+            return "show";
+          }
+        };
+        const newClasses = range(MAX_HAND_SIZE).map((i) => "card-" + computeClass(i));
+        return {
+          ...lastState,
+          cardClasses: newClasses,
+          selectedCard: newCard,
+        }
+      }
+      case 'reset': {
+        return {
+          ...action.value,
+          // Preserve the rendered card count?
+          renderedCardCount: lastState.renderedCardCount
+        };
+      }
+      default:
+        throw new Error("Unrecognized action.");
+    }
+};
 
 export default function CardSequence({
   cards, buttonLabel, onClickCard, unremovable, className, emphasizeButton, ...remainingProps
 }: {
   cards: Array<CardId>, buttonLabel: string, onClickCard: any, unremovable: number, emphasizeButton: boolean
 } & React.HTMLAttributes<HTMLDivElement>) {
-  const [selectedCard, setSelectedCard] = useState(0);
-  const [cardClasses, setCardClasses] = useState(BASIC_CARD_CLASSES);
-  const [lastCardCount, setLastCardCount] = useState(cards.length);
+  const defaultCardClasses = range(MAX_HAND_SIZE).map(() => 'card-show');
+  const [sequenceState, dispatch] = useReducer(CardInteractionReducer, {
+    cardCount: cards.length,
+    selectedCard: 0,
+    cardClasses: defaultCardClasses,
+    renderedCardCount: cards.length,
+  });
+  // Sometimes we have an inbound update to cards that we need to reconcile with our controlled
+  // sequence state... Just reset.
   useEffect(() => {
-    if (cards.length !== lastCardCount) {
-      setCardClasses(BASIC_CARD_CLASSES);
-      setLastCardCount(cards.length);
-      setSelectedCard(0);
-      return;
-    }
-    // We need to do a little bit of state machine magic to get the right animations.
-    const newClasses: Array<string> = [...BASIC_CARD_CLASSES]
-    for (let i = 0; i < MAX_HAND_SIZE; i++) {
-      const computeClass: () => string = () => {
-        if (i < selectedCard) {
-          return "displace";
-        } else {
-          return "show";
+    if (cards.length !== sequenceState.cardCount) {
+      dispatch({
+        type: "reset",
+        value: {
+          cardCount: cards.length,
+          selectedCard: 0,
+          cardClasses: defaultCardClasses,
         }
-      }
-      const newClass = computeClass();
-      newClasses[i] = "card-" + newClass;
+      })
     }
-    setCardClasses(newClasses);
-  }, [cards, lastCardCount, selectedCard]);
-
-  const clickCard = (index: number) => {
-    if (index >= unremovable) {
-      onClickCard(index);
-    }
-  }
-
+  }, [cards.length, defaultCardClasses, sequenceState.cardCount])
   return <div className={"sequence " + className}>
     <TransitionGroup component={null}>
     {
     cards.map((cardId: CardId, index: number) => 
-      <CSSTransition key={cardId} exit={true} classNames="card" timeout={200}>
+      <CSSTransition
+        key={cardId}
+        enter={true}
+        exit={true}
+        classNames="card"
+        timeout={200}
+        onEnter={() => dispatch({type: 'enter', value: cards.length})}
+        onExited={() => dispatch({type: 'exited', value: cards.length})}
+      >
         <div
-          className={"card-slot " + cardClasses[index]}
+          className={"card-slot " + sequenceState.cardClasses[index]}
           style={{
             zIndex: MAX_HAND_SIZE - index,
-            // marginTop: ((index - cards.length - 1) * 4) + "px",
           }}
         >
           <ActionCard
             cardId={cardId}
             cardIndex={index}
             buttonLabel={buttonLabel}
-            onClickCard={() => clickCard(index)}
-            onClickEnabled={index >= unremovable}
+            onClickCard={() => onClickCard(index)}
+            onClickEnabled={cards.length - index > unremovable}
             viewCard={() => {
-              const newCard = index !== selectedCard ? index : (
-                index < cards.length - 1 ? 
-                  index + 1 : 0 
-              );
-              setSelectedCard(newCard);
+              dispatch({
+                type: "select-card",
+                value: index,
+              });
             }}
-            isSelected={index === selectedCard}
+            isSelected={index === sequenceState.selectedCard}
             emphasizeButton={emphasizeButton}
+            leftOffset={18 * (MAX_HAND_SIZE - sequenceState.renderedCardCount - 1)}
           />
         </div>
       </CSSTransition>

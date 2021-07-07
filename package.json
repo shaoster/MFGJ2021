@@ -1,7 +1,7 @@
 {
   "name": "mfgj202106",
   "homepage": "https://shaoster.github.io/mfgj202106",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.4",

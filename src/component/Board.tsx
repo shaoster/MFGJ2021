@@ -96,7 +96,7 @@ export default function Board({
       setNpcDialog(hints);
     }
     if (playerSchedule.length > 0) {
-      const lastCard = Cards[playerSchedule[playerSchedule.length - 1]];
+      const lastCard = Cards[playerSchedule[0]];
       const partOfLastCard = playerParts.findIndex((e) => e.sample === lastCard.sampleTarget);
       if (partOfLastCard >= 0) {
         setSelectedPart(partOfLastCard);
@@ -199,6 +199,7 @@ export default function Board({
   };
   return <Grid container className="game-board" alignItems="center" justify="center">
     <LevelDescription
+      key={"ld:" + ctx.turn}
       turn={ctx.turn}
       onDismiss={() => {
         // On a new level, play the target first.
@@ -297,6 +298,7 @@ export default function Board({
         <h3>To-Do</h3>
       </div>
       <CardSequence
+        key={"hand:" + ctx.turn}
         cards={playerHand}
         onClickCard={(i: number) => {
           moves.playCard(i);
@@ -331,6 +333,7 @@ export default function Board({
         <h3>Schedule</h3>
       </div>
       <CardSequence
+        key={"schedule:" + ctx.turn}
         cards={playerSchedule}
         onClickCard={(i: number) => {
           moves.removeCard(i);

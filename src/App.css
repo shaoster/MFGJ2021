@@ -166,7 +166,7 @@ span.MuiTabs-indicator {
 
 div.sequence {
   display: flex;
-  width: 348px;
+  width: 280px;
   height: 260px;
   border: 0px;
   border-radius: 4px;
@@ -183,8 +183,9 @@ div.sequence.schedule {
 
 div.card-slot {
   margin-top: -4px;
-  width: 24px;
-  max-width: 48px;
+  min-width: 18px;
+  width: 18px;
+  max-width: 24px;
   display: flex;
   flex-shrink: initial;
   flex-direction: row;
@@ -348,10 +349,6 @@ div.card button {
   to {
     transform: translateX(0px);
   }
-}
-
-div.card-slot.card-enter-done {
-  transition: shift-over 0.2s linear forwards;
 }
 
 @keyframes play-card {

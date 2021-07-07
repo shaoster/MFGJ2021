@@ -6,6 +6,7 @@ import Cards from './Cards';
 import { STEP_COUNT } from './Constants';
 import { GameState, Part, StepSequence, StepState } from './Types';
 import { INVALID_MOVE } from 'boardgame.io/core';
+import { reverse } from 'lodash';
 
 
 export const FLIP:string = "flip";
@@ -58,13 +59,13 @@ export const MyGame: Game = {
       // Remove the played card.
       G.playerHand.splice(handSlot, 1);
       // Add it to the play stack.
-      G.playerSchedule.push(cardId);
+      G.playerSchedule.unshift(cardId);
       if (CheckLevelComplete(G)) {
         G.hasClearedLevel = true;
       }
     },
     removeCard: (G: GameState, ctx: Ctx, playerScheduleSlot: number) => {
-      if (playerScheduleSlot < G.startingSchedule.length) {
+      if (G.playerSchedule.length - playerScheduleSlot <= G.startingSchedule.length) {
         return INVALID_MOVE;
       }
 
@@ -78,17 +79,24 @@ export const MyGame: Game = {
       
       // Add the removed card back to the hand.
       cleanState.playerHand = [...G.playerHand];
-      cleanState.playerHand.push(removedCardId);
+      cleanState.playerHand.unshift(removedCardId);
 
-      // Re-play the remaining cards.
-      for (const [replayedCardIndex, replayedCardId] of G.playerSchedule.entries()) {
-        if (replayedCardIndex === playerScheduleSlot || replayedCardIndex < G.startingSchedule.length) {
+      const inOrderStack = reverse([...G.playerSchedule]);
+      console.log(inOrderStack);
+      // Re-play the remaining cards in stack order.
+      for (const [replayedCardIndex, replayedCardId] of inOrderStack.entries()) {
+        if (G.playerSchedule.length - replayedCardIndex - 1 === playerScheduleSlot) {
           // Ignore this removed card.
+          // We need to use the original index.
+          continue;
+        }
+        if (replayedCardIndex < G.startingSchedule.length) {
+          // Not removable...
           continue;
         }
         const replayedCard = Cards[replayedCardId];
         replayedCard.playCard(cleanState);
-        cleanState.playerSchedule.push(replayedCardId);
+        cleanState.playerSchedule.unshift(replayedCardId);
       }
       if (CheckLevelComplete(cleanState)) {
         G.hasClearedLevel = true;
