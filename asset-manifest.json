@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/mfgj202106/static/css/main.f3043247.chunk.css",
-    "main.js": "/mfgj202106/static/js/main.b8c16cd8.chunk.js",
-    "main.js.map": "/mfgj202106/static/js/main.b8c16cd8.chunk.js.map",
+    "main.css": "/mfgj202106/static/css/main.7d2687e7.chunk.css",
+    "main.js": "/mfgj202106/static/js/main.d7fd914f.chunk.js",
+    "main.js.map": "/mfgj202106/static/js/main.d7fd914f.chunk.js.map",
     "runtime-main.js": "/mfgj202106/static/js/runtime-main.6159f979.js",
     "runtime-main.js.map": "/mfgj202106/static/js/runtime-main.6159f979.js.map",
     "static/js/2.9b27f6f4.chunk.js": "/mfgj202106/static/js/2.9b27f6f4.chunk.js",
@@ -10,14 +10,14 @@
     "static/js/3.a7bc188e.chunk.js": "/mfgj202106/static/js/3.a7bc188e.chunk.js",
     "static/js/3.a7bc188e.chunk.js.map": "/mfgj202106/static/js/3.a7bc188e.chunk.js.map",
     "index.html": "/mfgj202106/index.html",
-    "static/css/main.f3043247.chunk.css.map": "/mfgj202106/static/css/main.f3043247.chunk.css.map",
+    "static/css/main.7d2687e7.chunk.css.map": "/mfgj202106/static/css/main.7d2687e7.chunk.css.map",
     "static/js/2.9b27f6f4.chunk.js.LICENSE.txt": "/mfgj202106/static/js/2.9b27f6f4.chunk.js.LICENSE.txt",
     "static/media/App.css": "/mfgj202106/static/media/tileableholograph.3912a997.png"
   },
   "entrypoints": [
     "static/js/runtime-main.6159f979.js",
     "static/js/2.9b27f6f4.chunk.js",
-    "static/css/main.f3043247.chunk.css",
-    "static/js/main.b8c16cd8.chunk.js"
+    "static/css/main.7d2687e7.chunk.css",
+    "static/js/main.d7fd914f.chunk.js"
   ]
 }
