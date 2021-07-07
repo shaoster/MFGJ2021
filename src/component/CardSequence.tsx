@@ -10,7 +10,7 @@ import { PatternRows } from "./SampleGrid";
 
 export function ActionCard({
   cardId, cardIndex, buttonLabel, onClickCard, onClickEnabled, viewCard, isSelected, emphasizeButton,
-  leftOffset,
+  leftOffset
 }: {
   cardId: CardId, cardIndex: number, buttonLabel: string, onClickCard: any,
   onClickEnabled: boolean, viewCard: any, isSelected: boolean, emphasizeButton: boolean,
@@ -41,18 +41,22 @@ export function ActionCard({
       }
     </CardContent> 
     <CardActions>
-      {onClickEnabled && 
-      <Button
-        variant="contained"
-        onClick={(evt) => {
-          onClickCard(cardIndex);
-          evt.stopPropagation();
-        }}
-        disabled={!isSelected}
-        className={emphasizeButton ? "emphasis" : ""}
-      >
-        {buttonLabel}
-      </Button>         
+      {onClickEnabled ? 
+        <Button
+          variant="contained"
+          onClick={(evt) => {
+            onClickCard(cardIndex);
+            evt.stopPropagation();
+          }}
+          disabled={!isSelected}
+          className={emphasizeButton ? "emphasis" : ""}
+        >
+          {buttonLabel}
+        </Button>         
+        :
+        <div className="card-fixed">
+          FIXED
+        </div>
       }
     </CardActions>
   </Card>;
@@ -185,6 +189,11 @@ export default function CardSequence({
             emphasizeButton={emphasizeButton}
             leftOffset={18 * (MAX_HAND_SIZE - sequenceState.renderedCardCount - 1)}
           />
+          { cards.length - index > unremovable &&
+            <div className="card-order" onClick={() => dispatch({type: "select-card", value: index,})}>
+              {cards.length - index - unremovable}
+            </div> 
+          }
         </div>
       </CSSTransition>
     )

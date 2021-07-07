@@ -10,6 +10,11 @@ body {
   */
 }
 
+button {
+  font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+  font-weight: bolder !important;
+}
+
 /* Sampler */
 
 .sampler {
@@ -179,6 +184,22 @@ div.sequence.hand {
 
 div.sequence.schedule {
   background-color: #F4A4CD;
+}
+
+.hand .card-order {
+  display: none;
+}
+
+.schedule .card-fixed {
+  margin: auto;
+  margin-top: 8px;
+}
+
+.schedule .card-order {
+  height: 0px;
+  width: 0px;
+  margin-top: 240px;
+  margin-left: -16px;
 }
 
 div.card-slot {
@@ -370,6 +391,7 @@ div.card-slot.card-exit {
   }
   100% {
     transform: translateX(-192px) rotate(-1deg);
+    opacity: 0.6;
   }
 }
 

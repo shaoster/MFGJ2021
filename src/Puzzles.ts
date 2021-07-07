@@ -2,7 +2,110 @@ import { Puzzle, StepState } from "./Types";
 
 const LT_PREFIX = process.env.PUBLIC_URL + "/samples/levels/";
 const Puzzles: Array<Puzzle> = [
+  { 
+    title: "The Bunk: Part I",
+    description: [
+      "Welcome Neon!",
+      "I'm [???], and I'm supposed to show you to your bunk.",
+      "Your training starts tomorrow, so why don't you get settled first?"
+    ],
+    levelTrack: `${LT_PREFIX}unmixed_3_1_112_bpm.ogg`,
+    targetParts: [
+      {
+        sample: "bd",
+        steps: [
+          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
+        ]
+      }
+    ],
+    startingHand: [
+      "makeBed",
+      "cleanChest",
+      "placeBelongings",
+    ],
+    startingSchedule: [],
+    hints: [
+      "**PLACE** items from your **To-Do** list on your **Schedule** and get to work!",
+      "Keep an eye on what happens when you add a task to your schedule!"
+    ],
+  },
+  {
+    title: "The Bunk: Part II",
+    description: [
+      "Hmmm... I can't seem to find ??? anywhere.",
+      "Might as well keep cleaning.",
+      "Let's make this bunk sparkle!"
+    ],
+    levelTrack: `${LT_PREFIX}unmixed_3_1_112_bpm.ogg`,
+    targetParts: [
+      {
+        sample: "ch",
+        steps: [
+          StepState.ON, StepState.OFF, StepState.ON, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ON, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ON, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ON, StepState.ON,
+        ]
+      }
+    ],
+    startingHand: [
+      "dust1",
+      "dust2",
+    ],
+    startingSchedule: [
+      "cobwebs",
+    ],
+    hints: [
+      "Why don't we start by dusting away all these cobwebs?",
+      "They sure are layered pretty thick in these corners."
+    ]
+  },
+  {
+    title: "The Bunk: Part III",
+    description: [
+      "??? is still nowhere to be found.",
+      "Might as well clean those bedsheets then.",
+    ],
+    levelTrack: `${LT_PREFIX}unmixed_3_1_112_bpm.ogg`,
+    targetParts: [
+      {
+        sample: "ch",
+        steps: [
+          StepState.ON, StepState.OFF, StepState.ON, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ON, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ON, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ON, StepState.ON,
+        ]
+      },
+      {
+        sample: "bd",
+        steps: [
+          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
+        ]
+      }
 
+    ],
+    startingHand: [
+      "washBedsheets",
+      "dryBedsheets",
+      "gatherBedsheets",
+      "placeBedsheets",
+    ],
+    startingSchedule: [
+    ],
+    hints: [
+      "Is the music guiding me somehow?",
+    ]
+  },
+ 
+ 
+ 
   // 0
   /*
   {
@@ -32,6 +135,7 @@ const Puzzles: Array<Puzzle> = [
     startingSchedule: [],
   },
   */
+  /*
   {
     title: "The Laundry",
     description: [
@@ -224,6 +328,7 @@ const Puzzles: Array<Puzzle> = [
       "Things are starting to get hard...",
     ],
   },
+  */
 ];
 
 export default Puzzles;

@@ -22,10 +22,30 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import Cards from '../Cards';
 import ReactMarkdown from 'react-markdown';
 
+
+/* From https://gist.github.com/malthe/02350255c759d5478e89 */
+function dedent(text: string): string {
+  var re_whitespace = /^([ \t]*)(.*)\n/gm;
+  var l, m, i;
+
+  while ((m = re_whitespace.exec(text)) !== null) {
+    if (!m[2]) continue;
+
+    if (l = m[1].length) {
+      i = (i !== undefined) ? Math.min(i, l) : l;
+    } else break;
+  }
+
+  if (i)
+    text = text.replace(new RegExp('^[ \t]{' + i + '}(.*\n)', 'gm'), '$1');
+
+  return text;
+}
+
 function ContinueButton({G, onClick} : {G: GameState, onClick: any} ) {
   const enabled = G.hasClearedLevel;
   return <Button variant="contained" onClick={onClick} disabled={!enabled} className={enabled ? "glow" : ""}>
-   Continue
+    next
   </Button>;
 }
 const keyMapper: { [key: string]: {pitch: string, duration: string}} = {
@@ -208,7 +228,7 @@ export default function Board({
       }}
     />
     <Grid item xs={12} key="title">
-      <h1>{ctx.turn}: {title}</h1>
+      <h1>{title}</h1>
     </Grid>
     <Grid item xs={3} className="pc-area portrait-area" key="pc-area">
       <div className="pc portrait">
@@ -273,7 +293,7 @@ export default function Board({
       <Grid item xs={12} className="dialogue">
         { typeof(npcDialog) !== 'undefined' && 
           <div>
-            <ReactMarkdown children={npcDialog.join('\n\n')}/>
+            <ReactMarkdown children={dedent(npcDialog.join('\n\n'))}/>
           </div>
         }
       </Grid>

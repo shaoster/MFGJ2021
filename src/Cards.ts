@@ -84,12 +84,18 @@ const Cards : {[key: string]: Card} = {
   makeBed: new CardImpl(
     {
       title: "Make Bed",
-      description: "If you make your bed every morning, you will have accomplished the first task of the day."
+      description: `
+        ***You make your bed.***
+
+        Hmm, did you notice that sound?
+
+        Anyway, let's keep working...
+      `
     },
     [
       StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
       StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
       StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
     ],
     "bd"
@@ -97,16 +103,163 @@ const Cards : {[key: string]: Card} = {
   cleanChest: new CardImpl(
     {
       title: "Clean Chest",
-      description: "Next to the bed is a small chest for your personal belongings. It's a bit dusty."
+      description: `
+        ***You clean the dusty chest beside your bed.***
+
+        I'm really not imagining this music am I?
+      `
     },
     [
-      StepAction.DECREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
       StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
       StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+    ],
+    "bd"
+  ),
+  placeBelongings: new CardImpl(
+    {
+      title: "Place Belongings",
+      description: `
+        ***You put your belongings into the chest.***
+
+        Whoah, that made things louder... That's pretty groovy!
+
+        Let's check back in with ??? to see what to do **NEXT**.
+      `
+    },
+    [
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.MAX, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
       StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
     ],
     "bd"
   ),
+  cobwebs: new CardImpl(
+    {
+      title: "Cobwebs",
+      description: `
+        Why don't we start by dusting away all these cobwebs?
+
+        They sure are layered pretty thick in these corners.
+      `
+    },
+    [
+      StepAction.MAX, StepAction.INCREMENT, StepAction.INCREMENT, StepAction.MAX,
+      StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT,
+      StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT,
+      StepAction.MAX, StepAction.INCREMENT, StepAction.INCREMENT, StepAction.MAX,
+    ],
+    "ch"
+  ),
+  dust1: new CardImpl(
+    {
+      title: "Dust 1",
+      description: `
+        ***You do a quick sweep of the whole room.***
+
+        That seemed to clear things up a bunch.
+
+        Let's keep at it!
+      `
+    },
+    [
+      StepAction.IGNORE, StepAction.DECREMENT, StepAction.IGNORE, StepAction.DECREMENT,
+      StepAction.IGNORE, StepAction.DECREMENT, StepAction.IGNORE, StepAction.DECREMENT,
+      StepAction.IGNORE, StepAction.DECREMENT, StepAction.IGNORE, StepAction.DECREMENT,
+      StepAction.IGNORE, StepAction.DECREMENT, StepAction.IGNORE, StepAction.DECREMENT,
+    ],
+    "ch"
+  ),
+  dust2: new CardImpl(
+    {
+      title: "Dust 2",
+      description: `
+        ***You scrub those hard-to-reach corners.***
+
+        Wow! This bunk is really starting to feel like home!
+
+        Too bad dust got on all the bedsheets; let's launder those ***NEXT***!
+      `
+    },
+    [
+      StepAction.DECREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.DECREMENT,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.DECREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+    ],
+    "ch"
+  ),
+  washBedsheets: new CardImpl(
+    {
+      title: "Wash Bedsheets",
+      description: `
+        ***You wash the bedsheets.***
+      `
+    },
+    [
+      StepAction.IGNORE, StepAction.INCREMENT, StepAction.IGNORE, StepAction.INCREMENT,
+      StepAction.IGNORE, StepAction.INCREMENT, StepAction.IGNORE, StepAction.INCREMENT,
+      StepAction.IGNORE, StepAction.INCREMENT, StepAction.IGNORE, StepAction.INCREMENT,
+      StepAction.IGNORE, StepAction.INCREMENT, StepAction.INCREMENT, StepAction.INCREMENT,
+    ],
+    "ch"
+  ),
+  dryBedsheets: new CardImpl(
+    {
+      title: "Dry Bedsheets",
+      description: `
+        ***You hang your bedsheets up to dry.***
+
+      `
+    },
+    [
+      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.MAX, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.MAX, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+    ],
+    "bd"
+  ),
+  gatherBedsheets: new CardImpl(
+    {
+      title: "Gather Bedsheets",
+      description: `
+        ***You take down your now dry and fresh bedsheets.***
+
+        Cool! Even moving things around makes music too!
+      `
+    },
+    [
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
+    ],
+    "ch"
+  ),
+  placeBedsheets: new CardImpl(
+    {
+      title: "Place Bedsheets",
+      description: `
+        ***You re-make the bed with the fresh bedsheets.***
+
+        I hear a knock on the door. Let's see what's ***NEXT***.
+      `
+    },
+    [
+      StepAction.SHIFT_UP, StepAction.SHIFT_UP, StepAction.SHIFT_UP, StepAction.SHIFT_UP,
+      StepAction.SHIFT_DOWN, StepAction.SHIFT_DOWN, StepAction.SHIFT_DOWN, StepAction.SHIFT_DOWN,
+      StepAction.SHIFT_UP, StepAction.SHIFT_UP, StepAction.SHIFT_UP, StepAction.SHIFT_UP,
+      StepAction.SHIFT_DOWN, StepAction.SHIFT_DOWN, StepAction.SHIFT_DOWN, StepAction.SHIFT_DOWN,
+    ],
+    "bd"
+  ),
+
+
+
+
   layFlat: new CardImpl(
     {
       title: "Lay Flat",
