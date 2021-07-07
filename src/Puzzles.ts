@@ -92,8 +92,7 @@ const Puzzles: Array<Puzzle> = [
       "drop",
     ],
     hints: [
-      "Looks like [???] made a real mess of things when [???] dropped those [???].",
-      "Not to worry, though! Cleaning is a subtractive process.",
+      "That's a big mess to tidy up!",
       "Just like with music, sometimes what's missing is heard loudest."
     ],
   },

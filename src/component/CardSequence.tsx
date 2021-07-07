@@ -42,7 +42,7 @@ export function ActionCard({
         variant="contained"
         onClick={()=>onClickCard(cardIndex)}
         disabled={!isSelected}
-        className={emphasizeButton ? "glow" : ""}
+        className={emphasizeButton ? "emphasis" : ""}
       >
         {buttonLabel}
       </Button>         
@@ -72,8 +72,8 @@ export default function CardSequence({
   useEffect(() => {
     if (cards.length !== lastCardCount) {
       setCardClasses(BASIC_CARD_CLASSES);
-      setSelectedCard(0);
       setLastCardCount(cards.length);
+      setSelectedCard(0);
       return;
     }
     // We need to do a little bit of state machine magic to get the right animations.
@@ -102,7 +102,7 @@ export default function CardSequence({
     <TransitionGroup component={null}>
     {
     cards.map((cardId: CardId, index: number) => 
-      <CSSTransition key={cardId + ":" + index} exit={true} classNames="card" timeout={200}>
+      <CSSTransition key={cardId} exit={true} classNames="card" timeout={200}>
         <div
           className={"card-slot " + cardClasses[index]}
           style={{
