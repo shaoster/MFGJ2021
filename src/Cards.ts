@@ -215,12 +215,12 @@ const Cards : {[key: string]: Card} = {
       `
     },
     [
-      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.MAX, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
-      StepAction.MAX, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
+      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
     ],
-    "bd"
+    "ch"
   ),
   gatherBedsheets: new CardImpl(
     {
@@ -232,12 +232,12 @@ const Cards : {[key: string]: Card} = {
       `
     },
     [
-      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
-      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
-      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
-      StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
+      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.MAX, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.INCREMENT, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
+      StepAction.MAX, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
     ],
-    "ch"
+    "bd"
   ),
   placeBedsheets: new CardImpl(
     {
