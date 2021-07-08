@@ -9,7 +9,7 @@ const Puzzles: Array<Puzzle> = [
       "I'm [???], and I'm supposed to show you to your bunk.",
       "Your training starts tomorrow, so why don't you get settled first?"
     ],
-    levelTrack: `${LT_PREFIX}unmixed_3_1_112_bpm.ogg`,
+    levelTrack: `${LT_PREFIX}unmixed_0_1_112_bpm.ogg`,
     targetParts: [
       {
         sample: "bd",
@@ -39,7 +39,7 @@ const Puzzles: Array<Puzzle> = [
       "Might as well keep cleaning.",
       "Let's make this bunk sparkle!"
     ],
-    levelTrack: `${LT_PREFIX}unmixed_3_1_112_bpm.ogg`,
+    levelTrack: `${LT_PREFIX}unmixed_0_1_112_bpm.ogg`,
     targetParts: [
       {
         sample: "ch",
@@ -69,7 +69,7 @@ const Puzzles: Array<Puzzle> = [
       "??? is still nowhere to be found.",
       "Might as well clean those bedsheets then.",
     ],
-    levelTrack: `${LT_PREFIX}unmixed_3_1_112_bpm.ogg`,
+    levelTrack: `${LT_PREFIX}unmixed_0_1_112_bpm.ogg`,
     targetParts: [
       {
         sample: "ch",

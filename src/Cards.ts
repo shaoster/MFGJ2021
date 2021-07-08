@@ -211,7 +211,6 @@ const Cards : {[key: string]: Card} = {
       title: "Dry Bedsheets",
       description: `
         ***You hang your bedsheets up to dry.***
-
       `
     },
     [

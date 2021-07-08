@@ -31,6 +31,7 @@ function dedent(text: string): string {
   while ((m = re_whitespace.exec(text)) !== null) {
     if (!m[2]) continue;
 
+    /*eslint no-cond-assign: 0*/
     if (l = m[1].length) {
       i = (i !== undefined) ? Math.min(i, l) : l;
     } else break;

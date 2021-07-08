@@ -67,12 +67,36 @@ button {
   background-color: transparent; 
 }
 
-.sampler .cell.ON .step {
-  background-color: rgba(191, 141, 226, 0.8); 
+.sampler .cell.ON {
+  opacity: 0.8;
 }
 
 .sampler .cell.ACCENT .step {
-  background-color: #BF8DE2; 
+  opacity: 0.8;
+}
+
+.sampler .sd .cell.ON .step {
+  background-image: url("icons/button_snare.png");
+}
+
+.sampler .sd .cell.ACCENT .step {
+  background-image: url("icons/button_snare_accent.png");
+}
+
+.sampler .ch .cell.ON .step {
+  background-image: url("icons/button_hihat.png");
+}
+
+.sampler .ch .cell.ACCENT .step {
+  background-image: url("icons/button_hihat_accent.png");
+}
+
+.sampler .bd .cell.ON .step {
+  background-image: url("icons/button_bass.png");
+}
+
+.sampler .bd .cell.ACCENT .step {
+  background-image: url("icons/button_bass_accent.png");
 }
 
 .sampler .cell.playing {
