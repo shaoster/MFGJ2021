@@ -653,7 +653,7 @@ div.MuiLinearProgress-root {
 
 /* Tutorial */
 .tutorial-popper {
-  margin-top: 4px;
+  margin-top: 8px;
   padding: 4px;
   padding-left: 8px;
   padding-right: 8px;
@@ -663,13 +663,14 @@ div.MuiLinearProgress-root {
 }
 
 .tutorial-popper .up-arrow {
-  background-image: url("icons/arrow_upward_black_24dp.svg");
+  background-image: url("icons/arrow_drop_up_black_24dp.svg");
   background-size: cover;
-  margin-top: -8px;
-  margin-bottom: 8px;
+  margin-top: -26px;
+  margin-bottom: 0px;
   margin-left: auto;
   margin-right: auto;
-  width: 24px;
+  width: 36px;
+  height: 24px;
 }
 
 .tutorial-popper p {
