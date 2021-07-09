@@ -23,6 +23,7 @@ import ReactMarkdown from 'react-markdown';
 import InteractableButton from './InteractableButton';
 import { dedent } from './dedent';
 import { useTutorial } from '../tutorial';
+import Album from './Album';
 
 const keyMapper: { [key: string]: {pitch: string, duration: string}} = {
   cy: {
@@ -73,6 +74,7 @@ export default function Board({
     startingSchedule,
     overrideTrackBars,
     overrideBPM,
+    albumIndex,
   } = G;
   const trackBars = overrideTrackBars ?? DEFAULT_TRACK_BARS;
   const bpm = overrideBPM ?? DEFAULT_BPM;
@@ -194,6 +196,11 @@ export default function Board({
       setNpcDialog([selectedCard.description]);
     }
   };
+  // Show Album info if we haven't yet.
+  const [displayedAlbum, setDisplayedAlbum] = useState(-1);
+  if (albumIndex > displayedAlbum) {
+    return <Album index={albumIndex} acknowledge={() => setDisplayedAlbum(albumIndex)}/>;
+  }
   return <Grid container className="game-board" alignItems="center" justify="center">
     <LevelDescription
       key={"ld:" + ctx.turn}

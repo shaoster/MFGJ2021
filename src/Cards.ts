@@ -85,11 +85,9 @@ const Cards : {[key: string]: Card} = {
     {
       title: "Make Bed",
       description: `
-        ***You make your bed.***
+        Good job!
 
-        Hmm, did you notice that sound?
-
-        Anyway, let's keep working...
+        Pay attention to the order that you’re playing these cards in, or you could really get messed up.
       `
     },
     [
@@ -104,9 +102,9 @@ const Cards : {[key: string]: Card} = {
     {
       title: "Clean Chest",
       description: `
-        ***You clean the dusty chest beside your bed.***
-
-        I'm really not imagining this music am I?
+        Hey, you've found **ACCENTED** beats!
+        
+        A beat can be **NORMAL** or **ACCENTED**, which just means it's being hit harder.
       `
     },
     [
@@ -121,11 +119,9 @@ const Cards : {[key: string]: Card} = {
     {
       title: "Place Belongings",
       description: `
-        ***You put your belongings into the chest.***
+        Wonderful! You've got yourself a solid foundation.
 
-        Whoah, that made things louder... That's pretty groovy!
-
-        Let's check back in with ??? to see what to do **NEXT**.
+        Click **NEXT** to continue to the next level.
       `
     },
     [

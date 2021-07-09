@@ -11,6 +11,7 @@
 // Puzzle Configuration
 
 export interface Puzzle {
+  albumIndex: number;
   title: string;
   description: Array<string>;
   levelTrack: string;
@@ -97,4 +98,9 @@ export type CardAction = (G: GameState) => void;
 export interface Tutorial {
   key: string,
   textMarkdown: string,
+}
+
+export interface DialogEntry {
+  speaker: string,
+  text: string,
 }

@@ -3,11 +3,11 @@ import { Puzzle, StepState } from "./Types";
 const LT_PREFIX = process.env.PUBLIC_URL + "/samples/levels/";
 const Puzzles: Array<Puzzle> = [
   { 
-    title: "The Bunk: Part I",
+    albumIndex: 0,
+    title: "The Baseline Bass",
     description: [
-      "Welcome Neon!",
-      "I'm [???], and I'm supposed to show you to your bunk.",
-      "Your training starts tomorrow, so why don't you get settled first?"
+      "We'll start simple.",
+      "The first step to any rhythm is the foundation you build on."
     ],
     levelTrack: `${LT_PREFIX}unmixed_0_1_112_bpm.ogg`,
     targetParts: [
@@ -28,11 +28,12 @@ const Puzzles: Array<Puzzle> = [
     ],
     startingSchedule: [],
     hints: [
-      "**PLACE** items from your **To-Do** list on your **Schedule** and get to work!",
-      "Keep an eye on what happens when you add a task to your schedule!"
+      "Use the cards in your hand to modify those beats on your grid.",
+      "See if you can't make your grid look like mine."
     ],
   },
   {
+    albumIndex: 0,
     title: "The Bunk: Part II",
     description: [
       "Hmmm... I can't seem to find ??? anywhere.",
@@ -64,6 +65,7 @@ const Puzzles: Array<Puzzle> = [
     ]
   },
   {
+    albumIndex: 0,
     title: "The Bunk: Part III",
     description: [
       "??? is still nowhere to be found.",
@@ -104,6 +106,7 @@ const Puzzles: Array<Puzzle> = [
     ]
   },
   {
+    albumIndex: 1,
     title: "After Dinner",
     description: [
       "Everything's right back in its place.",
@@ -137,7 +140,7 @@ const Puzzles: Array<Puzzle> = [
       "Err.. Or rather, just in time for cleaning the tables and dishes from dinner...",
     ],
   },
-
+  /*
   {
     title: "The Floor",
     description: [
@@ -171,12 +174,7 @@ const Puzzles: Array<Puzzle> = [
       "Just like with music, sometimes what's missing is heard loudest."
     ],
   },
-
- 
- 
- 
   // 0
-  /*
   {
     title: "The Dojo",
     description: [

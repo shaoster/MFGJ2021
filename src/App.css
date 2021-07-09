@@ -653,6 +653,7 @@ div.MuiLinearProgress-root {
 
 /* Tutorial */
 .tutorial-popper {
+  margin-top: 4px;
   padding: 4px;
   padding-left: 8px;
   padding-right: 8px;
@@ -661,7 +662,113 @@ div.MuiLinearProgress-root {
   position: static;
 }
 
+.tutorial-popper .up-arrow {
+  background-image: url("icons/arrow_upward_black_24dp.svg");
+  background-size: cover;
+  margin-top: -8px;
+  margin-bottom: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 24px;
+}
+
 .tutorial-popper p {
   margin: auto;
   text-align: center;
+}
+
+/* Intro */
+
+div.intro {
+  height: 100%;
+  width: 100%;
+  padding: auto;
+  background-image: url("icons/tileableholograph.png");
+}
+
+.intro-body {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  text-align: center;
+  vertical-align: middle;
+  color: #AF81E4;
+}
+
+.intro .credits {
+  position: absolute;
+  text-align: left;
+  bottom: 0px;
+  left: 0px;
+  margin: 16px;
+}
+
+/* Cutscene */
+
+div.cutscene {
+  height: 100%;
+  width: 100%;
+  padding: auto;
+  background-image: url("icons/tileableholograph.png");
+}
+
+.continue-or-skip {
+  text-align: center;
+  margin: auto;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.cutscene{
+  width: 100%;
+  height: 100%;
+}
+
+.cutscene-body {
+  width: 800px;
+  margin: auto;
+}
+
+.cutscene-body h1 {
+  text-align: center;
+}
+
+.cutscene-body button {
+  margin-left: 16px;
+  margin-top: -4px;
+}
+
+.cutscene-body p {
+  padding: 16px;
+  border-radius: 8px;
+  width: 600px;
+  text-shadow: none;
+}
+
+.cutscene-body .current p {
+  animation: glow 1s linear infinite forwards;
+}
+
+.neon p {
+  background-color: #6E90FF;
+  color: #F5CBA3; 
+  margin-right: auto;
+  margin-left: 16px;
+}
+
+.avery p {
+  background-color: #F5CBA3;
+  border: 2px solid #6E90FF;
+  color: #6E90FF;
+  margin-left: auto;
+  margin-right: 16px;
+}
+
+.cadence p {
+  background-color: #F4A4CD;
+  border: 2px solid #6E90FF;
+  color: #6E90FF;
+  margin-left: auto;
+  margin-right: 16px;
 }

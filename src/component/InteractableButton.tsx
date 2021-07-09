@@ -34,13 +34,9 @@ export default function InteractableButton(
       anchorEl={anchorEl}
       placement="bottom"
       open={showTutorial} 
-      modifiers={{
-        arrow: {
-          enabled: true,
-        }
-      }}
     >
       <Paper className="tutorial-popper">
+        <div className="up-arrow">&nbsp;</div>
         <ReactMarkdown>
           {dedent(tutorialMd ?? "")}
         </ReactMarkdown>
