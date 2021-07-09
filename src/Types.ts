@@ -90,3 +90,11 @@ export enum StepAction {
 };
 
 export type CardAction = (G: GameState) => void;
+
+//////////////////////////////////////////////////////////
+// UX potpourri
+
+export interface Tutorial {
+  key: string,
+  textMarkdown: string,
+}

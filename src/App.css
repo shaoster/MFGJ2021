@@ -488,7 +488,7 @@ div.event-modal {
   margin: auto;
   border-radius: 4px;
   min-width: 180px;
-  min-height: 450px;
+  min-height: 600px;
   max-width: 240px;
   max-height: 600px;
   background-size: cover;
@@ -516,6 +516,14 @@ div.event-modal {
 div.progress-bar {
   height: 18px !important;
   border-radius: 4px;
+}
+
+div.my-parts button {
+  margin-top: 8px;
+}
+
+div.target-parts button {
+  margin-top: 8px;
 }
 
 div.start-stop {
@@ -641,4 +649,19 @@ div.MuiLinearProgress-root {
 
 .MuiTouchRipple-rippleVisible {
   color: #BF8DE2 !important;
+}
+
+/* Tutorial */
+.tutorial-popper {
+  padding: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  background-color: #B8F7FF !important;
+  border: 2px solid #BF8DE2;
+  position: static;
+}
+
+.tutorial-popper p {
+  margin: auto;
+  text-align: center;
 }

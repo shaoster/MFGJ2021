@@ -103,6 +103,75 @@ const Puzzles: Array<Puzzle> = [
       "Is the music guiding me somehow?",
     ]
   },
+  {
+    title: "After Dinner",
+    description: [
+      "Everything's right back in its place.",
+      "You can head to the mess hall now.",
+      "[???] will serve you your dinner."
+    ],
+    levelTrack: `${LT_PREFIX}unmixed_1_3_88_bpm.ogg`,
+    targetParts: [
+      {
+        sample: "ch",
+        steps: [
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
+        ],
+      },
+    ],
+    startingHand: [
+      "rearrange",
+      "bus",
+      "rinse",
+      "scour",
+      "dry",
+    ],
+    startingSchedule: [
+      "feast",
+    ],
+    hints: [
+      "You've been working hard! You've arrived just in time for dinner.",
+      "Err.. Or rather, just in time for cleaning the tables and dishes from dinner...",
+    ],
+  },
+
+  {
+    title: "The Floor",
+    description: [
+      "Nice work on that laundry!",
+      "Let me introduce you to [???].",
+      "We're only just getting started...",
+    ],
+    levelTrack: `${LT_PREFIX}unmixed_0_2_88_bpm.ogg`,
+    targetParts: [
+      {
+        sample: "bd",
+        steps: [
+          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
+        ],
+      },
+    ],
+    startingHand:  [
+      "mop",
+      "sweep",
+      "vacuum",
+      "emptyTrash",
+    ],
+    startingSchedule: [
+      "drop",
+    ],
+    hints: [
+      "That's a big mess to tidy up!",
+      "Just like with music, sometimes what's missing is heard loudest."
+    ],
+  },
+
  
  
  
@@ -167,74 +236,7 @@ const Puzzles: Array<Puzzle> = [
     ],
   },
   // 1
-  {
-    title: "The Floor",
-    description: [
-      "Nice work on that laundry!",
-      "Let me introduce you to [???].",
-      "We're only just getting started...",
-    ],
-    levelTrack: `${LT_PREFIX}unmixed_1_2_88_bpm.ogg`,
-    targetParts: [
-      {
-        sample: "bd",
-        steps: [
-          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
-          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
-          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
-          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
-        ],
-      },
-    ],
-    startingHand:  [
-      "mop",
-      "sweep",
-      "vacuum",
-      "emptyTrash",
-    ],
-    startingSchedule: [
-      "drop",
-    ],
-    hints: [
-      "That's a big mess to tidy up!",
-      "Just like with music, sometimes what's missing is heard loudest."
-    ],
-  },
   // 2
-  {
-    title: "After Dinner",
-    description: [
-      "Everything's right back in its place.",
-      "You can head to the mess hall now.",
-      "[???] will serve you your dinner."
-    ],
-    levelTrack: `${LT_PREFIX}unmixed_1_3_88_bpm.ogg`,
-    targetParts: [
-      {
-        sample: "ch",
-        steps: [
-          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
-          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
-          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
-          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
-        ],
-      },
-    ],
-    startingHand: [
-      "rearrange",
-      "bus",
-      "rinse",
-      "scour",
-      "dry",
-    ],
-    startingSchedule: [
-      "feast",
-    ],
-    hints: [
-      "You've been working hard! You've arrived just in time for dinner.",
-      "Err.. Or rather, just in time for cleaning the tables and dishes from dinner...",
-    ],
-  },
   // 3
   {
     title: "Putting it All Together",

@@ -12,6 +12,7 @@
     "boardgame.io": "^0.44.4",
     "css-animation-sync": "^0.3.0",
     "lodash": "^4.17.21",
+    "material-ui-popup-state": "^1.8.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-markdown": "^6.0.2",

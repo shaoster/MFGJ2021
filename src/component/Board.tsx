@@ -3,7 +3,6 @@ import {
 } from 'boardgame.io/react'
 
 import {
-  Button,
   Grid,
 } from '@material-ui/core';
 
@@ -21,34 +20,10 @@ import { Player, Sequence } from 'tone';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import Cards from '../Cards';
 import ReactMarkdown from 'react-markdown';
+import InteractableButton from './InteractableButton';
+import { dedent } from './dedent';
+import { useTutorial } from '../tutorial';
 
-
-/* From https://gist.github.com/malthe/02350255c759d5478e89 */
-function dedent(text: string): string {
-  var re_whitespace = /^([ \t]*)(.*)\n/gm;
-  var l, m, i;
-
-  while ((m = re_whitespace.exec(text)) !== null) {
-    if (!m[2]) continue;
-
-    /*eslint no-cond-assign: 0*/
-    if (l = m[1].length) {
-      i = (i !== undefined) ? Math.min(i, l) : l;
-    } else break;
-  }
-
-  if (i)
-    text = text.replace(new RegExp('^[ \t]{' + i + '}(.*\n)', 'gm'), '$1');
-
-  return text;
-}
-
-function ContinueButton({G, onClick} : {G: GameState, onClick: any} ) {
-  const enabled = G.hasClearedLevel;
-  return <Button variant="contained" onClick={onClick} disabled={!enabled} className={enabled ? "glow" : ""}>
-    next
-  </Button>;
-}
 const keyMapper: { [key: string]: {pitch: string, duration: string}} = {
   cy: {
     pitch: "f4",
@@ -180,6 +155,7 @@ export default function Board({
     setIsPlaying(false);
     setPlayerActive(true);
   }, [isPlaying, sequence, player]);
+  const [tutorialStep, advanceTutorial] = useTutorial();
   useEffect(() => {
     if (lastPlayedStep === currentlyPlayingStep) {
       return;
@@ -226,6 +202,9 @@ export default function Board({
         // On a new level, play the target first.
         setPlayerActive(false);
         play();
+        if (ctx.turn === 1) {
+          advanceTutorial();
+        }
       }}
     />
     <Grid item xs={12} key="title">
@@ -233,17 +212,7 @@ export default function Board({
     </Grid>
     <Grid item xs={3} className="pc-area portrait-area" key="pc-area">
       <div className="pc portrait">
-        <Button
-          variant="contained"
-          disabled={playerActive}
-          className={playerActive ? "selected" : ""}
-          onClick={() => {
-            setPlayerActive(true);
-            play();
-          }}
-        >
-          My Parts
-        </Button>
+        &nbsp;
       </div>
     </Grid>
     <Grid item xs={6} className="parts-area">
@@ -265,13 +234,49 @@ export default function Board({
             </span>
           }
         </Grid>
-        <Grid item xs={12} className="start-stop" key="start-stop">
-          <Button
+        <Grid item xs={5} className="my-parts">
+          <InteractableButton
+            variant="contained"
+            disabled={playerActive}
+            className={playerActive ? "selected" : ""}
+            showTutorial={tutorialStep?.key === "current"}
+            tutorialMd={tutorialStep?.textMarkdown}
+            onClick={() => {
+              setPlayerActive(true);
+              play();
+            }}
+            onAcknowledge={() => advanceTutorial("current")}
+          >
+            My Parts
+          </InteractableButton>
+        </Grid>
+        <Grid item xs={2} className="start-stop" key="start-stop">
+          <InteractableButton
+            key={isPlaying ? "stop" : "play"}
             className={isPlaying ? "stop" : "play"}
             onClick={isPlaying ? stop : play}
+            tutorialMd={tutorialStep?.textMarkdown}
+            showTutorial={tutorialStep?.key === "start-stop"}
+            onAcknowledge={() => advanceTutorial("start-stop")} 
           >
             &nbsp;
-          </Button>
+          </InteractableButton>
+        </Grid>
+        <Grid item xs={5} className="target-parts">
+          <InteractableButton
+            variant="contained"
+            disabled={!playerActive}
+            className={!playerActive ? "selected" : ""}
+            onClick={() => {
+              setPlayerActive(false);
+              play();
+            }}
+            tutorialMd={tutorialStep?.textMarkdown}
+            showTutorial={tutorialStep?.key === "goal"}
+            onAcknowledge={() => advanceTutorial("goal")} 
+          >
+            Goal 
+          </InteractableButton>
         </Grid>
         <Grid item xs={12} className="current-parts">
           <SwitchTransition>
@@ -301,17 +306,7 @@ export default function Board({
     </Grid>
     <Grid item xs={3} className="npc-area portrait-area" key="npc-area">
       <div className="npc portrait">
-        <Button
-          variant="contained"
-          disabled={!playerActive}
-          className={!playerActive ? "selected" : ""}
-          onClick={() => {
-            setPlayerActive(false);
-            play();
-          }}
-        >
-          Goal 
-        </Button>
+        &nbsp;
       </div>
     </Grid>
     <Grid item xs={5} className="hand-area" key="hand-area">
@@ -330,22 +325,40 @@ export default function Board({
         buttonLabel="Place"
         className="hand"
         unremovable={0}
-        emphasizeButton={!hasClearedLevel}
+        emphasizeButton={!hasClearedLevel && tutorialStep?.key === "reset"}
       />
     </Grid>
     <Grid item xs={2} className="next-day" key="next-day">
       <Grid container>
         <Grid item xs={12}>
-          <Button variant="contained" onClick={moves.clearSchedule}>Reset</Button>
+          <InteractableButton
+            variant="contained"
+            onClick={moves.clearSchedule}
+            tutorialMd={tutorialStep?.textMarkdown}
+            showTutorial={tutorialStep?.key === "reset"}
+            onAcknowledge={() => advanceTutorial("reset")} 
+          >
+            Reset
+          </InteractableButton>
         </Grid>
         <Grid item xs={12} className="break"></Grid>
         <Grid item xs={12}>
-          <ContinueButton G={G} onClick={
-            () => {
-              moves.commitSchedule();
-              stop();
+          <InteractableButton
+            variant="contained"
+            onClick={
+              () => {
+                moves.commitSchedule();
+                stop();
+              }
             }
-          }/>
+            disabled={!G.hasClearedLevel}
+            className={G.hasClearedLevel ? "glow" : ""}
+            showTutorial={tutorialStep?.key === "next"}
+            tutorialMd={tutorialStep?.textMarkdown}
+            onAcknowledge={() => advanceTutorial("next")}
+          >
+            next
+          </InteractableButton>
         </Grid>
       </Grid>
     </Grid>
@@ -363,7 +376,7 @@ export default function Board({
         buttonLabel="Remove"
         className="schedule"
         unremovable={G.startingSchedule.length}
-        emphasizeButton={false}
+        emphasizeButton={tutorialStep?.key === "reset"}
       />
     </Grid>
   </Grid>;
