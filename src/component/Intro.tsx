@@ -78,7 +78,13 @@ export default function Intro({show, acknowledge}: {show: boolean, acknowledge: 
   }
   return <Modal open={show} onClose={handleClose} onClick={handleClose}>
     {
-      showCutscene ? <Cutscene skip={acknowledge} dialogue={INTRO_DIALOG}/> : <Title/>
+      showCutscene ? 
+        <Cutscene
+          skip={acknowledge}
+          dialogue={INTRO_DIALOG}
+          song="2_full.ogg"
+        /> :
+        <Title/>
     }
   </Modal>;
 }

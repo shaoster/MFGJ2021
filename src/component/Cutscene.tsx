@@ -1,10 +1,16 @@
 import { Button, Paper } from "@material-ui/core";
 import { take } from "lodash";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { DialogEntry } from "../Types";
+import * as Tone from "tone";
 
-export function Cutscene({skip, dialogue, header} : {skip: any, dialogue: Array<DialogEntry>, header?: ReactElement}) {
+export function Cutscene({skip, dialogue, header, song} : {skip: any, dialogue: Array<DialogEntry>, header?: ReactElement, song?: string}) {
+  useEffect(() => {
+    const player = new Tone.Player(process.env.PUBLIC_URL + "/samples/scene/" + song).toDestination();
+    player.autostart = true;
+    return () => { player.stop() }
+  }, [song]);
   const [currentDialogEntry, setCurrentDialogEntry] = useState(0);
   const next = (e: any) => {
     e.stopPropagation();

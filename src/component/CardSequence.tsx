@@ -1,12 +1,30 @@
 import { Button, Card, CardActions, CardContent } from "@material-ui/core";
-import { range } from "lodash";
-import { ReactElement, useEffect, useReducer } from "react";
+import { range, sample } from "lodash";
+import { ReactElement, useEffect, useReducer, useRef } from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import * as Tone from "tone";
 
 import Cards from '../Cards';
 import { MAX_HAND_SIZE } from "../Constants";
 import { CardId, StepAction } from "../Types";
 import { PatternRows } from "./SampleGrid";
+
+const SFXSampler = new Tone.Sampler({
+  urls: {
+    c4: "1.ogg",
+    d4: "2.ogg",
+    e4: "3.ogg",
+    f4: "4.ogg",
+    g4: "5.ogg",
+  },
+  baseUrl: process.env.PUBLIC_URL + "/samples/cards/"
+}).toDestination();
+
+function PlayRandomSFX() {
+  SFXSampler.triggerAttackRelease(sample([
+    "c4", "d4", "e4", "f4", "g4"
+  ])??"c4", 0.2);
+}
 
 export function ActionCard({
   cardId, cardIndex, buttonLabel, onClickCard, onClickEnabled, viewCard, isSelected, emphasizeButton,
@@ -133,6 +151,7 @@ export default function CardSequence({
 }: {
   cards: Array<CardId>, buttonLabel: string, onClickCard: any, unremovable: number, emphasizeButton: boolean
 } & React.HTMLAttributes<HTMLDivElement>) {
+  const didMount = useRef(false);
   const defaultCardClasses = range(MAX_HAND_SIZE).map(() => 'card-show');
   const [sequenceState, dispatch] = useReducer(CardInteractionReducer, {
     cardCount: cards.length,
@@ -154,6 +173,14 @@ export default function CardSequence({
       })
     }
   }, [cards.length, defaultCardClasses, sequenceState.cardCount])
+  useEffect(() => {
+    if (didMount.current) {
+      // Don't play on first mount.
+      PlayRandomSFX();
+    } else {
+      didMount.current = true;
+    }
+  }, [sequenceState.selectedCard, cards.length]);
   return <div className={"sequence " + className}>
     <TransitionGroup component={null}>
     {

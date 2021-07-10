@@ -36,7 +36,12 @@ const ALBUMS = [
 function Album({index, acknowledge} : {index: number, acknowledge: any}) {
   const album = ALBUMS[index];
   return <Modal open={true} onClose={acknowledge} onClick={acknowledge}>
-    <Cutscene skip={acknowledge} dialogue={album.dialogue} header={<h1>Album {index}: {album.title}</h1>}/>
+    <Cutscene
+      skip={acknowledge}
+      dialogue={album.dialogue}
+      header={<h1>Album {index}: {album.title}</h1>}
+      song="1_full.mp3"
+    />
   </Modal>;
 }
 
