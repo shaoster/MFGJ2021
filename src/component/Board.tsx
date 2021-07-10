@@ -54,6 +54,8 @@ const sampler = new Tone.Sampler({
     d4: "CH/E808_CH-06.wav",
     // Snare
     c4: "SD/E808_SD-07.wav",
+    // Clear level
+    a4: "../levels/clear.ogg",
   },
   baseUrl: process.env.PUBLIC_URL + "/samples/808/"
 }).toDestination();
@@ -101,9 +103,6 @@ export default function Board({
       }
     }
   }, [hints, playerParts, playerSchedule, startingSchedule.length]);
-  useEffect(() => {
-    setSelectedPart(0);
-  }, [ctx.turn]);
   const [currentlyPlayingStep, setCurrentlyPlayingStep] = useState<number | null>(null);
   const [lastPlayedStep, setLastPlayedStep] = useState<number | null>(null);
   const [currentTime, setCurrentTime] = useState<Time | undefined>(undefined);
@@ -157,7 +156,20 @@ export default function Board({
     setIsPlaying(false);
     setPlayerActive(true);
   }, [isPlaying, sequence, player]);
-  const [tutorialStep, advanceTutorial] = useTutorial();
+  const [tutorialStep, advanceTutorial, dismissTutorial] = useTutorial();
+  useEffect(() => {
+    setSelectedPart(0);
+    if (ctx.turn > 1) {
+      sampler.triggerAttackRelease("a4", "4n");
+    }
+  }, [ctx.turn]);
+
+  useEffect(() => {
+    if (ctx.turn > 1) {
+      dismissTutorial();
+    }
+  }, [ctx.turn, dismissTutorial])
+
   useEffect(() => {
     if (lastPlayedStep === currentlyPlayingStep) {
       return;
@@ -305,8 +317,8 @@ export default function Board({
       </Grid>
       <Grid item xs={12} className="dialogue">
         { typeof(npcDialog) !== 'undefined' && 
-          <div>
-            <ReactMarkdown children={dedent(npcDialog.join('\n\n'))}/>
+          <div className="dialogue-wrapper">
+            <ReactMarkdown className="dialogue-text" children={dedent(npcDialog.join('\n\n'))}/>
           </div>
         }
       </Grid>

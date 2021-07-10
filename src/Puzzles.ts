@@ -9,7 +9,7 @@ const Puzzles: Array<Puzzle> = [
       "We'll start simple.",
       "The first step to any rhythm is the foundation you build on."
     ],
-    levelTrack: `${LT_PREFIX}unmixed_0_1_112_bpm.ogg`,
+    levelTrack: `${LT_PREFIX}1_1.ogg`,
     targetParts: [
       {
         sample: "bd",
@@ -40,7 +40,7 @@ const Puzzles: Array<Puzzle> = [
       "Might as well keep cleaning.",
       "Let's make this bunk sparkle!"
     ],
-    levelTrack: `${LT_PREFIX}unmixed_0_1_112_bpm.ogg`,
+    levelTrack: `${LT_PREFIX}1_1.ogg`,
     targetParts: [
       {
         sample: "ch",
@@ -71,7 +71,7 @@ const Puzzles: Array<Puzzle> = [
       "??? is still nowhere to be found.",
       "Might as well clean those bedsheets then.",
     ],
-    levelTrack: `${LT_PREFIX}unmixed_0_1_112_bpm.ogg`,
+    levelTrack: `${LT_PREFIX}1_1.ogg`,
     targetParts: [
       {
         sample: "ch",

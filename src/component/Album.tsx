@@ -40,7 +40,7 @@ function Album({index, acknowledge} : {index: number, acknowledge: any}) {
       skip={acknowledge}
       dialogue={album.dialogue}
       header={<h1>Album {index}: {album.title}</h1>}
-      song="1_full.mp3"
+      song="1_full.ogg"
     />
   </Modal>;
 }
