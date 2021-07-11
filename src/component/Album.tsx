@@ -53,7 +53,7 @@ function Album({index, acknowledge} : {index: number, acknowledge: any}) {
       skip={acknowledge}
       dialogue={album.dialogue}
       header={<h1>Album {index + 1}: {album.title}</h1>}
-      song="1_full.ogg"
+      song={process.env.PUBLIC_URL + "/samples/scene/1_full.ogg"}
       npc="Cadence"
     />
   </Modal>;

@@ -507,7 +507,7 @@ div.event-modal {
 
 .npc-area.avery .portrait {
   background-color: #F5CBA3;
-  background-size: cover;
+  background-image: url("icons/portraits_avery_bordered_dark.png");
 }
 
 .npc-area.cadence {
@@ -517,7 +517,6 @@ div.event-modal {
 .npc-area.cadence .portrait {
   background-color: #F4A4CD;
   background-image: url("icons/portraits_cadence_cropped.png");
-  background-size: cover;
 }
 
 div.progress-bar {
@@ -739,7 +738,7 @@ div.cutscene {
   margin-bottom: 16px;
 }
 
-.cutscene{
+.cutscene {
   width: 100%;
   height: 100%;
 }
@@ -761,8 +760,9 @@ div.cutscene {
 .cutscene-body p {
   padding: 16px;
   border-radius: 8px;
-  width: 600px;
   text-shadow: none;
+  min-width: 400px;
+  max-width: 800px;
 }
 
 .cutscene-body .current p {

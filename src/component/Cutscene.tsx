@@ -18,7 +18,8 @@ export function Cutscene(
   {skip: any, dialogue: Array<DialogEntry>, header?: ReactElement, song?: string, npc: string})
 {
   useEffect(() => {
-    const player = new Tone.Player(process.env.PUBLIC_URL + "/samples/scene/" + song).toDestination();
+    const player = new Tone.Player(song).toDestination();
+    player.loop = true;
     player.autostart = true;
     return () => { player.stop() }
   }, [song]);

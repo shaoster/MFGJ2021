@@ -82,7 +82,7 @@ export default function Intro({show, acknowledge}: {show: boolean, acknowledge: 
         <Cutscene
           skip={acknowledge}
           dialogue={INTRO_DIALOG}
-          song="2_full.ogg"
+          song={process.env.PUBLIC_URL + "/samples/scene/2_full.ogg"}
           npc="Avery"
         /> :
         <Title/>
