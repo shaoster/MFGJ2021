@@ -153,11 +153,7 @@ const Cards : {[key: string]: Card} = {
     {
       title: "Dust 1",
       description: `
-        ***You do a quick sweep of the whole room.***
-
-        That seemed to clear things up a bunch.
-
-        Let's keep at it!
+        Yep! But, you'll find that practicing now will make you fluent in the long run. 
       `
     },
     [
@@ -172,11 +168,9 @@ const Cards : {[key: string]: Card} = {
     {
       title: "Dust 2",
       description: `
-        ***You scrub those hard-to-reach corners.***
-
-        Wow! This bunk is really starting to feel like home!
-
-        Too bad dust got on all the bedsheets; let's launder those ***NEXT***!
+        Nice work! But are you ready to put them together?
+        
+        Click ***NEXT*** to continue to the next level.
       `
     },
     [
@@ -191,7 +185,9 @@ const Cards : {[key: string]: Card} = {
     {
       title: "Wash Bedsheets",
       description: `
-        ***You wash the bedsheets.***
+        ***Neon:*** Some of these cards have different symbols in the background!
+        
+        Does that mean they affect different grids?
       `
     },
     [
@@ -206,7 +202,7 @@ const Cards : {[key: string]: Card} = {
     {
       title: "Dry Bedsheets",
       description: `
-        ***You hang your bedsheets up to dry.***
+        Exactly! Matching the symbol on a card to its respective grid lets you move things around there without messing up the other grid.
       `
     },
     [
@@ -221,9 +217,9 @@ const Cards : {[key: string]: Card} = {
     {
       title: "Gather Bedsheets",
       description: `
-        ***You take down your now dry and fresh bedsheets.***
+        ***Neon:*** You know, this is getting kind of hard to keep track of what goes where...
 
-        Cool! Even moving things around makes music too!
+        ***Cadence:*** You'll get there. I know you’ll master these grids in no time!
       `
     },
     [
@@ -238,9 +234,9 @@ const Cards : {[key: string]: Card} = {
     {
       title: "Place Bedsheets",
       description: `
-        ***You re-make the bed with the fresh bedsheets.***
-
-        I hear a knock on the door. Let's see what's ***NEXT***.
+        Fantastic! You're picking this up so quickly!
+        
+        Click Next to continue to the next level.
       `
     },
     [
@@ -251,10 +247,6 @@ const Cards : {[key: string]: Card} = {
     ],
     "bd"
   ),
-
-
-
-
   layFlat: new CardImpl(
     {
       title: "Lay Flat",

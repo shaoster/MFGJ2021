@@ -160,7 +160,7 @@ export default function Board({
   useEffect(() => {
     setSelectedPart(0);
     if (ctx.turn > 1) {
-      sampler.triggerAttackRelease("a4", "4n");
+      sampler.triggerAttackRelease("a4", 4);
     }
   }, [ctx.turn]);
 

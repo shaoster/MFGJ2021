@@ -13,7 +13,7 @@
 export interface Puzzle {
   albumIndex: number;
   title: string;
-  description: Array<string>;
+  introDialogue: Array<DialogEntry>;
   levelTrack: string;
   // Override the usually constant length of the track.
   overrideTrackBars?: number;

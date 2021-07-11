@@ -5,9 +5,19 @@ const Puzzles: Array<Puzzle> = [
   { 
     albumIndex: 0,
     title: "The Baseline Bass",
-    description: [
-      "We'll start simple.",
-      "The first step to any rhythm is the foundation you build on."
+    introDialogue: [
+      {
+        speaker: "cadence",
+        text: `
+          We'll start simple.
+        `
+      },
+      {
+        speaker: "cadence",
+        text: `
+          The first step to any rhythm is the foundation you build on.
+        `
+      }
     ],
     levelTrack: `${LT_PREFIX}1_1.ogg`,
     targetParts: [
@@ -34,11 +44,16 @@ const Puzzles: Array<Puzzle> = [
   },
   {
     albumIndex: 0,
-    title: "The Bunk: Part II",
-    description: [
-      "Hmmm... I can't seem to find ??? anywhere.",
-      "Might as well keep cleaning.",
-      "Let's make this bunk sparkle!"
+    title: "Hi Hat Flavor",
+    introDialogue: [
+      {
+        speaker: "neon",
+        text: "Okay, that's my foundation. We can move on, right?"
+      },
+      {
+        speaker: "cadence",
+        text: "Patience, Neon. There's still more to teach."
+      }
     ],
     levelTrack: `${LT_PREFIX}1_1.ogg`,
     targetParts: [
@@ -60,16 +75,23 @@ const Puzzles: Array<Puzzle> = [
       "cobwebs",
     ],
     hints: [
-      "Why don't we start by dusting away all these cobwebs?",
-      "They sure are layered pretty thick in these corners."
-    ]
+      "Use the cards in your hand to modify those beats on your grid.",
+      "See if you can't make your grid look like mine.",
+      "***Neon:*** Hey didn't I just do this?"
+    ],
   },
   {
     albumIndex: 0,
-    title: "The Bunk: Part III",
-    description: [
-      "??? is still nowhere to be found.",
-      "Might as well clean those bedsheets then.",
+    title: "Combination Station",
+    introDialogue: [
+      {
+        speaker: "neon",
+        text: "Alright, hit me with your next shot!"
+      },
+      {
+        speaker: "cadence",
+        text: "You’re doing great. But how will you do when you have *two* grids to work with?"
+      }
     ],
     levelTrack: `${LT_PREFIX}1_1.ogg`,
     targetParts: [
@@ -102,18 +124,25 @@ const Puzzles: Array<Puzzle> = [
     startingSchedule: [
     ],
     hints: [
-      "Is the music guiding me somehow?",
+      "Here, both of your grids need to match both of mine before we can move on.",
+      "You can switch between them with the buttons labelled ***SD*** and ***CH*** above the grid.",
+      "What are ***CH*** and ***BD*** short for? Well that's a secret ^_^."
     ]
   },
   {
-    albumIndex: 1,
-    title: "After Dinner",
-    description: [
-      "Everything's right back in its place.",
-      "You can head to the mess hall now.",
-      "[???] will serve you your dinner."
+    albumIndex: 0,
+    title: 'The REAL Fun',
+    introDialogue: [
+      {
+        speaker: "neon",
+        text: "The *real* fun? Were we having fake fun before?"
+      },
+      {
+        speaker: "cadence",
+        text: "It's just a saying, Neon. Are you ready?"
+      },
     ],
-    levelTrack: `${LT_PREFIX}unmixed_1_3_88_bpm.ogg`,
+    levelTrack: `${LT_PREFIX}1_1.ogg`,
     targetParts: [
       {
         sample: "ch",
@@ -126,29 +155,35 @@ const Puzzles: Array<Puzzle> = [
       },
     ],
     startingHand: [
-      "rearrange",
       "bus",
       "rinse",
-      "scour",
+      "rearrange",
       "dry",
+      "scour",
     ],
     startingSchedule: [
       "feast",
     ],
     hints: [
-      "You've been working hard! You've arrived just in time for dinner.",
-      "Err.. Or rather, just in time for cleaning the tables and dishes from dinner...",
+      "Don't let it overwhelm you!",
+      "Each piece is doing exactly what we've done before, it's just a matter of application.",
+      "Can you keep up?"
     ],
   },
-  /*
   {
-    title: "The Floor",
-    description: [
-      "Nice work on that laundry!",
-      "Let me introduce you to [???].",
-      "We're only just getting started...",
+    albumIndex: 0,
+    title: "To Be Continued...",
+    introDialogue: [
+      {
+        speaker: "cadence",
+        text: "Thanks for playing!"
+      },
+      {
+        speaker: "neon",
+        text: "I guess the credits and acknowledgments go here?"
+      },
     ],
-    levelTrack: `${LT_PREFIX}unmixed_0_2_88_bpm.ogg`,
+    levelTrack: `${LT_PREFIX}1_2.ogg`,
     targetParts: [
       {
         sample: "bd",
@@ -161,23 +196,18 @@ const Puzzles: Array<Puzzle> = [
       },
     ],
     startingHand:  [
-      "mop",
-      "sweep",
-      "vacuum",
-      "emptyTrash",
     ],
     startingSchedule: [
-      "drop",
     ],
     hints: [
-      "That's a big mess to tidy up!",
-      "Just like with music, sometimes what's missing is heard loudest."
+      "To be continued..."
     ],
   },
+  /*
   // 0
   {
     title: "The Dojo",
-    description: [
+    introDialogue: [
       "Hello, Neon...",
       "We have been eagerly awaiting your arrival at the <???> Dojo.",
       "I am <???>, and I have been tasked with guiding you to your living quarters.",
@@ -205,7 +235,7 @@ const Puzzles: Array<Puzzle> = [
   /*
   {
     title: "The Laundry",
-    description: [
+    introDialogue: [
       "Hey Neon, are you settled in yet?",
       "I'm [???] and I'm a specialist in [???].",
       "Your training starts today."
@@ -238,7 +268,7 @@ const Puzzles: Array<Puzzle> = [
   // 3
   {
     title: "Putting it All Together",
-    description: [
+    introDialogue: [
       "Wow, all the tables and dishes look great!",
       "You've worked hard.",
       "It's time to meet the master..."
@@ -286,7 +316,7 @@ const Puzzles: Array<Puzzle> = [
   },
   {
     title: "Day 2",
-    description: [
+    introDialogue: [
       "After the tutorial.",
     ],
     levelTrack: `${LT_PREFIX}unmixed_2_1_112_bpm.ogg`,

@@ -4,6 +4,7 @@ import { ReactElement, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { DialogEntry } from "../Types";
 import * as Tone from "tone";
+import { dedent } from "./dedent";
 
 export function Cutscene({skip, dialogue, header, song} : {skip: any, dialogue: Array<DialogEntry>, header?: ReactElement, song?: string}) {
   useEffect(() => {
@@ -40,7 +41,7 @@ export function Cutscene({skip, dialogue, header, song} : {skip: any, dialogue: 
           (e: DialogEntry, i) => <ReactMarkdown
             className={"dialog " + e.speaker + (i === currentDialogEntry ? " current" : "")}
           >
-            {e.text}
+            {dedent(e.text)}
           </ReactMarkdown>
         )}
         <div className="continue-or-skip">

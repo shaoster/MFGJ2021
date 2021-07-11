@@ -48,10 +48,12 @@ function PartGrid(
   }
 )
 {
+  // Workaround to make us resistant to non-atomic updates of tabIndex and parts between levels.
+  const safeTabIndex = Math.min(parts.length - 1, tabIndex);  
   const {
     steps,
     sample,
-  } = parts[tabIndex];
+  } = parts[safeTabIndex];
   const truncatedSteps: StepSequence = take(steps, STEP_COUNT);
   const cellClasses: Array<string> = truncatedSteps.map((step: StepState, index: number) => {
     let cellClass = "cell ";
@@ -63,11 +65,11 @@ function PartGrid(
   });
 
   return (
-    <table {...remainingProps} key={tabIndex}>
+    <table {...remainingProps} key={safeTabIndex}>
       <caption>
         <Tabs
           variant="fullWidth"
-          value={tabIndex}
+          value={safeTabIndex}
           onChange={(_, newValue: number) => setTabIndex(newValue)}
           className="part-selector"
         >

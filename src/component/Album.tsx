@@ -30,6 +30,19 @@ const ALBUMS = [
         text: "Step inside, we’ve got a lot of work to do."
       },
     ]
+  },
+  {
+    title: "The Real Fun",
+    dialogue: [
+      {
+        speaker: "neon",
+        text: "The real fun? Were we having fake fun before?"
+      },
+      {
+        speaker: "cadence",
+        text: "It's just a saying, Neon. Are you ready?"
+      }
+    ]
   }
 ];
 
@@ -39,7 +52,7 @@ function Album({index, acknowledge} : {index: number, acknowledge: any}) {
     <Cutscene
       skip={acknowledge}
       dialogue={album.dialogue}
-      header={<h1>Album {index}: {album.title}</h1>}
+      header={<h1>Album {index + 1}: {album.title}</h1>}
       song="1_full.ogg"
     />
   </Modal>;
