@@ -182,16 +182,51 @@ const Puzzles: Array<Puzzle> = [
         speaker: "neon",
         text: "I guess the credits and acknowledgments go here?"
       },
+      {
+        speaker: "cadence",
+        text: "Sure. This project was built with [ReactJS](https://reactjs.org/) and [boardgame.io](https://boardgame.io/)."
+      },
+      {
+        speaker: "cadence",
+        text: "Many general purpose icons and UI components were from [Material UI](https://material-ui.com/)."
+      },
+      {
+        speaker: "neon",
+        text: "Oh! And the source code and raw assets live on [GitHub](https://github.com/shaoster/mfgj202106)."
+      },
+      {
+        speaker: "neon",
+        text: "Thanks for playing!"
+      }
+
     ],
     levelTrack: `${LT_PREFIX}1_2.ogg`,
     targetParts: [
       {
+        sample: "sd",
+        steps: [
+          StepState.OFF, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.OFF, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
+        ],
+      },
+      {
         sample: "bd",
         steps: [
           StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
           StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
-          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
-          StepState.ACCENT, StepState.OFF, StepState.OFF, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.OFF, StepState.OFF,
+        ],
+      },
+      {
+        sample: "ch",
+        steps: [
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
+          StepState.ON, StepState.OFF, StepState.ACCENT, StepState.OFF,
         ],
       },
     ],
