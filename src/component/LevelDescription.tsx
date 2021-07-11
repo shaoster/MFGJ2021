@@ -1,4 +1,4 @@
-import { Modal, Paper } from "@material-ui/core";
+import { Modal } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import Puzzles from "../Puzzles";
 import { Cutscene } from "./Cutscene";

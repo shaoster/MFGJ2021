@@ -495,9 +495,12 @@ div.event-modal {
 }
 
 /* Placeholders for now. */
-
 .pc-area .portrait {
   background-color: #6E90FF;
+}
+
+.npc-area {
+  color: #F4A4CD; 
 }
 
 .npc-area .portrait {

@@ -13,7 +13,10 @@ const sampler = new Tone.Sampler({
   baseUrl: process.env.PUBLIC_URL + "/samples/scene/"
 }).toDestination();
 
-export function Cutscene({skip, dialogue, header, song} : {skip: any, dialogue: Array<DialogEntry>, header?: ReactElement, song?: string}) {
+export function Cutscene(
+  {skip, dialogue, header, song} :
+  {skip: any, dialogue: Array<DialogEntry>, header?: ReactElement, song?: string})
+{
   useEffect(() => {
     const player = new Tone.Player(process.env.PUBLIC_URL + "/samples/scene/" + song).toDestination();
     player.autostart = true;
@@ -46,7 +49,7 @@ export function Cutscene({skip, dialogue, header, song} : {skip: any, dialogue: 
         </div>
         <hr/>
         {take(dialogue, currentDialogEntry + 1).map(
-          (e: DialogEntry, i) => <ReactMarkdown
+          (e: DialogEntry, i) => <ReactMarkdown key={i}
             className={"dialog " + e.speaker + (i === currentDialogEntry ? " current" : "")}
           >
             {dedent(e.text)}
