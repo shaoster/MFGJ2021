@@ -24,6 +24,7 @@ export default function TurnDescription({turn, onDismiss} : {turn: number, onDis
       dialogue={puzzle.introDialogue}
       header={<h1>{puzzle.title}</h1>}
       song={puzzle.levelTrack}
+      npc="Cadence"
     />
   </Modal>;
 }

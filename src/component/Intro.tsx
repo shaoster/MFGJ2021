@@ -83,6 +83,7 @@ export default function Intro({show, acknowledge}: {show: boolean, acknowledge: 
           skip={acknowledge}
           dialogue={INTRO_DIALOG}
           song="2_full.ogg"
+          npc="Avery"
         /> :
         <Title/>
     }

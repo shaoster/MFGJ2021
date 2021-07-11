@@ -1,4 +1,4 @@
-import { Button, Paper } from "@material-ui/core";
+import { Button, Grid, Paper } from "@material-ui/core";
 import { take } from "lodash";
 import { ReactElement, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
@@ -14,8 +14,8 @@ const sampler = new Tone.Sampler({
 }).toDestination();
 
 export function Cutscene(
-  {skip, dialogue, header, song} :
-  {skip: any, dialogue: Array<DialogEntry>, header?: ReactElement, song?: string})
+  {skip, dialogue, header, song, npc} :
+  {skip: any, dialogue: Array<DialogEntry>, header?: ReactElement, song?: string, npc: string})
 {
   useEffect(() => {
     const player = new Tone.Player(process.env.PUBLIC_URL + "/samples/scene/" + song).toDestination();
@@ -32,7 +32,14 @@ export function Cutscene(
     }
   };
   return <Paper variant="outlined" className="cutscene" onClick={next}>
-      <div className="cutscene-body">
+    <Grid container className="game-board" alignItems="center" justify="center">
+      <Grid item xs={3} className="pc-area portrait-area" key="pc-area">
+        <h1>Neon</h1>
+        <div className="pc portrait">
+          &nbsp;
+        </div>
+      </Grid>
+      <Grid item xs={6} className="cutscene-body">
         {header ? header : <></>}
         <div className="continue-or-skip">
           { currentDialogEntry + 1 < dialogue.length ?
@@ -61,6 +68,13 @@ export function Cutscene(
             </Button>
           }
         </div>
-      </div>
+      </Grid>
+      <Grid item xs={3} className={`npc-area portrait-area ${npc.toLowerCase()}`} key="npc-area">
+        <h1>{npc}</h1>
+        <div className={`${npc.toLowerCase()} portrait`}>
+          &nbsp;
+        </div>
+      </Grid>
+    </Grid>
   </Paper>;
 }

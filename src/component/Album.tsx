@@ -54,6 +54,7 @@ function Album({index, acknowledge} : {index: number, acknowledge: any}) {
       dialogue={album.dialogue}
       header={<h1>Album {index + 1}: {album.title}</h1>}
       song="1_full.ogg"
+      npc="Cadence"
     />
   </Modal>;
 }

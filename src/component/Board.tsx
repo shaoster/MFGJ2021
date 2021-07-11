@@ -324,9 +324,9 @@ export default function Board({
         }
       </Grid>
     </Grid>
-    <Grid item xs={3} className="npc-area portrait-area" key="npc-area">
+    <Grid item xs={3} className="npc-area portrait-area cadence" key="npc-area">
       <h1>Cadence</h1>
-      <div className="npc portrait">
+      <div className="cadence portrait">
         &nbsp;
       </div>
     </Grid>

@@ -492,19 +492,30 @@ div.event-modal {
   background-size: cover;
   display: flex;
   align-items: flex-end;
+  border: 2px solid #AF81E4; 
 }
 
 /* Placeholders for now. */
 .pc-area .portrait {
   background-color: #6E90FF;
+  background-image: url("icons/portraits_neon_cropped.png");
 }
 
-.npc-area {
+.npc-area.avery {
+  color: #F5CBA3;
+}
+
+.npc-area.avery .portrait {
+  background-color: #F5CBA3;
+  background-size: cover;
+}
+
+.npc-area.cadence {
   color: #F4A4CD; 
 }
 
-.npc-area .portrait {
-  background-color: transparent;
+.npc-area.cadence .portrait {
+  background-color: #F4A4CD;
   background-image: url("icons/portraits_cadence_cropped.png");
   background-size: cover;
 }
