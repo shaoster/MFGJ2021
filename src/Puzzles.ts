@@ -191,6 +191,10 @@ const Puzzles: Array<Puzzle> = [
         text: "Many general purpose icons and UI components were from [Material UI](https://material-ui.com/)."
       },
       {
+        speaker: "cadence",
+        text: "Those in-game drum samples were taken from the [SampleRadar 808 Collection](https://www.musicradar.com/news/sampleradar-378-free-808-drum-samples)."
+      },
+      {
         speaker: "neon",
         text: "Oh! And the source code and raw assets live on [GitHub](https://github.com/shaoster/mfgj202106)."
       },
