@@ -125,7 +125,7 @@ const Puzzles: Array<Puzzle> = [
     ],
     hints: [
       "Here, both of your grids need to match both of mine before we can move on.",
-      "You can switch between them with the buttons labelled ***SD*** and ***CH*** above the grid.",
+      "You can switch between them with the buttons labelled ***CH*** and ***BD*** above the grid.",
       "What are ***CH*** and ***BD*** short for? Well that's a secret ^_^."
     ]
   },
