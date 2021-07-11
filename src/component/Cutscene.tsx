@@ -6,6 +6,13 @@ import { DialogEntry } from "../Types";
 import * as Tone from "tone";
 import { dedent } from "./dedent";
 
+const sampler = new Tone.Sampler({
+  urls: {
+    c4: "bubble.ogg",
+  },
+  baseUrl: process.env.PUBLIC_URL + "/samples/scene/"
+}).toDestination();
+
 export function Cutscene({skip, dialogue, header, song} : {skip: any, dialogue: Array<DialogEntry>, header?: ReactElement, song?: string}) {
   useEffect(() => {
     const player = new Tone.Player(process.env.PUBLIC_URL + "/samples/scene/" + song).toDestination();
@@ -17,6 +24,7 @@ export function Cutscene({skip, dialogue, header, song} : {skip: any, dialogue: 
     e.stopPropagation();
     if (currentDialogEntry + 1 < dialogue.length) {
       setCurrentDialogEntry(currentDialogEntry + 1);
+      sampler.triggerAttackRelease("c4", 1);
       return;
     }
   };

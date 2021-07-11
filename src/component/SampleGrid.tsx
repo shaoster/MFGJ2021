@@ -17,6 +17,15 @@ import {
 } from '../Constants';
 import { Part, StepSequence, StepState } from '../Types';
 
+import * as Tone from 'tone';
+
+const sampler = new Tone.Sampler({
+  urls: {
+    c4: "bubble.ogg",
+  },
+  baseUrl: process.env.PUBLIC_URL + "/samples/scene/"
+}).toDestination();
+
 export function PatternRows(
   { classSequence, ...remainingProps } : React.HTMLAttributes<HTMLElement> & {
     classSequence: Array<string>,
@@ -70,7 +79,10 @@ function PartGrid(
         <Tabs
           variant="fullWidth"
           value={safeTabIndex}
-          onChange={(_, newValue: number) => setTabIndex(newValue)}
+          onChange={(_, newValue: number) => {
+            setTabIndex(newValue);
+            sampler.triggerAttackRelease("c4", 1);
+          }}
           className="part-selector"
         >
           {

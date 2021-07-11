@@ -367,7 +367,11 @@ const Cards : {[key: string]: Card} = {
   rearrange: new CardImpl(
     {
       title: "Rearrange",
-      description: "All the chairs and tables have been moved away from their original places!"
+      description: `
+        A circle to the left and a circle to the right.
+
+        How do I use this card?
+      `
     },
     [
       StepAction.SHIFT_LEFT, StepAction.SHIFT_UP, StepAction.SHIFT_LEFT, StepAction.SHIFT_UP,
@@ -381,7 +385,11 @@ const Cards : {[key: string]: Card} = {
   bus: new CardImpl(
     {
       title: "Bus",
-      description: "What a delicious meal! What are we going to do about all the dishes?"
+      description: `
+        Whoah, all those notes were rotated!
+        
+        Interestingly, I still have the same number of accented and regular notes!
+      `
     },
     [
       StepAction.SHIFT_LEFT, StepAction.SHIFT_LEFT, StepAction.SHIFT_LEFT, StepAction.SHIFT_UP,
@@ -394,7 +402,7 @@ const Cards : {[key: string]: Card} = {
   rinse: new CardImpl(
     {
       title: "Rinse",
-      description: "Rinse the dishes. This will make them easier to clean."
+      description: "Let's rotate some notes. Did you notice which notes weren't touched?"
     },
     [
       StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE, StepAction.IGNORE,
@@ -407,7 +415,7 @@ const Cards : {[key: string]: Card} = {
   scour: new CardImpl(
     {
       title: "Scour",
-      description: "Scour the dishes. Really put your back into it."
+      description: "What a weird pattern. Did that do what you expected?"
     },
     [
       StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
@@ -420,7 +428,7 @@ const Cards : {[key: string]: Card} = {
   dry: new CardImpl(
     {
       title: "Dry",
-      description: "Let the dishes dry. What a lovely sight!"
+      description: "Doesn't this look like it should go last?"
     },
     [
       StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT, StepAction.SHIFT_LEFT, StepAction.SHIFT_RIGHT,
