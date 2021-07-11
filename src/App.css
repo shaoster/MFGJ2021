@@ -677,6 +677,7 @@ div.MuiLinearProgress-root {
   background-color: #B8F7FF !important;
   border: 2px solid #BF8DE2;
   position: static;
+  width: 448px;
 }
 
 .tutorial-popper .up-arrow {
